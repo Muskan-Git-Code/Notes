@@ -41,11 +41,12 @@ public class Dsa {
 
         // String Operations (immutable string i.e. can't change value at any specific index)
         s = "Hello, World!";
-        s.length(); s.charAt(0); s.indexOf('o'); s.contains("Hello");   s.substring(0, 5); s.toUpperCase(); s.toLowerCase(); s.trim(); s.replace("World", "Java"); s.split(",");  new StringBuilder(s).reverse().toString();
+        s.length(); s.charAt(0); s.indexOf('o'); s.contains("Hello");   s.toUpperCase(); s.toLowerCase(); s.trim(); s.replace("World", "Java"); s.split(",");  new StringBuilder(s).reverse().toString();
+        s.substring(0, 5); //(begin, end index)
         s.compareTo("hi"); // Compare two strings lexicographically (returns 0 if equal, negative if less, positive if greater) //<0 if s < "hi"
 
 
-        // StringBuilder Operations (mutable/ changable string)
+        // StringBuilder Operations (mutable/ changable string) - Appends Faster than string
         StringBuilder sb = new StringBuilder("Hello");
         sb.append("hi"); sb.insert(5, ","); sb.setCharAt(5, 'r'); sb.delete(5, 6); sb.deleteCharAt(3); sb.reverse(); sb.length(); sb.charAt(0); sb.indexOf("World"); sb.toString();
 
@@ -105,9 +106,9 @@ public class Dsa {
 
         //ArrayList (Dynamic array, default capacity is 10  (internally reallocates memory for more values)) and LinkedList (Default capacity is 0) => O(n)
         // Array (search is faster) and LinkedList (insert is faster as no shifting required).
-        List<Integer> list = new ArrayList<>(); List<Integer> list2 = new LinkedList<>();
+        List<Integer> list = new ArrayList<>(); List<Integer> list2 = new LinkedList<>();   // works as both doubly/ single linkedlist
         list.add(20); list.get(2); list.remove(2); list.set(2, 10); list.contains(30); list.size(); list.isEmpty(); list.clear(); list.addAll(list2);
-        for(Integer val : list) { System.out.println(val); } // For each loop
+        for(Integer val : list) { System.out.println(val); } // For-each loop
 
         list = Arrays.stream(arr).boxed().collect(Collectors.toList()); // Convert Array to List
         arr = list.stream().mapToInt(r -> r).toArray(); // Convert List to Array
@@ -115,20 +116,11 @@ public class Dsa {
         Collections.sort(list);     Collections.sort(list, Collections.reverseOrder()); // Sort in ascending/ descending order
         Collections.binarySearch(list, 4);  Collections.max(list);  Collections.min(list);  Collections.frequency(list, 5);
         Collections.rotate(list, -2);   Collections.rotate(list, 2);  // Left / Right rotate by 2
+        List<Integer> slot= new ArrayList<>(Collections.nCopies(5, -1));  // return a new array of 5 integer, each with value -1.
 
-
-        // sort fn returns int instead of boolean
-        class Person {
-            String name;    int age;
-            Person(String name, int age) {  this.name = name;   this.age = age; }
-        }
-        List<Person> peoplelist = Arrays.asList( new Person("Alice", 25), new Person("Bob", 30), new Person("Charlie", 25) );
-
-        peoplelist.sort((p1, p2) -> {
-            if (p1.age != p2.age)
-                return p2.age - p1.age;  // Descending age
-            return p1.name.compareTo(p2.name);  // Ascending name   //compareTo() method compares two strings lexicographically
-        });
+        // sort by comparator function returns int instead of boolean
+        List<List<Integer>> jobs= new ArrayList<>();
+        jobs.sort((p,q) -> { return q.get(2)-p.get(2); } ); // sort by 2nd value desc
 
 
 
@@ -144,6 +136,7 @@ public class Dsa {
 
         TreeMap<String, Integer> map1= new TreeMap<>();
         System.out.println(map1.headMap("D"));  // Used to find keys lesser than or equal (upper bound)     // Output: {A=40, B=10}
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>(16, 0.75f, true); // returns values in accessOrder
 
 
         // Stack O(1): LIFO (Last In First Out)
@@ -153,11 +146,11 @@ public class Dsa {
         // Queue O(1): FIFO (First In First Out)
         // PriorityQueue O(log n) (min heap i.e. min value at top by default)
         Queue<String> queue = new LinkedList<>();   PriorityQueue<Integer> pq = new PriorityQueue<>();
-        PriorityQueue<Integer> pq2 = new PriorityQueue<>(Comparator.reverseOrder()); // Max heap
+        PriorityQueue<Integer> pq2 = new PriorityQueue<>( (p1,p2) -> { return Integer.compare(p2,p1); } );  // Integer.compare(p2,p1) = p2-p1.
         queue.add("Apple"); queue.poll(); queue.peek(); queue.isEmpty();
 
         // Deque O(1): Double Ended Queue (can add/remove from both ends)
-        Deque<String> deque = new LinkedList<>();
+        Deque<String> deque = new ArrayDeque<>();
         deque.addFirst("Apple"); deque.addLast("Banana"); deque.removeFirst(); deque.removeLast(); deque.getFirst(); deque.getLast(); deque.isEmpty();
 
 
@@ -172,6 +165,7 @@ public class Dsa {
         Patterns:
         1. Binary Search: Sort, max/min value
         2. 2 pointer/ sliding window/ Prefix sum: subarray/ substring problems.
+        3. Stack-Queue: Check if through lifo/ fifo order possible to solve.
         */
 
     }

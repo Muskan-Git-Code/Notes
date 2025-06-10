@@ -14,11 +14,11 @@ public class twoPointer {
     /* Print 2 numbers in a[] which gives sum k */
 
     //sort, then check if sum greater than required then dec sum by removing last digit and vise versa.
-    static void sumK(List<Integer> a, int k){   // TC: O(nlogn)
-        int l=0, r= a.size()-1;     Collections.sort(a);
+    static void sumK(int a[], int k){   // TC: O(nlogn)
+        int l=0, r= a.length-1;     Arrays.sort(a);
         while(l<r){
-            int val = a.get(l)+a.get(r);
-            if(val==k){     System.out.println(a.get(l)+ " "+ a.get(r)); }
+            int val = a[l]+a[r];
+            if(val==k){     System.out.println(a[l]+ " "+ a[r]); }
             else if(val>k){     r--; }
             else{    l++; }
         }
@@ -28,13 +28,13 @@ public class twoPointer {
     /* Print all unique triplets which gives sum as target. */
 
     // sort, take outer loop, then 2 pointer approach as above.
-    static void triplet(List<Integer> a, int target){
-        int n= a.size();    Collections.sort(a);
+    static void triplet(int a[], int target){
+        int n= a.length;    Arrays.sort(a);
         for(int k=0; k<n; k++){
             int i= k+1, j=n-1;
             while(i<j){
-                int val= a.get(i)+ a.get(j)+ a.get(k);
-                if(val==target){    System.out.println(a.get(i)+ " "+ a.get(j)+ " "+ a.get(k)); }
+                int val= a[i]+ a[j]+ a[k];
+                if(val==target){    System.out.println(a[i]+ " "+ a[j]+ " "+ a[k]); }
                 else if(val>target){    j--; }
                 else{   i++; }
             }
@@ -45,11 +45,11 @@ public class twoPointer {
     /* Return index of 2 numbers which gives sum k. */
 
     // store (value, index) in map, and check if k-a[i] present in map, then that's the ans.
-    static void sumk2(List<Integer> a, int k){
+    static void sumk2(int a[], int k){
         HashMap<Integer, Integer> map= new HashMap<>();
-        for(int i=0; i<a.size(); i++){
-            if(map.containsKey(k-a.get(i)) ){   System.out.println(map.get(k-a.get(i))+ " "+ i);    break; }
-            map.put(a.get(i), i);
+        for(int i=0; i<a.length; i++){
+            if(map.containsKey(k-a[i]) ){   System.out.println(map.get(k-a[i])+ " "+ i);    break; }
+            map.put(a[i], i);
         }
     }
 
@@ -58,13 +58,13 @@ public class twoPointer {
     // a[]= {1,4,2,10,2,3,1,0,20}, k=3  => 21 i.e. last window (1,0,20)
 
     // iterate array, make window, such that while moving forward remove last taken element from sum.
-    static int subarrSum(List<Integer> a, int k){
+    static int subarrSum(int a[], int k){
         int sum=0, i=0, j=0, mx=Integer.MIN_VALUE;
-        for(; j<k; j++){    sum+= a.get(j); }   // first window
+        for(; j<k; j++){    sum+= a[j]; }   // first window
         mx = Math.max(mx, sum);
 
-        while(j<a.size()){
-            sum+= a.get(j)- a.get(i);   j++; i++;
+        while(j<a.length){
+            sum+= a[j]- a[i];   j++; i++;
             mx = Math.max(mx, sum);
         }
         return mx;
@@ -79,13 +79,13 @@ public class twoPointer {
     // a[]= {3,2,3,4,5,6,1}, k=3    => 12 (1,6,5)
 
     // Take exactly k elements, so lets take all k elements from start, then dec one by one and take end ones instead to find max.
-    static int maxpt(List<Integer> a, int k){
-        int mx=Integer.MIN_VALUE, sum=0, i=0, j=a.size()-1;
-        for(; i<k; i++){    sum+= a.get(i); }   i--;   // first window
+    static int maxpt(int a[], int k){
+        int mx=Integer.MIN_VALUE, sum=0, i=0, j=a.length-1;
+        for(; i<k; i++){    sum+= a[i]; }   i--;   // first window
         mx= Math.max(mx, sum);
 
         while(i>=0){
-            sum+= a.get(j)- a.get(i);   i--; j--;
+            sum+= a[j]- a[i];   i--; j--;
             mx= Math.max(mx, sum);
         }
         return mx;
@@ -96,48 +96,51 @@ public class twoPointer {
     // a[]= {1,3,-1,-3,5,3,6,7}, k=3    => {1,-1,-1,3,5,6}
 
     // taking min and max heap, each time move element to min heap, then to max heap, then if maxheap size is greater than min heap so move element back to min heap. Store all values outside window in a map, and if top value is in map then remove it, and balance map again.
-    static PriorityQueue<Integer> minHeap= new PriorityQueue<>();
-    static PriorityQueue<Integer> maxHeap= new PriorityQueue<>(Comparator.reverseOrder());
-    static Map<Integer, Integer> removedVals = new HashMap<>();
+    class MedianQues {
+        static PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+        static Map<Integer, Integer> removedVals = new HashMap<>();
 
-    static List<Integer> median(List<Integer> a, int k){
-        List<Integer> res= new ArrayList<>();   int i=0, j=0;
+        static List<Integer> median(int a[], int k) {
+            List<Integer> res = new ArrayList<>();
+            int i = 0, j = 0;
 
-        for(; j<k; j++){    addNum(a.get(j)); } // first window
-        res.add(getMedian(k));
-
-        while(j<a.size()){
-            addNum(a.get(j));   removeNum(a.get(i));    i++; j++;
+            for (; j < k; j++) {    addNum(a[j]); } // first window
             res.add(getMedian(k));
+
+            while (j < a.length) {
+                addNum(a[j]);   removeNum(a[i]);    i++;    j++;
+                res.add(getMedian(k));
+            }
+            return res;
         }
-        return res;
-    }
 
-    static void addNum(int val){
-        minHeap.add(val);   maxHeap.add(minHeap.poll());
-        if(maxHeap.size() > minHeap.size()){    minHeap.add(maxHeap.poll()); }
-    }
-
-    static void removeNum(int val){
-        removedVals.put(val, removedVals.getOrDefault(val, 0)+1);
-        cleanHeap(maxHeap);     cleanHeap(minHeap);
-
-        while(minHeap.size() > maxHeap.size()){ maxHeap.add(minHeap.poll()); }
-        while(maxHeap.size() > minHeap.size()){ minHeap.add(maxHeap.poll()); }
-    }
-
-    static void cleanHeap(PriorityQueue<Integer> heap){
-        while (!heap.isEmpty() && removedVals.containsKey(heap.peek())) {
-            int top = heap.peek();
-            removedVals.put(top, removedVals.get(top) - 1);
-            if (removedVals.get(top) == 0) {    removedVals.remove(top); }
-            heap.poll();
+        static void addNum(int val) {
+            minHeap.add(val);
+            maxHeap.add(minHeap.poll());
+            if (maxHeap.size() > minHeap.size()) {  minHeap.add(maxHeap.poll()); }
         }
-    }
 
-    static int getMedian(int k){
-        if(k%2 == 1){   return minHeap.peek(); }
-        else{   return (maxHeap.peek()+minHeap.peek())/2; }
+        static void removeNum(int val) {
+            removedVals.put(val, removedVals.getOrDefault(val, 0) + 1);     cleanHeap(maxHeap);     cleanHeap(minHeap);
+
+            while (minHeap.size() > maxHeap.size()) {   maxHeap.add(minHeap.poll()); }
+            while (maxHeap.size() > minHeap.size()) {   minHeap.add(maxHeap.poll()); }
+        }
+
+        static void cleanHeap(PriorityQueue<Integer> heap) {
+            while (!heap.isEmpty() && removedVals.containsKey(heap.peek())) {
+                int top = heap.peek();
+                removedVals.put(top, removedVals.get(top) - 1);
+                if (removedVals.get(top) == 0) {    removedVals.remove(top); }
+                heap.poll();
+            }
+        }
+
+        static int getMedian(int k) {
+            if (k % 2 == 1) {   return minHeap.peek(); }
+            else {  return (maxHeap.peek() + minHeap.peek()) / 2; }
+        }
     }
 
 
@@ -150,10 +153,10 @@ public class twoPointer {
     /* Kadane's Algorithm: Find max sum subarray. */
 
     // Iterate through array, add values in current sum, if sum goes -ve then make cs=0, else continue counting sum.
-    static int maxSum(List<Integer> a){
+    static int maxSum(int a[]){
         int mx= Integer.MIN_VALUE, cs=0;
-        for(int i=0; i<a.size(); i++){
-            cs+= a.get(i);      mx= Math.max(mx, cs);
+        for(int i=0; i<a.length; i++){
+            cs+= a[i];      mx= Math.max(mx, cs);
             if(cs<0)    cs=0;
         }
         return mx;
@@ -164,10 +167,10 @@ public class twoPointer {
     // a[]= {2,3,-2,4}  => 6 (2,3)
 
     // for product, we need to consider from both sides for -ve scenarios. For 0 values, subarray starts again from there.
-    static int product(List<Integer> a){
-        int mx= Integer.MIN_VALUE, pref=1, suf=1, n= a.size();
+    static int product(int a[]){
+        int mx= Integer.MIN_VALUE, pref=1, suf=1, n= a.length;
         for(int i=0; i<n; i++){
-            pref*= a.get(i);    suf*= a.get(n-1 -i);
+            pref*= a[i];    suf*= a[n-1 -i];
             mx= Math.max(mx, Math.max(pref, suf));
             if(pref==0) pref=1;     if(suf==0)  suf=1;
         }
@@ -185,16 +188,15 @@ public class twoPointer {
     // a[]= {1,1,1,0,0,0,1,1,1,1,0}, k=2    => 6
 
     // length = currentIx - (an index before till i need to ct) =j-(i-1)
-    static int consOnes(List<Integer> a, int k){
+    static int consOnes(int a[], int k){
         int i=0, j=0, mx=0, zeroesCt=0;
-        for(;j<a.size();j++){
-            if(a.get(j)==0) zeroesCt++;
+        for(;j<a.length;j++){
+            if(a[j]==0) zeroesCt++;
 
             while(zeroesCt>k && i<=j){
-                if(a.get(i)==0) zeroesCt--;
+                if(a[i]==0) zeroesCt--;
                 i++;
             }
-
             mx= Math.max(mx, j-(i-1));
         }
         return mx;
@@ -205,16 +207,16 @@ public class twoPointer {
     // a[]= {0,1,2,2}   => 3
 
     // pluck from continous trees, fruits i.e. k <= 2
-    static int maxFruits(List<Integer> a){
+    static int maxFruits(int a[]){
         int mx=0, i=0, j=0, fruitsCt=0;
         Map<Integer, Integer> map= new HashMap<>();
 
-        for(;j<a.size(); j++){
-            map.put(a.get(j), map.getOrDefault(a.get(j), 0)+1);
+        for(;j<a.length; j++){
+            map.put(a[j], map.getOrDefault(a[j], 0)+1);
 
             while(map.size()>2 && i<=j){
-                map.put(a.get(i), map.get(a.get(i))-1);
-                if(map.get(a.get(i))==0){    map.remove(a.get(i)); }
+                map.put(a[i], map.get(a[i])-1);
+                if(map.get(a[i])==0){    map.remove(a[i]); }
                 i++;
             }
 
@@ -228,12 +230,12 @@ public class twoPointer {
     // a[]= {10,5,2,6}, k=100    => 8 as {{10}, {5}, {2}, {6}, {10,5}, {5,2}, {2,6}, {5,2,6}}
 
     // product<k
-    static int prodSubarrays(List<Integer> a, int k){
+    static int prodSubarrays(int a[], int k){
         int res=0, i=0, prod=1;
-        for(int j=0; j<a.size(); j++){
-            prod*= a.get(j);
+        for(int j=0; j<a.length; j++){
+            prod*= a[j];
 
-            while(prod>=k && i<=j){     prod/= a.get(i);    i++; }
+            while(prod>=k && i<=j){     prod/= a[i];    i++; }
 
             res+= j-(i-1);  // //ct+= (j-i)+1, as to calculate ct for each individual array and a combined complete array from j till i.
         }
@@ -292,10 +294,10 @@ public class twoPointer {
 
     // Binary Search on ans+ 2 pointers
     // required result is between (min, max) dist. Each time if countPairs<=mid, then that's a possible ans, else found in left side.
-    static int pairFn(List<Integer> a, int k){
-        Collections.sort(a);
-        int res=0, mn= Integer.MAX_VALUE, n=a.size();   int mx= a.get(n-1)-a.get(0);
-        for(int i=1; i<n; i++){ mn= Math.min(mn, a.get(i)-a.get(i-1)); }
+    static int pairFn(int a[], int k){
+        Arrays.sort(a);
+        int res=0, mn= Integer.MAX_VALUE, n=a.length;   int mx= a[n-1]-a[0];
+        for(int i=1; i<n; i++){ mn= Math.min(mn, a[i]-a[i-1]); }
         int l=mn, r= mx;
         while(l<=r){
             int mid= (l+r)/2;
@@ -306,11 +308,11 @@ public class twoPointer {
     }
 
     // no of small dist <= mid, and that ct>=k
-    static boolean isPossible(int mid, List<Integer> a, int k){
+    static boolean isPossible(int mid, int a[], int k){
         int i=0, ct=0;
-        for(int j=0; j<a.size(); j++){
-            int dist= a.get(j)-a.get(i);
-            while(dist>mid){    i++;    dist= a.get(j)-a.get(i); }
+        for(int j=0; j<a.length; j++){
+            int dist= a[j]-a[i];
+            while(dist>mid){    i++;    dist= a[j]-a[i]; }
             ct+= j-i;   // pairs with lesser dist
         }
 
@@ -323,12 +325,12 @@ public class twoPointer {
     // a[]= {1,3,5,2,7,5}, mink=2, maxk=5   => 2 {as pairs (1,3,5), (1,3,5,2)}
 
     // if have req window, then count no of subarrays.
-    static int partWindow(List<Integer> a, int mink, int maxk){
+    static int partWindow(int a[], int mink, int maxk){
         int i=0, mini=-1, maxi=-1, ct=0;
-        for(int j=0; j<a.size(); j++){
-            if(a.get(j)==mink){ mini=j; }   if(a.get(j)==maxk){ maxi=j; }
+        for(int j=0; j<a.length; j++){
+            if(a[j]==mink){ mini=j; }   if(a[j]==maxk){ maxi=j; }
 
-            if((a.get(j)<mink || a.get(j)>maxk) && i<=j){   mini=-1; maxi=-1;   i=j+1; }
+            if((a[j]<mink || a[j]>maxk) && i<=j){   mini=-1; maxi=-1;   i=j+1; }
 
             if(mini!=-1 && maxi!=-1){   ct+= Math.min(mini, maxi) -i +1; }  //i.e. only value till both of them are present can be ans
         }
@@ -340,13 +342,13 @@ public class twoPointer {
     // a[]= {1,1,4,2,3}, x=5    => 2
 
     // Check for longest subarray which have sum total-x. So remaining is the shortest to sum x.
-    static int minOper(List<Integer> a, int x){ // TC: O(n)
-        int i=0, mx=-1, sum=0, n= a.size(), total=0;
-        for(int j=0; j<n; j++){ total+= a.get(j); }
+    static int minOper(int a[], int x){ // TC: O(n)
+        int i=0, mx=-1, sum=0, n= a.length, total=0;
+        for(int j=0; j<n; j++){ total+= a[j]; }
 
-        for(int j=0; j<a.size(); j++){
-            sum+= a.get(j);
-            while(sum> total-x && i<=j){    sum-= a.get(i); i++; }
+        for(int j=0; j<a.length; j++){
+            sum+= a[j];
+            while(sum> total-x && i<=j){    sum-= a[i]; i++; }
             if(sum== total-x){  mx= Math.max(mx, j-(i-1)); }
         }
         return (mx==-1) ? -1 : n-mx;
@@ -395,15 +397,15 @@ public class twoPointer {
     // a[]= {1,3,2,3,3}, k=2    => 6
 
     // all subarrays (i.e. n-j) having (mxEleCt>=k)
-    static int maxEle(List<Integer> a, int k){
-        int i=0, ct=0, mxCt=0, n= a.size(), mxFreq= Collections.max(a);
+    static int maxEle(int a[], int k){
+        int i=0, ct=0, mxCt=0, n= a.length, mxFreq= Arrays.stream(a).max().getAsInt();
 
         for(int j=0; j<n; j++){
-            if(a.get(j)==mxFreq){  mxCt++; }
+            if(a[j]==mxFreq){  mxCt++; }
 
             while(mxCt>=k && i<=j){
                 ct+= n-j;
-                if(a.get(i)==mxFreq){  mxCt--; }
+                if(a[i]==mxFreq){  mxCt--; }
                 i++;
             }
         }
@@ -447,11 +449,11 @@ public class twoPointer {
     /* Count subarrays whose sum equals k, negative values allowed. */
 
     // sumOfSubarray=k, means sum-k=0. So, count subarrays with sum-k values. Iterate through array, check if sum-k value already exist through map, and add the new sum.
-    static int subarrCt(List<Integer> a, int k){
+    static int subarrCt(int a[], int k){
         int ct=0, sum=0;
         Map<Integer, Integer> map= new HashMap<>(); map.put(0, 1); // (sum, ct)
-        for(int i=0; i<a.size(); i++){
-            sum+= a.get(i);     ct+= map.getOrDefault(sum-k, 0);
+        for(int i=0; i<a.length; i++){
+            sum+= a[i];     ct+= map.getOrDefault(sum-k, 0);
             map.put(sum, map.getOrDefault(sum,0)+1);
         }
         return ct;
@@ -461,11 +463,11 @@ public class twoPointer {
     /* Count subarray whose sum is divisible by k, negative values allowed. */
 
     // sum%k=0. Also, for -ve sum, modulo is still same, so while storing in map, we will consider its +ve value i.e. adding k more in it (rem%k = (rem+k)%k).
-    static int divis(List<Integer> a, int k){
+    static int divis(int a[], int k){
         int sum=0, ct=0, rem=0;
         Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);
-        for(int i=0; i<a.size(); i++){
-            sum+= a.get(i); rem= (sum+k)%k;     ct+= map.getOrDefault(rem, 0);
+        for(int i=0; i<a.length; i++){
+            sum+= a[i]; rem= (sum+k)%k;     ct+= map.getOrDefault(rem, 0);
             map.put(rem, map.getOrDefault(rem, 0)+1);
         }
         return ct;
@@ -475,11 +477,11 @@ public class twoPointer {
     /* Return max size subarray whose sum equals k, negative values allowed. */
 
     // this time in map store (sum, index), and return max instead of ct. This time its index, so we can't store 0 if not found. Also, storing only 1st occurence of a sum, so that we have max length in case if sum occurs again.
-    static int maxSubarr(List<Integer> a, int k){
+    static int maxSubarr(int a[], int k){
         int ix=0, sum=0, res=0;
         Map<Integer, Integer> map= new HashMap<>();     map.put(0, -1); // if sum 0, then max index can be from starting.
-        for(int i=0; i<a.size(); i++){
-            sum+= a.get(i);
+        for(int i=0; i<a.length; i++){
+            sum+= a[i];
             if(map.containsKey(sum-k))  res= Math.max(res, i- map.get(sum-k));  // (currentIndex - index of sum-k)
             if(!map.containsKey(sum))    map.put(sum, i);
         }
@@ -490,11 +492,11 @@ public class twoPointer {
     /* Return max length binary subarray with equal number of 0 and 1. */
 
     // no of 0= no of 1, means noOfZero - noOfOne =0
-    static int binaryLength(List<Integer> a){
+    static int binaryLength(int a[]){
         int mx=0, one=0, zero=0;
         Map<Integer, Integer> map= new HashMap<>(); map.put(0, -1);  //(diff, index)
-        for(int i=0; i<a.size(); i++){
-            if(a.get(i)==0){    zero++; }else{  one++; }
+        for(int i=0; i<a.length; i++){
+            if(a[i]==0){    zero++; }else{  one++; }
             int diff= zero-one;
 
             if(map.containsKey(diff))   mx= Math.max(mx, i-map.get(diff));
@@ -508,12 +510,12 @@ public class twoPointer {
     /* Check if there is a subarray whose sum of elements is multiple of k, and length is atleast 2. */
 
     // multiple of k, means rem=0 i.e. sum%k=0. Also, length should be >=2.
-    static boolean multiple(List<Integer> a, int k){
+    static boolean multiple(int a[], int k){
         int rem=0, sum=0;
         Map<Integer, Integer> map= new HashMap<>();
 
-        for(int i=0; i<a.size(); i++){
-            sum+= a.get(i); rem= (sum)%k;
+        for(int i=0; i<a.length; i++){
+            sum+= a[i]; rem= (sum)%k;
             if(map.containsKey(rem) && i-map.get(rem)>=2){  return true; }
             if(!map.containsKey(sum)){  map.put(rem, i); }
         }
@@ -525,12 +527,12 @@ public class twoPointer {
     // a[]= {4,2,2,6,4}, k=6    => 4
 
     // xor of subarray=k. So, xor^k=0;
-    static int xor(List<Integer> a, int k){
+    static int xor(int a[], int k){
         int ct=0, xor=0;
         Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);
 
-        for(int i=0; i<a.size(); i++){
-            xor^= a.get(i);
+        for(int i=0; i<a.length; i++){
+            xor^= a[i];
             ct+= map.getOrDefault(xor^k, 0);
             map.put(xor, map.getOrDefault(xor, 0)+1);
         }
@@ -542,12 +544,12 @@ public class twoPointer {
     // a[]= {2,3,1,6,7} => 4
 
     // xor1=xor2, means xor1^xor2=0. Means xor of (i to k)=0, and ctOfTriplets= len = currentIndex - IndexHavingSameXor. And if that same xor came more than once, then len= (currIx - i1)+ (currIx-i2) = ctXor*currIx - (sumOfprevIx).
-    static int xorTriplets(List<Integer> a){
+    static int xorTriplets(int a[]){
         int res=0, xor=0;
         Map<Integer, Integer> ctMap= new HashMap<>();   ctMap.put(0, 1);   // (xor, ct)
         Map<Integer, Integer> ixMap= new HashMap<>();   ixMap.put(0, 0);   // (xor, SumOfIx)
-        for(int i=0; i<a.size(); i++){
-            xor^= a.get(i);
+        for(int i=0; i<a.length; i++){
+            xor^= a[i];
 
             if(ctMap.containsKey(xor)){     res+= ctMap.get(xor)*(i) - ixMap.get(xor); }
 
@@ -582,12 +584,12 @@ public class twoPointer {
     // a[][]= {{0,1,0},{1,1,1},{0,1,0}}, k=0  => 4
 
     //Find prefix sum row-wise. Then, similar to 1D, check for each column subarray for the count
-    static int submatrixSum(List<List<Integer>> a, int k){
-        int m= a.size(), n= a.get(0).size(), ct=0;
+    static int submatrixSum(int a[][], int k){
+        int m= a.length, n= a[0].length, ct=0;
 
         for(int i=0; i<m; i++){
             for(int j=1; j<n; j++){
-                a.get(i).set(j, a.get(i).get(j) + a.get(i).get(j-1) );
+                a[i][j]= a[i][j] + a[i][j-1];
             }}
 
         //Now, for each col start to end, check for all rows and apply find "No. of subarrays with sum k" logic
@@ -596,7 +598,7 @@ public class twoPointer {
 
                 Map<Integer, Integer> map= new HashMap<>(); map.put(0, 1);  int sum=0;
                 for(int row=0; row<m; row++){
-                    sum+= a.get(row).get(colEnd) - (colSt>0 ? a.get(row).get(colSt-1) : 0); //(curr)-(prev calculated prefixSum)
+                    sum+= a[row][colEnd] - (colSt>0 ? a[row][colSt-1] : 0); //(curr)-(prev calculated prefixSum)
                     ct+= map.getOrDefault(sum-k, 0);
                     map.put(sum, map.getOrDefault(sum, 0)+1);
                 }

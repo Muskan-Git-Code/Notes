@@ -6,12 +6,12 @@ import java.util.List;
 
 public class BinarySearch {
 
-    static int binarySearch(List<Integer> a, int l, int r, int x){      // O(logn)
+    static int binarySearch(int a[], int l, int r, int x){      // O(logn)
 
         while(l<=r){
             int m= (l+r)/2;
-            if(a.get(m)==x){    return m; }
-            else if(a.get(m)<x){    l= m+1; }
+            if(a[m]==x){    return m; }
+            else if(a[m]<x){    l= m+1; }
             else{   r= m-1; }
         }
         return -1;
@@ -21,13 +21,13 @@ public class BinarySearch {
     /* Find 1st occurrence of an element in a sorted array. */
 
     // if found an occurrence then store index, and move left to find if there is any other index
-    static int firstOccurrence(List<Integer> a, int x){
+    static int firstOccurrence(int a[], int x){
 
-        int l=0, r=a.size()-1, res=-1;
+        int l=0, r=a.length-1, res=-1;
         while(l<=r){
             int m= (l+r)/2;
-            if(a.get(m)==x){    res=m;  r=m-1; }
-            else if(a.get(m) > x){   r= m-1; }
+            if(a[m]==x){    res=m;  r=m-1; }
+            else if(a[m] > x){   r= m-1; }
             else{   l = m+1; }
         }
         return res;
@@ -44,11 +44,11 @@ public class BinarySearch {
 
     /* Find element x in sorted infinite array. */
     // take r till x is not included
-    static int infiniteArr(List<Integer> a, int x){
+    static int infiniteArr(int a[], int x){
         int l=0, r=1;
-        while( r< a.size() && a.get(r) < x ){   l=r;    r= r*2; }
+        while( r< a.length && a[r] < x ){   l=r;    r= r*2; }
 
-        if(r>= a.size()){   r = a.size()-1; }
+        if(r>= a.length){   r = a.length-1; }
         return binarySearch(a, l, r, x);
     }
 
@@ -59,11 +59,11 @@ public class BinarySearch {
     // a[]= {4,5,6,7,0,1,2}     => 4
 
     // min element is always present in unsorted half
-    static int rotatedSort(List<Integer> a){
-        int l=0, r= a.size()-1, res=-1;
+    static int rotatedSort(int a[]){
+        int l=0, r= a.length-1, res=-1;
         while(l<r){
             int m= (l+r)/2;
-            if(a.get(m)>a.get(r)){  l = m+1; }
+            if(a[m]>a[r]){  l = m+1; }
             else{   r=m;  res=m; }
         }
         return res;
@@ -80,12 +80,12 @@ public class BinarySearch {
     // a[] = {1,3,8,12,4,2}     => 12
 
     // Each time compare mid with neighbors, if greater then that's the ans, else if inc order then l = m+1, else r=m-1
-    static int bitonic(List<Integer> a){
-        int l=0, r= a.size()-1;
+    static int bitonic(int a[]){
+        int l=0, r= a.length-1;
         while(l<=r){
             int m= (l+r)/2;
-            if(a.get(m) > a.get(m+1) && a.get(m) > a.get(m-1)){ return a.get(m); }
-            else if(a.get(m-1) < a.get(m) && a.get(m) < a.get(m+1) ){   l = m+1; }
+            if(a[m] > a[m+1] && a[m] > a[m-1]){ return a[m]; }
+            else if(a[m-1] < a[m] && a[m] < a[m+1] ){   l = m+1; }
             else{   r = m-1; }
         }
         return -1;
@@ -100,23 +100,14 @@ public class BinarySearch {
     // a[]= {{0,0,1,1},{0,0,0,0},{0,1,1,1}}     => 3
 
     //Rows are sorted, that means firstly zero then one. If at ith row, we found 1, then after that all are one. Also, no need to process all columns as col with more zeroes are already rejected.
-    static int sortedMatrix(List<List<Integer>> list){      // TC: O(m+n)
-        int mx=0, m= list.size(), n= list.get(0).size(), indexj=Integer.MAX_VALUE;
+    static int sortedMatrix(int arr[][]){      // TC: O(m+n)
+        int mx=0, m= arr.length, n= arr[0].length, indexj=Integer.MAX_VALUE;
 
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                if(list.get(i).get(j) == 1){
-                    mx = Math.max(mx, n-j);
-                    indexj=j;
-                    break;
-                }
-
-                if(j > indexj){
-                    break;
-                }
-            }
-        }
-
+                if(arr[i][j] == 1){ mx = Math.max(mx, n-j);     indexj=j;   break; }
+                if(j > indexj){     break; }
+        }}
         return mx;
     }
 
@@ -176,9 +167,9 @@ public class BinarySearch {
     // stalls[]= {0,3,4,7,10,9}, k=4    => 3
 
     // Max-min distance between 2 cows can be (4-3, 10-0) =(1, 10). Sort the stalls, and implement binary search, to find max distance possible to fit k cows.
-    static int aggCows(List<Integer> stalls, int k){
-        Collections.sort(stalls);
-        int l = 1, r= Collections.max(stalls) - Collections.min(stalls), res=-1;
+    static int aggCows(int stalls[], int k){
+        Arrays.sort(stalls);
+        int l = 1, r= (Arrays.stream(stalls).max().getAsInt() - Arrays.stream(stalls).min().getAsInt()), res=-1;
         while(l<=r){
             int m= (l+r)/2;     // check if possible to place k cows at this distance
             if(isPossible(stalls, k, m)){   res= m;     l= m+1; }
@@ -187,10 +178,10 @@ public class BinarySearch {
         return res;
     }
 
-    static boolean isPossible(List<Integer> stalls, int k, int dist){
+    static boolean isPossible(int stalls[], int k, int dist){
         int distSum=0, ctCows=1;    // 1 as keeping 1st cow at a[0]
-        for(int i= 1; i<stalls.size(); i++){
-            distSum+= stalls.get(i)-stalls.get(i-1);
+        for(int i= 1; i<stalls.length; i++){
+            distSum+= stalls[i]-stalls[i-1];
             if(distSum>=dist){  ctCows++;   distSum= 0; }
         }
         if(ctCows>=k){  return true; }
@@ -217,13 +208,6 @@ public class BinarySearch {
 
 
     public static void main(String args[]){
-        List<Integer> list = (Arrays.asList(0,3,4,7,9,10));
-        Integer ans = aggCows(list, 4);
 
-        System.out.println(ans);
-
-        List<List<Integer>> list2 = Arrays.asList(Arrays.asList(0,0,1,1), Arrays.asList(0,0,0,0), Arrays.asList(0,0,0,1));
-        ans = sortedMatrix(list2);
-        System.out.println(ans);
     }
 }
