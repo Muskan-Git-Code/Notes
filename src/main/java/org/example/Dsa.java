@@ -14,9 +14,7 @@ public class Dsa {
         // Reading input from the console
         // Input can be read from Scanner (has built-in parsing for primitive types and strings), BufferedReader (can read only strings, but is faster for larger inputs as it has larger buffer)
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int a = Integer.parseInt(br.readLine());
-        String s = br.readLine();
-        int b = Integer.parseInt(br.readLine());
+        int a = Integer.parseInt(br.readLine());    int b = Integer.parseInt(br.readLine());    Float f= Float.parseFloat(br.readLine());   String s = br.readLine();
         System.out.println(a + " " + s + " " + b);
 
 
@@ -107,7 +105,7 @@ public class Dsa {
         //ArrayList (Dynamic array, default capacity is 10  (internally reallocates memory for more values)) and LinkedList (Default capacity is 0) => O(n)
         // Array (search is faster) and LinkedList (insert is faster as no shifting required).
         List<Integer> list = new ArrayList<>(); List<Integer> list2 = new LinkedList<>();   // works as both doubly/ single linkedlist
-        list.add(20); list.get(2); list.remove(2); list.set(2, 10); list.contains(30); list.size(); list.isEmpty(); list.clear(); list.addAll(list2);
+        list.add(20); list.addFirst(30);    list.addLast(10); list.get(2); list.remove(2);  list.removeLast(); list.set(2, 10); list.contains(30); list.size(); list.isEmpty(); list.clear(); list.addAll(list2);
         for(Integer val : list) { System.out.println(val); } // For-each loop
 
         list = Arrays.stream(arr).boxed().collect(Collectors.toList()); // Convert Array to List
@@ -141,13 +139,13 @@ public class Dsa {
 
         // Stack O(1): LIFO (Last In First Out)
         Stack<String> stack = new Stack<>();
-        stack.push("Apple"); stack.pop(); stack.peek(); stack.isEmpty();
+        stack.add("Apple"); stack.pop(); stack.peek(); stack.isEmpty();
 
         // Queue O(1): FIFO (First In First Out)
         // PriorityQueue O(log n) (min heap i.e. min value at top by default)
-        Queue<String> queue = new LinkedList<>();   PriorityQueue<Integer> pq = new PriorityQueue<>();
-        PriorityQueue<Integer> pq2 = new PriorityQueue<>( (p1,p2) -> { return Integer.compare(p2,p1); } );  // Integer.compare(p2,p1) = p2-p1.
-        queue.add("Apple"); queue.poll(); queue.peek(); queue.isEmpty();
+        Queue<String> queue = new ArrayDeque<>();   PriorityQueue<Integer> pq = new PriorityQueue<>();  //minHeap
+        PriorityQueue<Integer> pq2 = new PriorityQueue<>( (p1,p2) -> { return Integer.compare(p2,p1); } );  // Integer.compare(p2,p1) = p2-p1.  //maxHeap
+        queue.add("Apple"); queue.remove(); queue.peek(); queue.isEmpty();
 
         // Deque O(1): Double Ended Queue (can add/remove from both ends)
         Deque<String> deque = new ArrayDeque<>();
@@ -160,6 +158,8 @@ public class Dsa {
 
         // Always remember, that even if you are not able to think about sol, think about brute force, atleast give that as an ans.
 
+
+        // 1e9 is returned instead of Integer.MAX_VALUE, if need to add something further but still needs a bigger value for int calculations.
 
         /*
         Patterns:
