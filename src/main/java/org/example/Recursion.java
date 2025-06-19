@@ -24,9 +24,7 @@ public class Recursion {
 
     /* Print number from 1 to n, using recursion. */
     static void numRec(int i, int n) { // numRec(1, n)
-        if (i > n) {
-            return;
-        }
+        if(i>n){    return; }
         System.out.print(i + " ");
         numRec(i + 1, n);
     }
@@ -36,30 +34,23 @@ public class Recursion {
 
     // Approach 1: Parameterized recursion: Sending values as parameter
     void sumN(int i, int n, int sum) {    // sumN(1, n, 0)
-        if (i > n) {
-            System.out.println(sum);
-            return;
-        }
+        if(i>n){    System.out.println(sum);    return; }
         sumN(i + 1, n, sum + i);
     }
 
     // Approach 2: Functional Recursion: Waiting for function to return back from if condition and then return responses.
-    int sumN2(int i, int n) {    // sumN2(1, n);
-        if (i > n) {
-            return 0;
-        }
-        return i + sumN2(i + 1, n);
+    int sumN2(int i, int n){    // sumN2(1, n);
+        if(i>n){    return 0; }
+        return i+ sumN2(i+1, n);
     }
 
 
     /* Find factorial of n. */
     // n=4  => 24 (i.e. 4*3*2*1)
 
-    int fact(int i) {     // fact(n)
-        if (i == 1) {
-            return 1;
-        }
-        return i * fact(i - 1);
+    int fact(int i){     // fact(n)
+        if(i==1){   return 1; }
+        return i * fact(i-1);
     }
 
 
@@ -67,31 +58,21 @@ public class Recursion {
     // n=7  => 13 (i.e. 0,1,1,2,3,5,8,13)
 
     int fib(int i) { // fib(n);  // TC: O(pow(2,n))
-        if (i <= 1) {
-            return i;
-        }
-        return fib(i - 1) + fib(i - 2);
+        if(i<=1) {  return i; }
+        return fib(i-1)+ fib(i-2);
     }
 
     // DP Top-Down Approach (Recursive)
     int fibTD(int i, int[] dp) { // fib(n, dp);  // TC: O(pow(2,n))
-        if (i <= 1) {
-            return i;
-        }
-        if (dp[i] != -1) {
-            return dp[i];
-        }
-        return dp[i] = fibTD(i - 1, dp) + fibTD(i - 2, dp);
+        if(i<=1){   return i; }
+        if(dp[i]!=-1) {  return dp[i]; }
+        return dp[i]= fibTD(i-1, dp)+ fibTD(i-2, dp);
     }
 
     // DP Bottom-Up Approach (Tabulation)
-    int fibBU(int n) {
-        int dp[] = new int[n + 1];
-        dp[0] = 0;
-        dp[1] = 1;
-        for (int i = 2; i <= n; i++) {
-            dp[i] = dp[i - 1] + dp[i - 2];
-        }
+    int fibBU(int n){
+        int dp[]= new int[n+1];   dp[0]=0;    dp[1]=1;
+        for(int i=2; i<=n; i++){    dp[i]= dp[i-1]+ dp[i-2]; }
         return dp[n];
     }
 
@@ -101,17 +82,11 @@ public class Recursion {
 
     // each time have choice either 1, 2, 3 steps
     int stairs(int n) {  // O(n)
-        if (n == 1 || n == 0) {
-            return 1;
-        }
-        if (n == 2) {
-            return 2;
-        }
+        if(n==1 || n==0){   return 1; }
+        if(n==2){   return 2; }
 
-        int step1 = stairs(n - 1);
-        int step2 = stairs(n - 2);
-        int step3 = stairs(n - 3);
-        return step1 + step2 + step3;
+        int step1= stairs(n-1);     int step2= stairs(n-2);     int step3= stairs(n-3);
+        return step1+ step2+ step3;
     }
 
 
@@ -120,15 +95,10 @@ public class Recursion {
 
     // initially it can start from 0th or 1st val as allowed to take 1 or 2 steps. Then each time have choice either 1 or 2 steps.
     int reachTop(int i, int a[]) {   // min(fn(0,a), fn(1,a));
-        if (i == a.length) {
-            return 0;
-        }
+        if(i==a.length){    return 0; }
 
-        int l = reachTop(i + 1, a);
-        int r = Integer.MAX_VALUE;
-        if (i > 1) {
-            r = reachTop(i + 2, a);
-        }
+        int l= a[i]+ reachTop(i+1, a);
+        int r= Integer.MAX_VALUE;       if(i< a.length-1){ r= a[i]+ reachTop(i+2, a); }
         return Math.min(l, r);
     }
 
@@ -136,16 +106,11 @@ public class Recursion {
     /* Find min cost to reach end of array, such that cost is abs diff between them, and can take either 1 or 2 steps */
     // a[]= {4,8,3,10,4,4}  => 2 {i.e. 4->3->4->4}
 
-    int costReach(int i, int a[]) {  // TC: O(n), SC: O(n)
-        if (i == 0) {
-            return 0;
-        }
+    int costReach(int i, int a[]) {     //costReach(n-1,a);  // TC: O(n), SC: O(n)
+        if(i==0){   return 0; }
 
-        int l = costReach(i - 1, a) + Math.abs(a[i] - a[i - 1]);
-        int r = Integer.MAX_VALUE;
-        if (i > 1) {
-            r = costReach(i - 2, a) + Math.abs(a[i] - a[i - 2]);
-        }
+        int l= costReach(i-1, a)+ Math.abs(a[i]-a[i-1]);
+        int r= Integer.MAX_VALUE;       if(i>1){    r= costReach(i-2, a) + Math.abs(a[i]-a[i-2]); }
         return Math.min(l, r);
     }
 
@@ -154,15 +119,13 @@ public class Recursion {
     // a[]= {4,8,3,10,4,4}, k=2     => 2 (i.e. 4->3->4->4)
 
     int reachEnd(int i, int a[], int k) {    // fn(n-1, a, k);   // TC: O(n), SC: O(n)
-        if (i == 0) {
-            return 0;
-        }
-        int mn = Integer.MAX_VALUE, jump = Integer.MAX_VALUE;
-        for (int j = 1; j <= k; j++) {
-            if (i - j > 0) {
-                jump = reachEnd(i - j, a, k) + Math.abs(a[i] - a[i - j]);
+        if(i==0){   return 0; }
+        int mn = Integer.MAX_VALUE;
+        for(int j=1; j<=k; j++){
+            if(i-j >=0){
+                int jump= reachEnd(i-j, a, k) + Math.abs(a[i] - a[i-j]);
+                mn= Math.min(mn, jump);
             }
-            mn = Math.min(mn, jump);
         }
         return mn;
     }
@@ -171,13 +134,10 @@ public class Recursion {
     /* Return min jumps to reach end of array, given from ith index can take max a[i] steps. */
     // a[]= {2,3,1,1,4}     => 2 (i.e. 0, 1)
     int minJumps(int i, int a[]) {   // minJumps(0, a);
-        if (i >= a.length - 1) {
-            return 0;
-        }
-        int mn = Integer.MIN_VALUE;
-        for (int j = 1; j <= a[i]; j++) {
-            int take = 1 + minJumps(i + j, a);
-            mn = Math.min(mn, take);
+        if (i >= a.length-1) {      return 0; }
+        int mn = Integer.MAX_VALUE;
+        for (int j=1; j<=a[i]; j++) {
+            int take= 1+ minJumps(i+j, a);      mn = Math.min(mn, take);
         }
         return mn;
     }
@@ -188,12 +148,9 @@ public class Recursion {
 
     // if taking a[i] then next which can be taken is i+2. If not taken then next val can be used.
     int adj(int i, int a[]) {    // adj(n-1, a); // TC: O(n)
-        if (i < 0) {
-            return 0;
-        }
+        if(i<0){    return 0; }
 
-        int l = a[i] + adj(i - 2, a);
-        int r = 0 + adj(i - 1, a);
+        int l= a[i]+ adj(i-2, a);   int r= 0+ adj(i-1, a);
         return Math.max(l, r);
     }
 
@@ -210,17 +167,11 @@ public class Recursion {
 
     // if length of string = n then valid ans.
     int possStr(int i, int n, int ctB, int ctC) {    // possStr(0,n,0,0);    // TC: O(n)
-        if (i == n) {
-            return 1;
-        }
-        int takeA = 0, takeB = 0, takeC = 0;
-        takeA = possStr(i + 1, n, ctB, ctC);
-        if (ctB < 1) {
-            takeB = possStr(i + 1, n, ctB + 1, ctC);
-        }
-        if (ctC < 2) {
-            takeC = possStr(i + 1, n, ctB, ctC + 1);
-        }
+        if(i==n){   return 1; }
+        int takeA=0, takeB=0, takeC=0;
+        takeA= possStr(i+1, n, ctB, ctC);
+        if (ctB<1) {      takeB = possStr(i+1, n, ctB+1, ctC); }
+        if (ctC<2) {    takeC = possStr(i+1, n, ctB, ctC+1); }
         return takeA + takeB + takeC;
     }
 
@@ -230,15 +181,10 @@ public class Recursion {
 
     // for single it can be just 1 way, but for pair, a person can pair with (n-1) other persons. So, n-1 ways.
     int friends(int i) {
-        if (i <= 2) {
-            return i;
-        }
+        if (i <= 2) {   return i; }
         int single = 1 * friends(i - 1);
-        int paired = 0;
-        if (i >= 2) {
-            paired = (i - 1) * friends(i - 2);
-        }
-        return single + paired;
+        int paired=0;   if(i>=2) {   paired= (i-1) * friends(i-2); }
+        return single+ paired;
     }
 
 
@@ -249,17 +195,11 @@ public class Recursion {
 
     // int total= Arrays.stream(a).sum();   if(x>=sum-x){   return true; }else{ return false; }
     int players(int i, int j, int p1, int a[]) { // x= players(0, n-1, 1, a); i.e. players(taking 1st val, or taking last val, assuming 1st chance of p1, a)
-        if (i > j) {
-            return 0;
-        }
+        if(i>j){    return 0; }
 
-        int take1 = 0, take2 = 0;
-        if (p1 != 0) {
-            take1 = Math.max(a[i] + players(i + 1, j, 0, a), a[j] + players(i, j - 1, 0, a));
-        } // if chance is of p1
-        else {
-            take2 = Math.min(players(i + 1, j, 1, a), players(i, j - 1, 1, a));
-        }
+        int take1=0, take2=0;
+        if(p1!=0){      take1= Math.max(a[i] + players(i+1, j, 0, a), a[j] + players(i, j-1, 0, a)); } // if chance is of p1
+        else{       take2 = Math.min(players(i+1, j, 1, a), players(i, j-1, 1, a)); }
         return Math.max(take1, take2);
     }
 
@@ -269,18 +209,11 @@ public class Recursion {
 
     // each time if square is of length x, then remaining is (total-x). Cutting horizontally, and vertically.
     int minSq(int m, int n) {
-        if (m == n) {
-            return 1;
-        }
+        if (m == n) {   return 1; }
+
         int ans = Integer.MAX_VALUE;
-
-        for (int i = 1; i < m; i++) {     // horizontal cuts
-            ans = Math.min(ans, minSq(i, n) + minSq(m - i, n));
-        }
-
-        for (int j = 1; j < n; j++) {
-            ans = Math.min(ans, minSq(m, j) + minSq(m, n - j));
-        }
+        for(int i=1; i<m; i++){     ans= Math.min(ans, minSq(i, n) + minSq(m-i, n)); }   // horizontal cuts
+        for(int j=1; j<n; j++){     ans= Math.min(ans, minSq(m, j) + minSq(m, n-j)); }
         return ans;
     }
 
@@ -289,18 +222,11 @@ public class Recursion {
     // n=3  => 5 {((())), (()()), (())(), ()(()), ()()()}
 
     // Close bracket can be added only if extra open bracket is already in string, for balanced parenthesis.
-    void balancedPr(int open, int close, String ans) {
-        if (open == 0 && close == 0) {
-            System.out.println(ans);
-            return;
-        }
+    void balancedPr(int open, int close, String ans) {  // balancedPr(3,3,"");
+        if (open==0 && close==0){  System.out.println(ans);    return; }
 
-        if (open != 0) {
-            balancedPr(open - 1, close, ans + '(');
-        }
-        if (close > open) {
-            balancedPr(open, close - 1, ans + ')');
-        }
+        if(open != 0){    balancedPr(open-1, close, ans + '('); }
+        if(close > open){     balancedPr(open, close-1, ans + ')'); }
     }
 
 
@@ -308,15 +234,11 @@ public class Recursion {
     // n=4  => {1111, 1110, 1101, 1100, 1011, 1010}
 
     // 0 is added only if number of 1's are more.
-    void bitBinary(int n, int one, int zero, String ans) {
-        if (n == 0) {
-            System.out.println(ans);
-            return;
-        }
-        bitBinary(n - 1, one + 1, zero, ans + '1');
-        if (one > zero) {
-            bitBinary(n - 1, one, zero + 1, ans + '0');
-        }
+    void bitBinary(int n, int one, int zero, String ans) {      // bitBinary(4,0,0,"");
+        if(n==0){   System.out.println(ans);    return; }
+
+        bitBinary(n-1, one+1, zero, ans+'1');
+        if(one > zero){   bitBinary(n-1, one, zero+1, ans+'0'); }
     }
 
 
@@ -395,17 +317,12 @@ public class Recursion {
     // m=3, n=7     => 28
     // m=3, n=2     => 3 (i.e. RDD, DDR, DRD)
 
-    int reachEnd(int i, int j) {     // fn(m, n)
-        if (i == 0 && j == 0) {
-            return 1;
-        }
-        if (i < 0 || j < 0) {
-            return 0;
-        }
+    int reachEnd(int i, int j) {     // reachEnd(m-1, n-1)
+        if(i==0 && j==0){   return 1; }
+        if(i<0 || j<0){     return 0; }
 
-        int up = reachEnd(i - 1, j);
-        int left = reachEnd(i, j - 1);
-        return up + left;
+        int up= reachEnd(i-1, j);       int left= reachEnd(i, j-1);
+        return up+ left;
     }
 
 
@@ -413,34 +330,20 @@ public class Recursion {
     // grid[][]= {{1,1,1},{1,0,1},{1,1,1}}  => 2
 
     int sparse(int i, int j, int a[][], int m, int n) {    // fn(0, 0, a, rowSize, colSize);
-        if (i == m && j == n) {
-            return 1;
-        }
-        if (i < 0 || j < 0 || i >= m || j >= n) {
-            return 0;
-        }
-        if (a[i][j] == 0) {
-            return 0;
-        }     // obstracle condition
+        if(i==m-1 && j==n-1){   return 1; }
+        if(i<0 || j<0 || i>=m || j>=n){     return 0; }
+        if(a[i][j]==0){     return 0; }     // obstracle condition
 
-        int down = sparse(i + 1, j, a, m, n);
-        int right = sparse(i, j + 1, a, m, n);
-        return right + down;
+        int down= sparse(i + 1, j, a, m, n);   int right= sparse(i, j + 1, a, m, n);
+        return right+ down;
     }
 
 
     /* Print paths also in above. */
     int sparsePath(int i, int j, String move, List<String> ans, int a[][], int m, int n) {   // sparsePath(0,0,"", {}, a, m, n);
-        if (i == m && j == n) {
-            ans.add(move);
-            return 1;
-        }
-        if (i < 0 || j < 0 || i >= m || j >= n) {
-            return 0;
-        }
-        if (a[i][j] == 0) {
-            return 0;
-        }     // obstracle condition
+        if(i==m-1 && j==n-1){   ans.add(move);  return 1; }
+        if(i<0 || j<0 || i>=m || j>=n){    return 0; }
+        if(a[i][j]==0){     return 0; }     // obstracle condition
 
         int down = sparsePath(i + 1, j, move + 'D', ans, a, m, n);
         int right = sparsePath(i, j + 1, move + 'R', ans, a, m, n);
@@ -452,11 +355,10 @@ public class Recursion {
     // a[][]= {{10,2,3},{3,7,2},{8,1,5}}    => 25
 
     // from 1st to last row, means multiple start and end pts. So exploring all columns of first row as start.
-    // for(int j=0; j<a[0].size(); j++){    mx= Math.mx(mx, maxPathSum(0,j,a)); }
+    // for(int j=0; j<a[0].length; j++){    mx= Math.max(mx, maxPathSum(0,j,a)); }
     int maxPathSum(int i, int j, int a[][]) {
-        if (i < 0 || j < 0 || i > a.length || j > a[0].length) {
-            return Integer.MIN_VALUE;
-        } // not taking this condition ever
+        if(i<0 || j<0 || i>=a.length || j>=a[0].length) {   return Integer.MIN_VALUE; } // not taking this condition ever
+        if(i==a.length-1){  return a[i][j]; }
 
         int down = a[i][j] + maxPathSum(i + 1, j, a);
         int diagLt = a[i][j] + maxPathSum(i + 1, j - 1, a);
@@ -465,26 +367,25 @@ public class Recursion {
     }
 
 
-    /* Find max profit alice and bob can gain from (0,0) to last row in grid. Given they can move down, diagLeft, diagRight, and only one person can pick profit from one cell. */
+    /* Find max profit alice (0,0) and bob (0,n-1) can gain to last row in grid. Given they can move down, diagLeft, diagRight, and only one person can pick profit from one cell. */
     // a[][]= {{2,3,1,2},{3,4,2,2},{5,6,3,5}}   => 21 {(2+4+6), (2=2+5)}
 
     // 2 persons, can go in 2 diff directions.
     // 3d DP used here, i.e. dp[m][n][n], each with value -1 initially.
-    int aliceBob(int i, int j1, int j2, int a[][], int m, int n) {
-        if (i < 0 || j1 < 0 || j2 < 0 || i >= m || j1 >= n || j2 >= n) {
-            return 0;
+    int aliceBob(int i, int j1, int j2, int a[][], int m, int n) {  // aliceBob(0,0,n-1,grid,m,n);
+        if(j1<0 || j2<0 || j1>=n || j2>=n){     return 0; }
+        if(i==m-1){
+            if(j1==j2){     return a[i][j1]; }   // if same cell, count once
+            else{   return a[i][j1]+ a[i][j2]; }
         }
 
-        int mx = Integer.MIN_VALUE;
-        for (int dj1 = -1; dj1 <= 1; dj1++) {
-            for (int dj2 = -1; dj2 <= 1; dj2++) {
+        int mx= Integer.MIN_VALUE;
+        for(int dj1=-1; dj1<=1; dj1++){
+            for(int dj2=-1; dj2<=1; dj2++){
                 int val = 0;
-                if (j1 == j2) {
-                    val = a[i][j1] + aliceBob(i + 1, j1 + dj1, j2 + dj2, a, m, n);
-                } else {
-                    val = a[i][j1] + a[i][j2] + aliceBob(i + 1, j1 + dj1, j2 + dj2, a, m, n);
-                }
-                mx = Math.max(mx, val);
+                if(j1==j2){     val= a[i][j1] + aliceBob(i+1, j1+dj1, j2+dj2, a, m, n); }
+                else{       val= a[i][j1] + a[i][j2] + aliceBob(i+1, j1+dj1, j2+dj2, a, m, n); }
+                mx= Math.max(mx, val);
             }
         }
         return mx;
@@ -495,15 +396,11 @@ public class Recursion {
     // a[][]= {{10,50,1},{5,100,11}}    => 110 {10+100}
 
     // same task can't be performed next day
-    int collectMax(int i, int last, int a[][]) { // fn(n-1, -1, a);
-        if (i < 0) {
-            return 0;
-        }
+    int collectMax(int i, int last, int a[][]) { // collectMax(m-1, -1, a);
+        if(i<0){    return 0; }
         int mx = 0;
-        for (int task = 0; task < 3; task++) {
-            if (task != last) {
-                mx = Math.max(mx, a[i][task] + collectMax(i - 1, task, a));
-            }
+        for(int task=0; task<3; task++){
+            if(task != last){   mx= Math.max(mx, a[i][task]+ collectMax(i-1, task, a)); }
         }
         return mx;
     }
@@ -1169,7 +1066,21 @@ public class Recursion {
 
     public static void main(String args[]){
         Recursion r= new Recursion();
-        r.numRec(0,5);  r.sumN(0,5,0);
+
+        int a[]= {7,1,5,3,6,4}, k=2;  //int n= a.length;
+        int grid[][]= {{10,50,1},{5,100,11}};    int m=grid.length, n= grid[0].length;
+        List<String> ans= new ArrayList<>();
+
+        int x= r.collectMax(m-1,-1,grid);
+
+//        int mx= -(int)1e9; //Integer.MIN_VALUE;
+
+//        for(int j=0; j<grid[0].length; j++){    mx= Math.max(mx, r.maxPathSum(0,j,grid)); }
+
+        System.out.println(x);
+//        System.out.println(x);
+
+//        r.bitBinary(4,0,0,"");
     }
 
 }
