@@ -97,9 +97,13 @@ public class Dsa {
         int[][] arr3 = new int[3][3];   int[][] arr4 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}; // 2D array
         x = arr.length;
 
-        Arrays.sort(arr);  Arrays.sort(arr2, Collections.reverseOrder()); // Sort in ascending, descending order
         Arrays.fill(arr, 0);    Arrays.binarySearch(arr, 4);    Arrays.equals(arr, arr);   Arrays.toString(arr);
         x = Arrays.stream(arr).sum();   x = Arrays.stream(arr).max().getAsInt();   x = Arrays.stream(arr).min().getAsInt();
+
+        // For 1D array, sort can be only asc desc (or use list). For 2D array can use comparator function.
+        Arrays.sort(arr);  Arrays.sort(arr2, Collections.reverseOrder()); // Sort in ascending, descending order
+        Arrays.sort(arr, 2, 5);     //sort array from (startIx, endIx-1)
+        Arrays.sort(arr4, (p1,p2) -> { return Integer.compare(p2[1], p1[1]); });
 
 
         //ArrayList (Dynamic array, default capacity is 10  (internally reallocates memory for more values)) and LinkedList (Default capacity is 0) => O(n)
@@ -107,19 +111,19 @@ public class Dsa {
         List<Integer> list = new ArrayList<>(); List<Integer> list2 = new LinkedList<>();   // works as both doubly/ single linkedlist
         list.add(20); list.addFirst(30);    list.addLast(10); list.get(2); list.remove(2);  list.removeLast(); list.set(2, 10); list.contains(30); list.size(); list.isEmpty(); list.clear(); list.addAll(list2);
         for(Integer val : list) { System.out.println(val); } // For-each loop
+        System.out.println(list);   // print all elements of array
 
         list = Arrays.stream(arr).boxed().collect(Collectors.toList()); // Convert Array to List
         arr = list.stream().mapToInt(r -> r).toArray(); // Convert List to Array
 
-        Collections.sort(list);     Collections.sort(list, Collections.reverseOrder()); // Sort in ascending/ descending order
         Collections.binarySearch(list, 4);  Collections.max(list);  Collections.min(list);  Collections.frequency(list, 5);
         Collections.rotate(list, -2);   Collections.rotate(list, 2);  // Left / Right rotate by 2
         List<Integer> slot= new ArrayList<>(Collections.nCopies(5, -1));  // return a new array of 5 integer, each with value -1.
 
-        // sort by comparator function returns int instead of boolean
-        List<List<Integer>> jobs= new ArrayList<>();
-        jobs.sort((p,q) -> { return q.get(2)-p.get(2); } ); // sort by 2nd value desc
+        Collections.sort(list);     Collections.sort(list, Collections.reverseOrder()); // Sort in ascending/ descending order
 
+        // sort by comparator function returns int instead of boolean
+        List<List<Integer>> jobs= new ArrayList<>();        jobs.sort((p,q) -> { return q.get(2)-p.get(2); } ); // sort by 2nd value desc
 
 
         // HashSet O(1)/ LinkedHashSet O(1)/ TreeSet O(1) (Stores unique elements, maintains no/ insert/ ascending order)
@@ -160,6 +164,8 @@ public class Dsa {
 
 
         // 1e9 is returned instead of Integer.MAX_VALUE, if need to add something further but still needs a bigger value for int calculations.
+
+        // in java for adding one value to another, like List<String> path= new ArrayList<>(); path.add('a'); List<List<String>> ans= new ArrayList<>(); ans.add(new ArrayList<>(path));    always add new ArrayList again, so that it makes new variable instead of changing current one.
 
         /*
         Patterns:

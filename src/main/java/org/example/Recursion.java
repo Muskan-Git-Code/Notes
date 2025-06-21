@@ -460,7 +460,7 @@ public class Recursion {
     // nums[]= {4,3,2,3,5,2,1}, k=4     => true i.e. {(5), (1,4), (2,3), (2,3)}
 
     // sumReq= TotalSum/k. Means if value not taken then allowed to take, and if valid result the move to find another subset.
-    boolean ksubsets(int i, int target, int reqSum, int nums[], int k, int vis[]){     // ksubsets(0, totalSum, totalSum, nums, k, vis);
+    boolean ksubsets(int i, int target, int reqSum, int nums[], int k, int vis[]){     // ksubsets(0, totalSum/k, totalSum/k, nums, k, vis);
         if(k==0){   return true; }
         if(i==nums.length){    if(target==0){   return ksubsets(0, reqSum, reqSum, nums, k-1, vis); }   return false; }
 
@@ -471,7 +471,7 @@ public class Recursion {
             vis[i]=0;
         }
         notTake= ksubsets(i+1, target, reqSum, nums, k, vis);
-        return take | notTake;
+        return take || notTake;
     }
 
 
@@ -501,11 +501,11 @@ public class Recursion {
 
         int zeroes=0, ones=0;   String curr= s[i];
         for(int j=0; j<curr.length(); j++){     // count number of zeroes and ones
-            if(curr.charAt(i)=='0'){    zeroes++; }
+            if(curr.charAt(j)=='0'){    zeroes++; }
             else{   ones++; }
         }
 
-        int take=0; if(zeroes<=m && ones<=n){   take= 1+ subsetmn(i+1, s, m-zeroes, n-ones); }
+        int take=0;     if(zeroes<=m && ones<=n){   take= 1+ subsetmn(i+1, s, m-zeroes, n-ones); }
         int notTake= subsetmn(i+1, s, m, n);
         return Math.max(take, notTake);
     }
@@ -546,9 +546,7 @@ public class Recursion {
 
 
 
-/*----------------------------------------------------------------------------------------------------------------------
-                                                     Longest Common Subsequence (LCS): Think in form of (i,j).
-----------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------                              Longest Common Subsequence (LCS): Think in form of (i,j)-------------------------------------------------------------------------------------------------------------------*/
 
     /* Find LCS in string x and y. */
     // x= abcdgh, y= abedfhr    => 4 (as "abdh")
@@ -591,7 +589,7 @@ public class Recursion {
 
 
     /* Find length of shortest common subsequence such that on merging we can get both strings from it. */
-    // a= "geek", b= "eke"  => geeke
+    // a= "geek", b= "eke"  => 5 as "geeke"
 
     // basically just count common only once.
     int scs(String x, String y){
@@ -664,14 +662,14 @@ public class Recursion {
     /* Find if string s1, s2 are equal, given s1 can have 2 wild characters i.e. '?' equals any 1 char, and '*' equals zero or more string of chars. */
     // s1= "ba*a?", s2= "baaabab"   => true
 
-    boolean wildChars(int i, int j, String s1, String s2){
+    boolean wildChars(int i, int j, String s1, String s2){      // wildChars(x.length(), y.length(), x, y);
         if(i==0){   return (j==0) ? true : false; }
         if(j==0){   for(int k=0; k<i; k++){ if(s1.charAt(k)!='*'){  return false; }}    return true; }  // s2 empty, s1 can be all *
 
         boolean take1= false, take2= false;
         if(s1.charAt(i-1)==s2.charAt(j-1) || s1.charAt(i-1)=='?'){  take1= wildChars(i-1, j-1, s1, s2); }
-        if(s1.charAt(i-1)=='?'){    take2= wildChars(i, j-1, s1, s2); }
-        return take1 | take2;
+        if(s1.charAt(i-1)=='*'){    take2= wildChars(i-1,j,s1,s2) || wildChars(i, j-1, s1, s2); }
+        return take1 || take2;
     }
 
 
@@ -679,7 +677,7 @@ public class Recursion {
     // a[]= {10,9,2,2,5,3,7,101,18}     => 4 (as {2,5,7,101})
 
     // only condition is next ele should be greater than prev in sequence
-    int lis(int i, int prev, int a[]){
+    int lis(int i, int prev, int a[]){  // lis(0, -1, a);
         if(i==a.length){    return 0; }
 
         int take=0;     if(prev==-1 || a[i]>a[prev]){   take= 1+ lis(i+1, i, a); }
@@ -696,7 +694,7 @@ public class Recursion {
     // a[]= {1,3,5,4,7}     => 2
 
     // Same as lis, though instead of returning directly check if length equal then ct, else take max length
-    class noOfLongestIncSeq{
+    static class noOfLongestIncSeq{
         class Pair{
             int len;    int ct;
             Pair(int len, int ct){  this.len= len;  this.ct= ct; }
@@ -742,25 +740,26 @@ public class Recursion {
     // a[]= {xbc, pcxbcf, xb, cxbc, pcxbc}  => 5 as (xb, xbc, cxbc, pcxbc, pcxbcf)
 
     // sort list, check if possible then take it.
-    class incLetterChain {
+    static class incLetterChain {
         int incChain(int i, int prev, String words[]) {     // sort; return(0, -1, words);
             if (i >= words.length) {    return 0; }
 
             int take = 0;
-            if (prev == -1 || letterDiff(words[i], words[prev])) {  take = 1 + incChain(i + 1, i, words); }
-            int notTake = incChain(i + 1, prev, words);
+            if(prev == -1 || letterDiff(words[prev], words[i])) {  take = 1 + incChain(i+1, i, words); }
+            int notTake= incChain(i+1, prev, words);
             return Math.max(take, notTake);
         }
 
         boolean letterDiff(String s1, String s2) {
-            if (s1.length() + 1 != s2.length()) {   return false; }
+            if (s1.length()+1 != s2.length()) {   return false; }
 
-            int i = 0, j = 0;
+            int i=0, j=0;
             while (j < s2.length()) {
-                if (s1.charAt(i) == s2.charAt(j)) { i++;    j++; }
-                else {  j++; }
+                if (i<s1.length() && s1.charAt(i) == s2.charAt(j)){    i++; }
+                j++;
             }
-            if (i == s1.length() && j == s2.length()) {     return true; }
+
+            if(i == s1.length()){     return true; }
             return false;
         }
     }
@@ -770,7 +769,7 @@ public class Recursion {
     // a[]= {1,2,1,2,1}     => 3
 
     // bitonic means first inc then dec. inc can be when prev is lesser, dec when prev is more. Also, inc sequence till we haven't taken any ele for dec (i.e. next=0).
-    int bitonic(int i, int prev, int next, int a[]){
+    int bitonic(int i, int prev, int next, int a[]){    // bitonic(0,-1,0,a);
         if(i==a.length){    return 0; }
 
         int take1=0, take2=0;
@@ -834,7 +833,7 @@ public class Recursion {
     // s= aab   => 1 (i.e. aa, b)
 
     // each time check if length (i, k) is palindrome then ct+1, and iterate remaining (k+1, j) string for checking.
-    int minPart(int i, String s, int dp[], int dpPal[][]){    // minPart(0, s, dp, dpPal);    //dpPal is for palindrome dp    // TC: O(n*n)
+    int minPart(int i, String s, int dp[], int dpPal[][]){    // minPart(0, s, dp, dpPal)-1; -1 as for last part partition not needed    //dpPal is for palindrome dp    // TC: O(n*n)
         if(i==s.length()){  return 0; }
         if(dp[i]!=-1){  return dp[i]; }
 
@@ -853,9 +852,9 @@ public class Recursion {
 
     //After checking if palindrome, then add it to ans, and iterate for next j elements.
     void possPal(int i, String s, List<String> path, List<List<String>> ans, int dpPal[][]){    // possPal(0, s, path, ans, dpPal);  // TC: O(n*n)
-        if(i==s.length()){  ans.add(path);  return; }
+        if(i==s.length()){  ans.add(new ArrayList<>(path));  return; }
 
-        for(int j=0; j<s.length(); j++){
+        for(int j=i; j<s.length(); j++){
             if(isPalindrome(i, j, s, dpPal)==1) {
                 path.add(s.substring(i, j+1));  // as substr takes value from startix till endix-1.
                 possPal(j+1, s, path, ans, dpPal);
@@ -891,7 +890,7 @@ public class Recursion {
     // add all words in a set. Check if substr present in set, then possible ans, else not.
     boolean possWordsStr(int i, String s, Set<String> wordSet, int dp[]){   // Set<String> wordSet= new HashSet<>(words);   return possWordsSet(0,s, wordSet, dp);
         if(i==s.length()){  return true; }
-        if(dp[i]!=1){  return dp[i]==1; }
+        if(dp[i]!=-1){  return dp[i]==1; }
 
         for(int j=i; j<s.length(); j++){
             if( wordSet.contains(s.substring(i, j+1)) ){
@@ -923,7 +922,7 @@ public class Recursion {
     // a[]={1,15,7,9,2,5,10}, k=3	=> 84 as (15,15,15,9,10,10,10)
 
     // each time take max value till what we have iterated, calc sum, and ans.
-    int partArr(int i, int a[], int k, int dp[]){
+    int partArr(int i, int a[], int k, int dp[]){   // partArr(0,a,k,dp);
         if(i==a.length){    return 0; }
         if(dp[i]!=-1){  return dp[i]; }
 
@@ -991,7 +990,7 @@ public class Recursion {
     // stones[]={3,5,1,2,6}, val=3    => 25 as {(5,1,2),(3,8,6)}
 
     // Precalculate cost by prefix sum. Possible to merge all only if ((n-1)%(k-1))==0. At a time can merge exactly val stones, so if taken (i,k) then can merge. Let's have t=1 when we want to merge.
-    class mergeStoneSum{
+    static class mergeStoneSum{
         int mergeStones(int[] stones, int val) {
             int n = stones.length;
             if((n-1)%(val-1) != 0) {    return -1; }
@@ -1029,7 +1028,7 @@ public class Recursion {
     // s= "T^F&T"   => 2 as {(T^F)&T, T^(F&T)}
 
     // Check for operators, which lie from (1, last-1) after every adjacent value. Now, from each partition check if we are getting T/F. And then apply operator on it. And initially sent isTrue as 1, as we need to calculate ways who yields result as true.
-    int countWays(int i, int j, boolean isTrue, String s) {     // countWays(0, n-1, 1, s);
+    int countWays(int i, int j, boolean isTrue, String s) {     // countWays(0, n-1, true, s);
         if(i>j){    return 0; }
 
         if(i==j){
@@ -1065,22 +1064,7 @@ public class Recursion {
 
 
     public static void main(String args[]){
-        Recursion r= new Recursion();
 
-        int a[]= {7,1,5,3,6,4}, k=2;  //int n= a.length;
-        int grid[][]= {{10,50,1},{5,100,11}};    int m=grid.length, n= grid[0].length;
-        List<String> ans= new ArrayList<>();
-
-        int x= r.collectMax(m-1,-1,grid);
-
-//        int mx= -(int)1e9; //Integer.MIN_VALUE;
-
-//        for(int j=0; j<grid[0].length; j++){    mx= Math.max(mx, r.maxPathSum(0,j,grid)); }
-
-        System.out.println(x);
-//        System.out.println(x);
-
-//        r.bitBinary(4,0,0,"");
     }
 
 }
