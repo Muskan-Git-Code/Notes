@@ -67,13 +67,13 @@ public class Dsa {
         // Decimal to Binary: 13 => 2^3+ 2^2+ 2^0 =1101
         // In binary form, if last digit is 0 means even number, if 1 means odd. Also, can use BigInteger for larger/ longer numbers.
 
-        Integer.parseInt(s, 2); // Convert binary to int i.e. 0101 => 5
-        Integer.toBinaryString(a); // Convert int to binary string i.e. 5 => 0101
+        int base=2;     Integer.parseInt(s, base); // Convert binary to int for given base value = binary representation to int for base 2  = (0101 => 5)
+        Long.toString(a, base); // get integer to base value i.e. 5 => 0101
         Integer.bitCount(a); // Count number of bits in a i.e. 5 => 2
 
         x = a&b;            // AND operator = Intersection (1&1=1)
         x = a|b;	        // OR operator = Union (0|0 = 0)
-        x = a^b;	        // XOR operator	{1*0 =0*1 =1,  1*1 =0*0 =0}
+        x = a^b;	        // XOR operator	{1^0 =0^1 =1,  1^1 =0^0 =0}
         x = ~a;             //Not operator = Toggles all bits (5 => 1010)
         x = a<<1;           // (00001010) Left shift operator = multiply by 2
         x = a>>1;	        // (00000010) Right shift operator = divide by 2 = removing last bit
@@ -89,6 +89,7 @@ public class Dsa {
         x = a & 1;		    // checks if odd number (returns 0 if even number)
         x = a & -a;		    // Returns a if number is power of 2
 
+        Integer.compare(a, b);      // a==b then 0, a>b then +ve, a<b then -ve
 
 
         // Arrays
@@ -103,7 +104,7 @@ public class Dsa {
         // For 1D array, sort can be only asc desc (or use list). For 2D array can use comparator function.
         Arrays.sort(arr);  Arrays.sort(arr2, Collections.reverseOrder()); // Sort in ascending, descending order
         Arrays.sort(arr, 2, 5);     //sort array from (startIx, endIx-1)
-        Arrays.sort(arr4, (p1,p2) -> { return Integer.compare(p2[1], p1[1]); });
+        Arrays.sort(arr3, (p1,p2) -> { return Integer.compare(p2[1], p1[1]); });    // this comparision sorting works only in 2D array for int datatype. Sorting in desc order.
 
 
         //ArrayList (Dynamic array, default capacity is 10  (internally reallocates memory for more values)) and LinkedList (Default capacity is 0) => O(n)
@@ -129,11 +130,13 @@ public class Dsa {
         // HashSet O(1)/ LinkedHashSet O(1)/ TreeSet O(1) (Stores unique elements, maintains no/ insert/ ascending order)
         HashSet<String> hashSet = new HashSet<>();
         hashSet.add("Apple"); hashSet.remove("Apple"); hashSet.contains("Apple"); hashSet.isEmpty(); hashSet.size();
+        for(String key: hashSet){ System.out.println(key); }
 
         // HashMap O(1)/ LinkedHashMap O(1)/ TreeMap O(logn) (Stores key-value pair, maintains no/ insert/ ascending order)
         // HashMap is implemented using HashTable, internally created by 2 data structures i.e. Array (search is faster) and LinkedList (insert is faster).
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("Apple", 10);   hashMap.get("Apple");   hashMap.getOrDefault("Apple", 0);   hashMap.remove("Apple");    hashMap.containsKey("Apple");   hashMap.containsValue(10);  hashMap.isEmpty();  hashMap.size();
+        hashMap.values(); // return List<Integer> values
         for (String key : hashMap.keySet()) { System.out.println("Key: " + key + ", Value: " + hashMap.get(key)); }  // For each loop
 
         TreeMap<String, Integer> map1= new TreeMap<>();
@@ -156,6 +159,8 @@ public class Dsa {
         deque.addFirst("Apple"); deque.addLast("Banana"); deque.removeFirst(); deque.removeLast(); deque.getFirst(); deque.getLast(); deque.isEmpty();
 
 
+        // Total number of subarray for specific length is number of elements present i.e. length of subarray +1(for empty) = j-i+1
+        // Total number of subsequence = Math.pow(2, j-i)
 
 
         // In java, passing value in a function is by value, not by reference. While passing an object or list, is pass by reference.

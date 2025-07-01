@@ -4,7 +4,7 @@ import java.util.*;
 
 public class BasicPrograms {
 
-    /* 1. Find sum of digits */
+    /* Find sum of digits */
     static int sumOfDigits(int n){    // n= 12345 => sum = 15
         int res = 0;
         while(n != 0){
@@ -15,7 +15,7 @@ public class BasicPrograms {
     }
 
 
-    /* 2. Rotate matrix to 90 degree clockwise */
+    /* Rotate matrix to 90 degree clockwise */
     // 1 2 3             1 4 7       7 4 1
     // 4 5 6    =>       2 5 8   =>  8 5 2
     // 7 8 9             3 6 9       9 6 3
@@ -35,7 +35,7 @@ public class BasicPrograms {
     }
 
 
-    /* 3. Check if given string is constructed of appending same string multiple times */
+    /* Check if given string is constructed of appending same string multiple times */
     // s="abcabcabc"    => true
 
     // Append same string twice, remove 1st and last value and check if string still exist
@@ -47,7 +47,7 @@ public class BasicPrograms {
     }
 
 
-    /* 4. Find odd occuring number */
+    /* Find odd occuring number */
     //  arr[7] = {12, 12, 14, 90, 14, 14, 14};  => 90
     static int oddOcc(int[] arr){      // xor for checking
         int res = arr[0];
@@ -56,7 +56,7 @@ public class BasicPrograms {
     }
 
 
-    /* 5. Find intersection of 2 arrays. */
+    /* Find intersection of 2 arrays. */
     //Add arr1[] in map. Iterate arr2, check if already present in arr1 then that's an intersecting value, and dec count
 
     static int[] intersect(int[] arr1, int[] arr2) {
@@ -71,13 +71,13 @@ public class BasicPrograms {
     }
 
 
-    /* 6. Return true if it's possible to split the array in consecutive sequence of >= 3 elements. */
+    /* Return true if it's possible to split the array in consecutive sequence of >= 3 elements. */
     // nums[] = {1,2,3,3,4,4,5,5}    => true
 
     // Store all in ctMap. Iterate list, and check if (val, val+1, val+2) exist then add new ans (i.e. ansMap(lastval, ans)), else check if (val-1) exist in ansMap, then change lastval in ansMap. If possible then true, else false.
 
 
-    /* 7. Return maximum number of points which lies on same line in the X-Y plane */
+    /* Return maximum number of points which lies on same line in the X-Y plane */
     // points[x][y]= {{1,1},{3,2},{5,3},{4,1},{2,3},{1,4}}	=> 4
 
     // Same line, means slope ((y2-y1)/(x2-x1)) will be same. And check for each point, so that parallel lines won't be counted. denominator can't be zero.
@@ -91,9 +91,7 @@ public class BasicPrograms {
                 int x1 = points[i][0], x2 = points[j][0], y1 = points[i][1], y2 = points[j][1];
 
                 if(x2-x1 == 0){     slopeCt.put(Integer.MAX_VALUE, slopeCt.getOrDefault(Integer.MAX_VALUE, 0)+1); }
-                else {
-                    int m = (y2 - y1) / (x2 - x1);  slopeCt.put(m, slopeCt.getOrDefault(m, 0) + 1);
-                }
+                else {      int m = (y2 - y1) / (x2 - x1);  slopeCt.put(m, slopeCt.getOrDefault(m, 0) + 1); }
             }
             for(int key: slopeCt.keySet()){     mx = Math.max(mx, slopeCt.get(key)); }
         }
@@ -213,6 +211,30 @@ public class BasicPrograms {
         return res;
     }
 
+
+    /* Generate first n palindromic numbers. */
+    // n=30     => {1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 33, 44, 55, 66, 77, 88, 99, 101, 111, 121, 131, 141, 151, 161, 171, 181, 191, 202, 212}
+
+    // generate 1st half numbers and reverse them. Also, for 2nd half the length is len/2 which handles 1 less than left if odd number of total digits.
+    void firstNPal(int n) {     // firstNPal(30);
+        int ct=0, len=1;  // len= current length of palindrome
+
+        while(ct<n) {
+            int halfLen= (len+1)/2;   // half length to generate
+            int start= (int)Math.pow(10, halfLen-1);        int end= (int)Math.pow(10, halfLen);
+
+            for(int i=start; i<end && ct<n; i++){
+                String left= Integer.toString(i);       String right= new StringBuilder(left.substring(0, len/2)).reverse().toString();
+                String palin = left+ right;     System.out.print(palin + " ");
+                ct++;
+            }
+            len++;
+        }
+    }
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------                                   GREEDY METHOD                               ---------------------------------------------------------------------------------------------------------------------------------------*/
 
     /* Return minimum candies required to distribute n children, given child with higher ratings gets more candies than neighbours, and should gets atleast 1 candy. */
     // rating[]= {1,0,2}	=> 5 (2,1,2)

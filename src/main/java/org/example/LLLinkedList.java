@@ -280,31 +280,5 @@ public class LLLinkedList {
 
     public static void main(String args[]){
 
-        Node list= new Node(1), p=list;
-        for(int i=2; i<=5; i++){
-            p.next= new Node(i);
-            p= p.next;
-        }
-
-        Node res= rev(list);
-        p= res;
-        while(p!=null){
-            System.out.println(p.val);
-            p= p.next;
-        }
-
-
-        // LRU Cache
-//        LRUCache cache = new LRUCache(3);
-//
-//        cache.put(1, 100);  cache.put(2, 200);  cache.put(3, 300);
-//        cache.display(); // {1=100, 2=200, 3=300}
-//
-//        cache.get(1);
-//        cache.put(4, 400); // Evicts 2
-//        cache.display(); // {3=300, 1=100, 4=400}
-//
-//        cache.put(5, 500); // Evicts 3
-//        cache.display(); // {1=100, 4=400, 5=500}
     }
 }

@@ -9,7 +9,9 @@ import java.util.*;
     - Equi-directional: taking 2 pointers in same direction. It can be Sliding window Fixed size, Variable size (based on condition find max/ min, count in substring/ subarray).
 */
 
-public class twoPointer {
+public class TwoPointer {
+
+/*--------------------------------------------------------------------------------------------------                   OPPOSITE DIRECTION 2 POINTER APPROACH FOR FIXED SIZE SUBARRAY -------------------------------------------------------------------------------------------------*/
 
     /* Print 2 numbers in a[] which gives sum k */
 
@@ -52,6 +54,25 @@ public class twoPointer {
             map.put(a[i], i);
         }
     }
+
+
+    /* Find total number of non-empty subsequence having (min+ max) value less than equal to k. */
+
+    // sort the array. Now, min value for any window is a[l], and max is a[r]. Check if sum greater than k, then dec right for fit in window, else l++.
+    int mnmxSum(int a[], int k){
+        int l=0, r= a.length -1, res=0;
+
+        Arrays.sort(a);
+        while(l<=r){
+            if(a[l]+a[r] > k){  r--; }
+            else{   res+= Math.pow(2, r-l);     l++; }
+        }
+        return res;
+    }
+
+
+
+/*--------------------------------------------------------------------------------------------------                        EQUI DIRECTION 2 POINTER APPROACH FOR FIXED SIZE SUBARRAY --------------------------------------------------------------------------------------------------*/
 
 
     /* Find max sum in a subarray of size k. */
@@ -150,6 +171,9 @@ public class twoPointer {
     // Count number of 1's, that will be size of sliding window. Find max 1's in a sliding window. So, ans= (size of window) - (max 1's). For any circular array problem, append the array twice.
 
 
+
+/*--------------------------------------------------------------------------------------------------                        VARIABLE SIZE WINDOW --------------------------------------------------------------------------------------------------*/
+
     /* Kadane's Algorithm: Find max sum subarray. */
 
     // Iterate through array, add values in current sum, if sum goes -ve then make cs=0, else continue counting sum.
@@ -179,7 +203,7 @@ public class twoPointer {
 
 
 
-    /*  Sliding Window with (Condition <=k): For it follow pattern {operation, violated condition, calculate ans} */
+    /*--------------------------------------------------------------------------------------------------VARIABLE SIZE WINDOW with (Condition <=k): For it follow pattern {operation, violated condition, calculate ans} --------------------------------------------------------------------------------------------------*/
 
     /* Return max no of consecutive ones, if can flip utmost k zeroes.
        OR
@@ -356,7 +380,8 @@ public class twoPointer {
 
 
 
-    /* Sliding window (count==k) condition: This is for count only. return subarray(<=k) - subarray(<=k-1) */
+    /*--------------------------------------------------------------------------------------------------VARIABLE SIZE WINDOW with (count==k) condition: This is for count only. return subarray(<=k) - subarray(<=k-1)--------------------------------------------------------------------------------------------------*/
+
     /* Return number of subarrays having exactly k distinct elements. */
     // a[]= {1,2,1,2,3}, k=2    => 7 {(1,2), (2,1), (1,2), (2,3), (1,2,1), (2,1,2), (1,2,1,2)}
 
@@ -370,7 +395,7 @@ public class twoPointer {
 
 
 
-    /* Sliding Window with (condition > k): ans= all who contains min window {operation, (ct, shrink)} */
+    /*--------------------------------------------------------------------------------------------------VARIABLE SIZE WINDOW with (condition > k): ans= all who contains min window {operation, (ct,shrink)} --------------------------------------------------------------------------------------------------*/
 
     /* Return number of substrings containing atleast 3 characters i.e. a, b,c */
     // s= "abcabc"  => 10
