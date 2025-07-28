@@ -1,4 +1,4 @@
-package org.example;
+package DSAPrograms;
 
 import java.io.*;
 import java.math.*;
@@ -38,10 +38,15 @@ public class Dsa {
 
 
         // String Operations (immutable string i.e. can't change value at any specific index)
-        s = "Hello, World!";
+        s = "Hello, World!";    String s2= "Hello, World!";
         s.length(); s.charAt(0); s.indexOf('o'); s.contains("Hello");   s.toUpperCase(); s.toLowerCase(); s.trim(); s.replace("World", "Java"); s.split(",");  new StringBuilder(s).reverse().toString();
         s.substring(0, 5); //(begin, end index)
         s.compareTo("hi"); // Compare two strings lexicographically (returns 0 if equal, negative if less, positive if greater) //<0 if s < "hi"
+
+        // == compares references, .equals() method compares value
+        String aa= "hi", b1= new String("hi");
+        boolean res= (aa==b1);  // return false
+        res= aa.equals(b1);     // return true
 
 
         // StringBuilder Operations (mutable/ changable string) - Appends Faster than string
@@ -67,8 +72,8 @@ public class Dsa {
         // Decimal to Binary: 13 => 2^3+ 2^2+ 2^0 =1101
         // In binary form, if last digit is 0 means even number, if 1 means odd. Also, can use BigInteger for larger/ longer numbers.
 
-        int base=2;     Integer.parseInt(s, base); // Convert binary to int for given base value = binary representation to int for base 2  = (0101 => 5)
-        Long.toString(a, base); // get integer to base value i.e. 5 => 0101
+        int base=2;     Integer.parseInt(s, base); // Integer.parseInt(101, 2);     // Convert binary to int for given base value = binary representation to int for base 2  = (0101 => 5)
+        Long.toString(a, base); // Long.toString(5, 2);     // Long.toString(101, 2);   // get integer to base value i.e. 5 => 0101
         Integer.bitCount(a); // Count number of bits in a i.e. 5 => 2
 
         x = a&b;            // AND operator = Intersection (1&1=1)
@@ -102,29 +107,38 @@ public class Dsa {
         x = Arrays.stream(arr).sum();   x = Arrays.stream(arr).max().getAsInt();   x = Arrays.stream(arr).min().getAsInt();
 
         // For 1D array, sort can be only asc desc (or use list). For 2D array can use comparator function.
-        Arrays.sort(arr);  Arrays.sort(arr2, Collections.reverseOrder()); // Sort in ascending, descending order
+        Arrays.sort(arr);
         Arrays.sort(arr, 2, 5);     //sort array from (startIx, endIx-1)
         Arrays.sort(arr3, (p1,p2) -> { return Integer.compare(p2[1], p1[1]); });    // this comparision sorting works only in 2D array for int datatype. Sorting in desc order.
+        Arrays.sort(arr2, Collections.reverseOrder()); // Integer array sort in descending order
 
 
         //ArrayList (Dynamic array, default capacity is 10  (internally reallocates memory for more values)) and LinkedList (Default capacity is 0) => O(n)
         // Array (search is faster) and LinkedList (insert is faster as no shifting required).
         List<Integer> list = new ArrayList<>(); List<Integer> list2 = new LinkedList<>();   // works as both doubly/ single linkedlist
-        list.add(20); list.addFirst(30);    list.addLast(10); list.get(2); list.remove(2);  list.removeLast(); list.set(2, 10); list.contains(30); list.size(); list.isEmpty(); list.clear(); list.addAll(list2);
+        list.add(20); list.add(2, 30); list.get(2); list.remove(2); list.set(2, 10); list.contains(30); list.size(); list.isEmpty(); list.clear(); list.addAll(list2);
         for(Integer val : list) { System.out.println(val); } // For-each loop
         System.out.println(list);   // print all elements of array
 
         list = Arrays.stream(arr).boxed().collect(Collectors.toList()); // Convert Array to List
         arr = list.stream().mapToInt(r -> r).toArray(); // Convert List to Array
 
+        List<List<Integer>> list2d= new ArrayList<>();   list2d.add(list);  // modifies the original list, as it points to reference of list
+        list2d.add(new ArrayList<>(list));      // its a new copy of list.
+
+        List<List<List<Integer>>> adj= new ArrayList<>();   adj.get(0).add(Arrays.asList(1,6));     // 3D array initialization
+
+
         Collections.binarySearch(list, 4);  Collections.max(list);  Collections.min(list);  Collections.frequency(list, 5);
         Collections.rotate(list, -2);   Collections.rotate(list, 2);  // Left / Right rotate by 2
         List<Integer> slot= new ArrayList<>(Collections.nCopies(5, -1));  // return a new array of 5 integer, each with value -1.
 
-        Collections.sort(list);     Collections.sort(list, Collections.reverseOrder()); // Sort in ascending/ descending order
+        Collections.sort(list);     // asc order
 
         // sort by comparator function returns int instead of boolean
         List<List<Integer>> jobs= new ArrayList<>();        jobs.sort((p,q) -> { return q.get(2)-p.get(2); } ); // sort by 2nd value desc
+
+        Collections.reverse(list);      Collections.sort(list, (a1,a2)->{ return Integer.compare(a2, a1); });       // desc order
 
 
         // HashSet O(1)/ LinkedHashSet O(1)/ TreeSet O(1) (Stores unique elements, maintains no/ insert/ ascending order)
@@ -172,6 +186,9 @@ public class Dsa {
 
         // in java for adding one value to another, like List<String> path= new ArrayList<>(); path.add('a'); List<List<String>> ans= new ArrayList<>(); ans.add(new ArrayList<>(path));    always add new ArrayList again, so that it makes new variable instead of changing current one.
 
+
+        // Directions: Think in term of matrix. For (row, col) -> up, down, left, right is (row-1, col), (row+1, col), (row, col-1), (row, col+1). So directions will be: dx[]= {-1, 1, 0, 0}, dy[]= {0, 0, -1, 1}.
+
         /*
         Patterns:
         1. Binary Search: Sort, max/min value
@@ -179,5 +196,81 @@ public class Dsa {
         3. Stack-Queue: Check if through lifo/ fifo order possible to solve.
         */
 
+        // BackTracking: for number of ways, always use backtracking method, i.e. add value before recursion but remove after recursion, for different paths.
+
+
+
+        /*
+        ## Sorting Algorithms
+
+| Algorithm | Time Complexity | Space    | Stable |
+| --------- | --------------- | -------- | ------ |
+| Bubble    | O(n^2)          | O(1)     | Yes    |
+| Selection | O(n^2)          | O(1)     | No     |
+| Insertion | O(n^2)          | O(1)     | Yes    |
+| Merge     | O(n log n)      | O(n)     | Yes    |
+| Quick     | O(n log n)      | O(log n) | No     |
+
+> QuickSort is better for arrays, MergeSort for linked lists.
+
+
+
+Sorting Algorithms: the different sorting algorithms are bubble sort, selection sort, insertion sort, merge sort and quick sort.
+Bubble Sort O(n2)
+Selection Sort O(n2)
+Insertion Sort O(n2)
+Merge Sort O(nlogn)
+Quick Sort O(nlogn)
+(Sort by comparing 2 elements at a time)
+(Sort by taking smallest element)
+(Sort by taking
+one value at a
+time and insert
+at correct
+place)
+(Sort by
+merging the
+sorted
+half’s)
+(Sort elements around a particular element by choose last element as pivot. Then set left and right pointer. If value at left pointer is larger than pivot then swap it with right pointer. In this way we get two half’s. And then sort the half’s by again choosing pivot for both halfs).
+9 6 3 4
+6 9 3 4
+6 3 9 4
+6 3 4 9
+3 6 4 9
+3 4 6 9
+9 6 3 4
+3 6 9 4
+3 4 9 6
+3 4 6 9
+9 6 3 4
+9 6 3 4
+6 9 3 4
+3 6 9 4
+3 4 6 9
+9 6 3 4
+9 6   3 4
+9  6  3  4
+6 9  3 4
+3 4 6 9
+9 6 3 4
+3 6 9 4
+3 6 4 9
+3 4 6 9
+
+
+Quick Sort and merge sort are more efficient for sorting large arrays. Quick sort is preferred for arrays and merge sort for linked list. In merge sort, complete process has to be done whether array is sorted or not, therefore quick sort is better for array. Merge sort is preferred for linked list.
+In worst, quick sort takes O(n2) time. And in best case, bubble and insertion takes O(n) time complexity.
+
+Sorting Terminology: In-Place Sorting (when no extra space is required while sorting like in Bubble, Selection, Insertion, Quick Sort) and Stable sorting (Duplicate elements retains their order of occurrence, like in Bubble, Insertion, Merge Sort).
+
+Space Complexity: For sorting, it is O(1) for bubble, selection, insertion sort; O(n) for merge sort and O(logn) for quick sort.
+Time Complexity: It can be of 3 types and are simply known as Asymptotic notation (mathematical notation used to bound complexity of an algorithm) i.e. Worst Case/ Upper Bound (O) (Maximum number of operations to be calculated), Average Case(θ), Best Case/ Lower Bound (Ω).
+Time Complexity: O(1) < O(log n) < O(n) < O(n logn) < O(n2) < O(n3) < O(2n) < O(n!) < exponential
+Corner Cases: Empty cases, underflow/overflow, negative numbers, sequence with 1 or 2 elements, repeated elements.
+
+
+
+        */
     }
 }

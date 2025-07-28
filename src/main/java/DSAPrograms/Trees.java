@@ -1,4 +1,4 @@
-package org.example;
+package DSAPrograms;
 
 import java.util.*;
 
@@ -87,7 +87,7 @@ public class Trees {
         if(root.left==null && root.right==null){    ans.add(new ArrayList<>(path)); }
 
         rootToLeaf(root.left, path, ans);   rootToLeaf(root.right, path, ans);
-        path.removeLast();
+        path.remove(path.size()-1);
     }
 
 
@@ -373,7 +373,7 @@ public class Trees {
 
 
 
-    /*----------------------------------------------------------------------------------------------                                   BFS TRAVERSAL QUESTIONS         ------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------                                                    BFS TRAVERSAL QUESTIONS         ---------------------------------------------------------------------------------------------------------------------*/
 
     /* BFS Traversal */
 
@@ -386,7 +386,7 @@ public class Trees {
         while(!q.isEmpty()){
             List<Integer> level= new ArrayList<>(); int n= q.size();
             for(int i=0; i<n; i++){
-                Node p= q.poll();   level.add(p.val);
+                Node p= q.remove();   level.add(p.val);
                 if(p.left != null){ q.add(p.left); }        if(p.right != null){    q.add(p.right); }
             }
             ans.add(level);
@@ -423,7 +423,7 @@ public class Trees {
             while(!q.isEmpty()){
                 int n= q.size();
                 for(int i=0; i<n; i++){
-                    Pair p= q.poll();   int axis= p.axis;   int lvl= p.lvl;     Node curr= p.node;
+                    Pair p= q.remove();   int axis= p.axis;   int lvl= p.lvl;     Node curr= p.node;
 
                     TreeMap<Integer, List<Integer>> lvlMap= map.getOrDefault(axis, new TreeMap<>());    lvlMap.getOrDefault(lvl, new ArrayList<>()).add(curr.val);
                     map.put(axis, lvlMap);       // update with modified list
@@ -481,7 +481,7 @@ public class Trees {
                 int n= q.size();
 
                 for(int i=0; i<n; i++){
-                    Node curr= q.poll();
+                    Node curr= q.remove();
 
                     if(curr.left!=null && !vis.contains(curr.left)){    q.add(curr.left);   vis.add(curr.left); }
                     if(curr.right!=null && !vis.contains(curr.right)){    q.add(curr.right);   vis.add(curr.right); }
@@ -489,14 +489,14 @@ public class Trees {
                 }
             }
 
-            while(!q.isEmpty()){    res.add(q.poll().val); }
+            while(!q.isEmpty()){    res.add(q.remove().val); }
             return res;
         }
 
         void markParents(Node root, Map<Node, Node> parent){    // Traverse complete tree, and just add node with its child
             Queue<Node> q= new ArrayDeque<>();      q.add(root);
             while(!q.isEmpty()){
-                Node curr= q.poll();
+                Node curr= q.remove();
                 if(curr.left!=null){    parent.put(curr.left, curr);    q.add(curr.left); }
                 if(curr.right!=null){   parent.put(curr.right, curr);   q.add(curr.right); }
             }
@@ -510,7 +510,7 @@ public class Trees {
 
 
 
-    /*-----------------------------------------------------------------------------------------------    BST TRAVERSAL QUESTIONS: Sorted Binary Tree i.e. elements in left are smaller than root -------------------------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------------------------------------------                        BST TRAVERSAL QUESTIONS: Sorted Binary Tree i.e. elements in left are smaller than root -----------------------------------------------------------------------------------------------------------------*/
 
     /* Insert an element in BST. */
 
@@ -616,7 +616,7 @@ public class Trees {
     // Trie are formed like for words hell, hello, we append h->e->l->l->o which stores both.
     class TrieNode{
 
-        class Node{
+        class Node{     // Node root= new Node() in main function
             Node child[]= new Node[26];
             int wordCt=0, prefixCt=0;
         }

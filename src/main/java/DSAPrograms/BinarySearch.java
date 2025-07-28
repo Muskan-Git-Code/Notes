@@ -1,4 +1,4 @@
-package org.example;
+package DSAPrograms;
 
 import java.util.Arrays;
 import java.util.Collections;

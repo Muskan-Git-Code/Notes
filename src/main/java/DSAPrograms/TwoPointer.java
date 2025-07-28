@@ -1,4 +1,4 @@
-package org.example;
+package DSAPrograms;
 
 import java.util.*;
 
@@ -79,7 +79,7 @@ public class TwoPointer {
     // a[]= {1,4,2,10,2,3,1,0,20}, k=3  => 21 i.e. last window (1,0,20)
 
     // iterate array, make window, such that while moving forward remove last taken element from sum.
-    static int subarrSum(int a[], int k){
+    static int subarrSum(int a[], int k){   // O(n)
         int sum=0, i=0, j=0, mx=Integer.MIN_VALUE;
         for(; j<k; j++){    sum+= a[j]; }   // first window
         mx = Math.max(mx, sum);
@@ -100,7 +100,7 @@ public class TwoPointer {
     // a[]= {3,2,3,4,5,6,1}, k=3    => 12 (1,6,5)
 
     // Take exactly k elements, so lets take all k elements from start, then dec one by one and take end ones instead to find max.
-    static int maxpt(int a[], int k){
+    static int maxpt(int a[], int k){   // O(n)
         int mx=Integer.MIN_VALUE, sum=0, i=0, j=a.length-1;
         for(; i<k; i++){    sum+= a[i]; }   i--;   // first window
         mx= Math.max(mx, sum);
@@ -138,15 +138,15 @@ public class TwoPointer {
 
         static void addNum(int val) {
             minHeap.add(val);
-            maxHeap.add(minHeap.poll());
-            if (maxHeap.size() > minHeap.size()) {  minHeap.add(maxHeap.poll()); }
+            maxHeap.add(minHeap.remove());
+            if (maxHeap.size() > minHeap.size()) {  minHeap.add(maxHeap.remove()); }
         }
 
         static void removeNum(int val) {
             removedVals.put(val, removedVals.getOrDefault(val, 0) + 1);     cleanHeap(maxHeap);     cleanHeap(minHeap);
 
-            while (minHeap.size() > maxHeap.size()) {   maxHeap.add(minHeap.poll()); }
-            while (maxHeap.size() > minHeap.size()) {   minHeap.add(maxHeap.poll()); }
+            while (minHeap.size() > maxHeap.size()) {   maxHeap.add(minHeap.remove()); }
+            while (maxHeap.size() > minHeap.size()) {   minHeap.add(maxHeap.remove()); }
         }
 
         static void cleanHeap(PriorityQueue<Integer> heap) {
@@ -154,7 +154,7 @@ public class TwoPointer {
                 int top = heap.peek();
                 removedVals.put(top, removedVals.get(top) - 1);
                 if (removedVals.get(top) == 0) {    removedVals.remove(top); }
-                heap.poll();
+                heap.remove();
             }
         }
 
@@ -212,7 +212,7 @@ public class TwoPointer {
     // a[]= {1,1,1,0,0,0,1,1,1,1,0}, k=2    => 6
 
     // length = currentIx - (an index before till i need to ct) =j-(i-1)
-    static int consOnes(int a[], int k){
+    static int consOnes(int a[], int k){    // O(n)
         int i=0, j=0, mx=0, zeroesCt=0;
         for(;j<a.length;j++){
             if(a[j]==0) zeroesCt++;

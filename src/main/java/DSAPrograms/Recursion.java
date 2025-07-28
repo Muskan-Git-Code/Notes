@@ -1,4 +1,4 @@
-package org.example;
+package DSAPrograms;
 import java.util.*;
 
 /*
@@ -201,6 +201,28 @@ public class Recursion {
         if(p1!=0){      take1= Math.max(a[i] + players(i+1, j, 0, a), a[j] + players(i, j-1, 0, a)); } // if chance is of p1
         else{       take2 = Math.min(players(i+1, j, 1, a), players(i, j-1, 1, a)); }
         return Math.max(take1, take2);
+    }
+
+
+    /* Find min, max rounds required to make first and second player face each other, if there are total n players. */
+    // n=11, fp=2, sp=4     => {3,4}
+
+    // Consider players as bitmask value. During each round check if i/j is not alive then move ahead, else kill any one of player if they are not fp/sp. Increment rounds each time all players are completed.
+    int mn= Integer.MAX_VALUE, mx= Integer.MIN_VALUE;
+    public int[] earliestAndLatest(int n, int fp, int sp){
+        fp--;  sp--;     // making 0 indexed.
+        calc(0, n-1, (1<<n)-1, 1, n-1, fp, sp);     return new int[]{mn, mx};
+    }
+    void calc(int i, int j, int mask, int round, int n, int fp, int sp){    // O(2^n)   // even with dp but will be lil faster.
+        if(i>= j){  calc(0, n, mask, round+1, n, fp, sp);   return; }     // increment round and reset pointers
+        if( (i==fp && j==sp) || (i==sp && j==fp) ){  mn= Math.min(mn, round);    mx= Math.max(mx, round);   return; }   // Both players facing each other i.e. calc min, max.
+
+        if( (mask & (1<<i))==0 ){   calc(i+1, j, mask, round, n, fp, sp); }     // ith player already died in previous rounds
+        else if( (mask & (1<<j))==0 ){  calc(i, j-1, mask, round, n, fp, sp); }
+        else{
+            if(i!=fp && i!=sp){     calc(i+1, j-1, (mask & ~(1<<i)), round, n, fp, sp); }    // safe to kill i, i.e. turn off jth bit
+            if(j!=fp && j!=sp){     calc(i+1, j-1, (mask & ~(1<<j)), round, n, fp, sp); }
+        }
     }
 
 
@@ -731,7 +753,7 @@ public class Recursion {
     void divPrint(int i, int prev, int a[], List<Integer> currList, List<Integer> resList){     // divPrint(0, -1, a, [], []);  return resList;
         if(i==a.length){    if(currList.size() > resList.size()){   resList= currList; } return; }
 
-        if(prev==-1 || a[i]%a[prev]==0){    currList.add(a[i]);     divPrint(i+1, i, a, currList, resList);     currList.removeLast(); }
+        if(prev==-1 || a[i]%a[prev]==0){    currList.add(a[i]);     divPrint(i+1, i, a, currList, resList);     currList.remove(currList.size()-1); }
         divPrint(i+1, prev, a, currList, resList);
     }
 
@@ -777,6 +799,29 @@ public class Recursion {
         if(prev==-1 || a[prev]>a[i] ){  take2= 1+ bitonic(i+1, i, 1, a); }  // decreasing
         int notTake= 0+ bitonic(i+1, prev, next, a);
         return Math.max(take1, Math.max(take2, notTake));
+    }
+
+
+    /* Return length of longest valid subsequence. Given valid if satisfy (sub[0]+sub[1])%k == (sub[1]+sub[2])%k ==...== (sub[x-2]+sub[x-1])%k */
+    // nums[1,4,2,3,1,4], k=3    => 4
+
+    // If prev==-1 means any two pairs we can take. Else need to take only those value whose mod==prev
+    int validSub(int i, int prev, int nums[], int n, int k, int dp[][]){    // O(n*n*k)
+        if(i==n){ return 0; }
+        if(dp[i][prev+1]!=-1){  return dp[i][prev+1]; }
+
+        int take=0, notTake=0;
+        if(prev==-1){
+            for(int j=i+1; j<nums.length; j++){
+                take= Math.max(take, 2+ validSub(j, (nums[i]+nums[j])%k, nums, n, k, dp));  //+2 as 2 values including in sequence
+            }
+            notTake= validSub(i+1, prev, nums, n, k, dp);
+        }
+
+        for(int j=i+1; j<nums.length; j++){
+            if((nums[i]+nums[j])%k==prev){      take= Math.max(take, 1+ validSub(j, prev, nums, n, k, dp)); }
+        }
+        return dp[i][prev+1]= Math.max(take, notTake);
     }
 
 
@@ -912,7 +957,7 @@ public class Recursion {
             if( wordSet.contains(sub) ){
                 path.add(sub);
                 possAllStr(j+1, s, wordSet, path, ans);
-                path.removeLast();
+                path.remove(path.size()-1);
             }
         }
     }

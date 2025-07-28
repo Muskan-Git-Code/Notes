@@ -1,4 +1,4 @@
-package org.example;
+package DSAPrograms;
 
 import java.util.*;
 
@@ -347,13 +347,31 @@ public class BasicPrograms {
 
         PriorityQueue<Integer> pq= new PriorityQueue<>();
         for(int i=0; i<a.length; i++){
-            if(!pq.isEmpty() && pq.peek()<=a[i][0]){    pq.poll(); }
+            if(!pq.isEmpty() && pq.peek()<=a[i][0]){    pq.remove(); }
             pq.add(a[i][1]);
         }
         return pq.size();
     }
 
 
+    /* Find maximum number of events that can be attended, given you can attend only 1 event at a time, but its not compulsion to attend entire event */
+    // events[][]= {{1,1},{1,4},{2,2},{4,4},{3,4}}
+
+    // Sort by start day. At currDay, Process event who is finishing earlier. That is, store all events with same start date, process whoever is finishing earlier first on that day, and do day++.
+    int maxEvents(int[][] events) {
+        Arrays.sort(events, (p1, p2) -> { return Integer.compare(p1[0], p2[0]); });
+        PriorityQueue<Integer> pq= new PriorityQueue<>();   // end date in asc, min heap
+        int ct=0, i=0, n=events.length, currDay=events[0][0];
+
+        while(i<n || !pq.isEmpty()){
+            if(pq.isEmpty()){   currDay= events[i][0]; }
+            while(i<n && events[i][0] == currDay){  pq.add(events[i][1]);   i++; }  // store all the events who can be processed on currDay.
+
+            pq.remove();   ct++;    currDay++;
+            while(!pq.isEmpty() && pq.peek()<currDay){  pq.remove(); }
+        }
+        return ct;
+    }
 
     public static void main(String args[]){
 

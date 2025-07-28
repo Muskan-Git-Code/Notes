@@ -1,4 +1,4 @@
-package org.example;
+package DSAPrograms;
 
 import java.util.*;
 
@@ -82,6 +82,32 @@ public class StackQueue {
             if(vl[i]!=-1 && vr[i]!=-1){ ct+= Math.min(vl[i], vr[i]) - a[i]; }
         }
         return ct;
+    }
+
+
+    /* Given n meetings with startTime, EndTime. Find largest gap possible between meetings if allowed atmost 1 meeting to be rescheduled within EventTime. */
+    // eventTime=10, startTime[]= {0,3,7,9}, endTime[]= {1,4,8,10}
+
+    // find all gaps between meetings. Find maximum gap in left-1 and right+1. If there is larger value present in either left or right, then possible to reschedule currMeeting, else not.
+    public int maxFreeTime(int eventTime, int[] startTime, int[] endTime) {
+        int n= startTime.length;    int gaps[]= new int[n+1];
+
+        gaps[0]= startTime[0]-0;
+        for(int i=1; i<n; i++){     gaps[i]= startTime[i]- endTime[i-1]; }
+        gaps[n]= eventTime- endTime[n-1];
+
+        n= gaps.length;
+        int left[]= new int[n];    int right[]= new int[n];     Arrays.fill(left, 0);   Arrays.fill(right, 0);
+        for(int i=1; i<n; i++){     left[i]= Math.max(left[i-1], gaps[i-1]); }
+        for(int i=n-2; i>=0; i--){  right[i]= Math.max(right[i+1], gaps[i+1]); }
+
+        int mx=0;
+        for(int i=1; i<n; i++){
+            int dur= endTime[i-1]-startTime[i-1];
+            if(dur<=left[i-1] || dur<= right[i]){   mx= Math.max(mx, gaps[i-1]+ dur+ gaps[i]); }    // meeting rescheduled
+            mx= Math.max(mx, gaps[i-1]+gaps[i]);
+        }
+        return mx;
     }
 
 
@@ -232,7 +258,7 @@ public class StackQueue {
         PriorityQueue<Integer> pq= new PriorityQueue<>(Comparator.reverseOrder());
         for(int i=0; i<a.length; i++){
             pq.add(a[i]);
-            if(pq.size()>k){    pq.poll(); }
+            if(pq.size()>k){    pq.remove(); }
         }
         return pq.peek();
     }
@@ -272,10 +298,10 @@ public class StackQueue {
             }); // sorting in desc order
             for (int i = 0; i < a.length; i++) {
                 pq.add(new Pair(Math.abs(x - a[i]), a[i]));
-                if (pq.size() > k) {    pq.poll(); }
+                if (pq.size() > k) {    pq.remove(); }
             }
 
-            for (int i = 0; i < pq.size(); i++) {   ans[i] = pq.poll().b; }
+            for (int i = 0; i < pq.size(); i++) {   ans[i] = pq.remove().b; }
             return ans;
         }
     }
@@ -285,6 +311,29 @@ public class StackQueue {
     // a[]= {3,1,4,4,5,2,6,1}, k=2  => (4,1)
 
     // create map for finding freqency of each number, and then store into MaxHeap (freq, value)
+
+
+    /* Return difference between 1st and last part of array after removing n elements from array of size 3n. */
+    // nums[]= {7,9,5,8,1,3}    => 1 as {7,5,8,3}
+
+    // Minimize diff (minStart - maxEnd). For 1st half; Take min from [0,2n] i.e. add [0,n] then calc diff along with removing top n ele from [n,2n]. For 2nd half; Take max from [n,3n] i.e. add [2n,3n] then calc diff along with removing top n ele from [2n,n]. And return min diff as ans.
+    public long minimumDifference(int nums[]) {     // O(nlogn)
+        int n3= nums.length;    int n= n3/3;    long diff[]= new long[n+1];   long sum=0;
+        PriorityQueue<Integer> maxHeap= new PriorityQueue<>( (p1,p2)->{    return Integer.compare(p2,p1); } );   // Max heap
+        PriorityQueue<Integer> minHeap= new PriorityQueue<>();  // minHeap
+
+        // Build left min elements from maxHeap
+        for(int i=0; i<n; i++){     maxHeap.add(nums[i]);   sum+= nums[i]; }
+        for(int i=n; i<=n*2; i++){  diff[i-n]= sum;     maxHeap.add(nums[i]);   sum+= nums[i] - maxHeap.remove(); }   // diff[0], diff[1],..
+
+        // Build right max elements
+        sum=0;
+        for(int i=2*n; i<3*n; i++){  minHeap.add(nums[i]);      sum+= nums[i]; }
+        for(int i=n*2 -1; i>= n-1; i--){    diff[i-(n-1)] -= sum;      minHeap.add(nums[i]);   sum+= nums[i] - minHeap.remove(); }    // diff[n], diff[n-1],..
+
+        long mn= Long.MAX_VALUE;    for(int i=0; i<=n; i++){    mn= Math.min(mn, diff[i]); }
+        return mn;
+    }
 
 
     /* Return min cost to connect n ropes, such that cost of connecting 2 ropes is equal to sum of their lengths. */
@@ -297,7 +346,7 @@ public class StackQueue {
         for(int i=0; i<n; i++){ pq.add(a[i]); }
 
         while(pq.size()>=2){
-            int x1= pq.poll();  int x2= pq.poll();
+            int x1= pq.remove();  int x2= pq.remove();
             pq.add(x1+x2);  res= x1+x2;
         }
         return res;
@@ -321,7 +370,7 @@ public class StackQueue {
             for(int i=1; i<n; i++){ double gap= a[i]-a[i-1];    pq.add(new Pair(gap, gap, 1)); }
 
             for(; k>0; k--){
-                Pair val= pq.poll();
+                Pair val= pq.remove();
                 val.ct++;   val.dist= val.origDist/ val.ct;
                 pq.add(val);
             }
