@@ -116,7 +116,8 @@ public class Dsa {
         //ArrayList (Dynamic array, default capacity is 10  (internally reallocates memory for more values)) and LinkedList (Default capacity is 0) => O(n)
         // Array (search is faster) and LinkedList (insert is faster as no shifting required).
         List<Integer> list = new ArrayList<>(); List<Integer> list2 = new LinkedList<>();   // works as both doubly/ single linkedlist
-        list.add(20); list.add(2, 30); list.get(2); list.remove(2); list.set(2, 10); list.contains(30); list.size(); list.isEmpty(); list.clear(); list.addAll(list2);
+        list.add(20); list.add(2, 30);  list.addAll(list2); list.get(2); list.remove(2); list.set(2, 10); // set(ix, ele) replaces ele at that ix.
+        list.subList(2, 5); list.contains(30); list.size(); list.isEmpty(); list.clear();
         for(Integer val : list) { System.out.println(val); } // For-each loop
         System.out.println(list);   // print all elements of array
 

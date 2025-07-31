@@ -1,11 +1,9 @@
 package SpringBootExample;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.*;
 
 @RestController
@@ -69,14 +67,15 @@ public class ProductController {
     // calling expernal api
     @GetMapping("/call-external-api")
     public ResponseEntity<String> callExternalApi() {
-        String url = "https://jsonplaceholder.typicode.com/posts/1"; // Example API
-        HttpGet request = new HttpGet(url);
-        request.setHeader("Accept", "application/json");
 
-        try(CloseableHttpResponse response = HttpClients.createDefault().execute(request) ) {
-            String responseBody = EntityUtils.toString(response.getEntity());
-            return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
-        }
-        catch (Exception e){    return new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
+        String url = "https://jsonplaceholder.typicode.com/posts/1";
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();    headers.set("Accept", "application/json");
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);   // (header, body) if given
+
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);      // (url, httpMethod, request, class)
+
+        return new ResponseEntity<>(response.getBody(), headers, HttpStatus.CREATED);
     }
 }

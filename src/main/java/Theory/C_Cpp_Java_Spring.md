@@ -96,6 +96,10 @@ void fn() {
 @ResponseBody User user   // Object to JSON (Serialization)
 ```
 
+> **For adding logger:** Logs data (warn, info, debug, error). Example: Logger logger = LoggerFactory.getLogger(className.class);
+> 
+> **ObjectMapper:** Handles JSON **serialization** (java objects to json strings i.e. objectMapper.writeValueAsString(User)) and **deserialization** (json strings to java objects i.e. objectMapper.readValue(str, className.class)).
+
 ---
 
 ## Data Types
@@ -354,6 +358,18 @@ class Demo{
 
 5. **@Override Annotation:** Safety check which indicates method intentionally overrides superclass method.
 
+6. **Field class:** Represents class member variable (field) at runtime.
+```java
+// Get 'price' field from 'Product' class at runtime (even if it's private member)
+Field field= Product.class.getDeclaredField("price");
+
+// get field values from Object
+Comparable f1= (Comparable)field.get(p1);   Comparable f2= (Comparable)field.get(p2);
+
+// Compare fields without knowing datatype
+int x= f1.compareTo(f2);
+```
+
 ---
 
 ## Exception Handling
@@ -495,89 +511,58 @@ git stash, git stash pop  // for temporarily saving changes in a branch
 
 ---
 
-## Spring Boot
-* Simplifies Spring app development with minimal configuration.
-* Features:
-
-    * Auto Configuration
-    * Embedded Web Server
-    * Starter Dependencies
-
-```java
-@RestController
-public class HelloController {
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello, Spring Boot!";
-    }
-}
-```
-
----
-
-## Spring & Spring Boot - Complete Notes
-
-### Spring Framework
-* **Spring:** An open-source framework designed to create java production ready applications in efficient way with minimal configuration.
+## Spring Framework
+* **Spring:** An open-source framework designed to create java production ready applications in efficient way with minimal configuration, embedded web servers, and starter dependencies.
 
 
 * **Spring MVC:** Based on **Model-View-Controller (MVC)** architecture, Primarily used for developing web applications.
   * **hibernate.cfg.xml**: Config for DB details.
 
----
 
-## Spring Boot
-Built on top of Spring, widely used for developing APIs in easier way and lesser development time.
+* **Spring Boot:** Built on top of Spring, widely used for developing APIs in easier way and lesser development time.
   * **pom.xml:** Contains configuration and dependency details. 
 
 ---
 
 ### Spring Boot Starter Dependencies
-* **spring-boot-starter-web**: For web apps
-* **spring-boot-starter-data-jpa**: For JPA DB access
-* **spring-boot-starter-actuator**: For production monitoring
-
+* **spring-boot-starter-web:** For web apps
+* **spring-boot-starter-data-jpa:** For JPA DB access
+* **spring-boot-starter-actuator:** For production monitoring
+* **spring-boot-starter-test:** Includes all neccessary test libraries like JUnit, Mockito, AssertJ, SpringTest, etc.
+* `@SpringBootApplication Annotation`: Automatically configures all dependencies added in project. It includes `@Configuration` (Defines bean method), `@ComponentScan` (spring component scanning), `@EnableAutoConfiguration` (Enables auto configs)
+ 
 ### Inversion of Control (IoC) 
 Transfer control of objects to a framework. 
 
 ### Dependency Injection (DI)
 Includes necessary dependencies through IOC.
-Example: Using @Autowired annotation for injecting service class to controller.
-
-
-### Some Spring Annotations
-* `@Bean`: Manual Bean creation.
-* `@Component`: General purpose bean, base for `@Service`, `@Repository`, `@Controller`
-* `@Configuration`: Defining bean method
-* `@EnableAutoConfiguration`: Enabling auto configuration.
-* `@ComponentScan`: For spring component scanning.
-* `@Autowired`: Automatically wires beans.
-* `@Embedded`: Embeds one entity/ table into another. 
-* `@SpringBootApplication`: Automatically configures all dependencies added in project. It includes `@Configuration`, `@EnableAutoConfiguration`, `@ComponentScan`
-* `@NoArgsConstructor`, `@Data`, `@AllArgsConstructor`, `@Builder`:
-* `@Lombok`: Used for automatic getter/ setter construction.
+Example: Using `@Autowired` annotation for injecting service class to controller.
 
 ---
 
 ### Rest API (Representational State Transfer)
 Client-server communication using standard HTTP methods. It is easy to test/debug and is language agnostic.
-* `@ResponseBody`: Returns json response
-* `@Controller`:
-* `@RestController`: Handles HTTP requests through GET/POST mapping. It combines `@Controller` and `@ResponseBody`
-* `@Service`: Implements business logic
-* `@Repository`: Extends JPA for CRUD operations
+* `@Bean`: Manual Bean creation.
+* `@Component`: General purpose bean, base for `@Service`, `@Repository`, `@Controller`
+* `@Autowired`: Automatically wires beans.
+* `@Embedded`: Embeds one entity/ table into another.
+
+
 * `@Entity`: Stores table details along with getter/setters
+* `@Repository`: Extends JPA for CRUD operations
+* `@Service`: Implements business logic
+* `@RestController`: Handles HTTP requests through GET/POST mapping. It combines `@Controller` (marks class as MVC model) and `@ResponseBody` (Returns json response using ResponseEntity class)
 * `@GetMapping/ @PostMapping/ @PutMapping/ @DeleteMapping/ @PatchMapping`: Handles HTTP get/ post/ put (update whole record)/ delete/ patch (update partial record) method.
-* `@PathVariable`, `@RequestParam`: Pass Value/ query parameter in API URL
+* `@PathVariable`: Pass Value (/{id}) in API URL
+* `@RequestParam`: Pass query parameter (?id=1) in API URL
 
-* `HttpEntity`: Obtain HTTP content as inputStream, and is passed through `@RequestBody`, `@RequestHeader`.
-* `ResponseEntity`: Get result of HTTP response (by methods like  getStatusCode(), getBody(), etc.) in form of `@ResponseBody`.
-* `RestTemplate`: Used to consume data from external APIs and microservices.
 
----
+* For calling any api, 
+  * `HttpEntity`: Obtain HTTP content as inputStream, and is passed through `@RequestBody`, `@RequestHeader`.
+  * `ResponseEntity`: Get result of HTTP response (by methods like  getStatusCode(), getBody(), etc.) in form of `@ResponseBody`.
+  * `RestTemplate`: Used to consume data from external APIs and give response.
 
-### Spring Boot Application Flow
-`@RestController` → `@Service` → `@Repository` → `@Entity`
+> **Spring Boot Application Flow:** `@RestController` → `@Service` → `@Repository` → `@Entity`
 
 ---
 
@@ -590,7 +575,7 @@ Client-server communication using standard HTTP methods. It is easy to test/debu
 
 ### DB Configuration
 * **In-memory**: Add `h2database` dependency
-* **MySQL setup**: Add `mysql-connector-java` dependency in `pom.xml`. And configure DB in `application.properties`
+* **Outside-memory like MySQL setup**: Add `mysql-connector-java` dependency in `pom.xml`. And configure DB in `application.properties`
 
 ---
 
@@ -598,16 +583,39 @@ Client-server communication using standard HTTP methods. It is easy to test/debu
 * **Unit Test**: Tests individual modules
 * **Integration Test**: Tests combined modules
 
-#### Mockito
-Tests by clone/mock objects of java application.
-* `@SpringBootTest`: Loads context
-* `@Mock`: Create mock objects
-* `@InjectMocks`: Inject mock dependencies
+Mockito: Tests by clone/mock objects of java application.
+* `@SpringBootTest(classes = ApiApplication.class)`: Loads context of the main ApiApplication class (with `@SpringBootApplication` annotation) for testing.
+* `@AutoConfigureMockMvc`: Enables MockMvc auto-configuration for testing without starting server.
+* `MockMvc`: Mocks HTTP calls for REST API testing.
 * `@Before`, `@BeforeEach`: Run before each method
 * `@BeforeClass`,`@BeforeAll`: Runs once before executing all test methods
 * `when().thenReturn()`, `when().thenThrow()`: Mock to return specific values.
-* `assertEquals(expected, actual)`: Checks if both equal.
-* `MockMvc`: Mocks HTTP calls
+* `Assertions.assertEquals(expected, actual)`: Checks if both equal.
+* `@Test`:	Marks a method as a test case.
+* `MvcResult`: Captures result of MockMvc request for further assertions.
+
+
+#### Example: 
+mockMvc to perform get url with given params, and expect given status/ path to return.
+```java
+MvcResult result= mockMvc.perform(get("/api/products/"+ saved.getId()))
+        .param("name", "Keyboard")
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.name", is("Mouse")))
+        .andReturn();
+```
+
+mockMvc to perform post/put url, with given header, contentType to expect a specific result and return.
+```java
+MvcResult result = mockMvc.perform(put("/api/products/" + saved.getId())
+                .header("X-Custom-Header", "my-header-value")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updatedProduct)))
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("$.name", is("Tablet Pro")))
+          .andExpect(jsonPath("$.price", is(500.0)))
+          .andReturn();
+```
 
 ---
 
@@ -621,32 +629,3 @@ Tests by clone/mock objects of java application.
 **Spring Boot Example:** Refer to SpringBootExample package. `pom.xml` updated with dependencies needed for this.
 
 ---
-
-
-
----
-
-### Calling REST API (Alternative - Apache HttpClient)
-
-```xml
-<dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpclient</artifactId>
-    <version>4.5.13</version>
-</dependency>
-```
-
----
-* All pom.xml dependencies meaning
-* Object class : For creating instance of any type
-* Field field= Product.class.getDeclaredField(sortBy);
-* Comparable val1= (Comparable)field.get(p1);
-  Comparable val2= (Comparable)field.get(p2);
-* if(direction.equals("asc")){    return val1.compareTo(val2); }
-                        return val2.compareTo(val1);
-
-* test for calling external api
-
-
-
-

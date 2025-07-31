@@ -233,8 +233,42 @@ public class BasicPrograms {
     }
 
 
+    /* Find the longest subarray with max bitwise AND. */
+    // nums[]= {1,2,3,3,2,2}    => 2 (maxAND=3, length 2 i.e. 3,3)
 
-/*---------------------------------------------------------------------------------------------------------------------------------------                                   GREEDY METHOD                               ---------------------------------------------------------------------------------------------------------------------------------------*/
+    // AND operation, for two diff numbers it will always be strictly lesser than max of those 2 numbers (as 1*0=0). So, inc length only if ele are same.
+    int maxLenAND(int[] nums) {     // O(n)
+        int ans=0, curr=0, mx=0;
+        for(int i=0; i<nums.length; i++){
+            if(mx<nums[i]){     mx= nums[i];    ans= curr=0; }      // making ans=0 for re-calculating as its for subarray, not subset
+
+            if(mx==nums[i]){    curr++; } else{  curr=0; }
+            ans= Math.max(ans, curr);
+        }
+        return ans;
+    }
+
+
+    /* Find smallest subarray length at each index with max bitwise OR. */
+    // nums[]= {1,0,2,1,3}  => {3,3,2,2,1}
+
+    // max OR = OR of all ele (as 1*0=1). Iterate array backwards, finding nearest set bit by filling pos[] (nearest position where we found 1). And calc length.
+    int[] minLenOR(int[] nums) {
+        int n= nums.length;     int ans[]= new int[n];  int pos[]= new int[32]; Arrays.fill(pos, -1);
+        for(int i=n-1; i>=0; i--){
+            // if bit is set in nums[i] that's the nearest
+            for(int j=0; j<32; j++){    if( (nums[i]&(1<<j)) !=0 ){  pos[j]= i; }}
+
+            // check the mx index where bit is set
+            int mx=i;   for(int j=0; j<32; j++){    mx= Math.max(mx, pos[j]); }
+            ans[i]= mx-i+1;     // length
+        }
+        return ans;
+    }
+
+
+
+/*----------------------------------------------------------------------------------------------------------------------                                                    GREEDY METHOD                               ---------------------------------------------------------------------------------------------------------------------*/
 
     /* Return minimum candies required to distribute n children, given child with higher ratings gets more candies than neighbours, and should gets atleast 1 candy. */
     // rating[]= {1,0,2}	=> 5 (2,1,2)
