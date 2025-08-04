@@ -34,6 +34,10 @@ public class StackQueue {
     }
 
 
+    /* Find next greater element in circular array. */
+    // Same as above, just add the array twice, and then calc.
+
+
     /* Find index of previous greater element. */
     // a[]= {73,74,75,71,69,72,76,73}   => {-1,-1,-1,2,3,2,-1,6}
 

@@ -11,25 +11,24 @@ public class Dsa {
         System.out.println("Hello, World!");
 
 
-        // Reading input from the console
-        // Input can be read from Scanner (has built-in parsing for primitive types and strings), BufferedReader (can read only strings, but is faster for larger inputs as it has larger buffer)
+        // Reading input from the console can be through Scanner (has built-in parsing for primitive types and strings), BufferedReader (can read only strings, but is faster for larger inputs as it has larger buffer)
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int a = Integer.parseInt(br.readLine());    int b = Integer.parseInt(br.readLine());    Float f= Float.parseFloat(br.readLine());   String s = br.readLine();
         System.out.println(a + " " + s + " " + b);
 
 
         // Math Operations
-        int x = 10; double y = 20.5;
+        int x = 10; double y = 20.5;    long z= 10;
         Math.abs(x); Math.max(x, y); Math.min(x, y); Math.sqrt(x); Math.pow(x, y); Math.random();
-        x = Integer.MAX_VALUE; x = Integer.MIN_VALUE; y = Double.MAX_VALUE; y = Double.MIN_VALUE;
+        x = Integer.MAX_VALUE; x = Integer.MIN_VALUE; y = Double.MAX_VALUE; y = Double.MIN_VALUE;   z= Long.MAX_VALUE;
         Math.round(y); Math.ceil(y); Math.floor(y);   // round off, round up, round down
         BigInteger.valueOf(x).gcd(BigInteger.valueOf((int)y)).intValue(); // GCD of x and y
 
 
         /* Permutation and Combination */
+        // Combination: nCk = n!/(k! * (n-k)!), Permutation: n!
         //distributing n different objects in k groups = Math.pow(n,k)
         // distributing n identical objects in k groups = (n+k-1)C(k-1)
-        // nCk = n!/(k! * (n-k)!)
 
 
         // Character Operations
@@ -73,15 +72,15 @@ public class Dsa {
         // In binary form, if last digit is 0 means even number, if 1 means odd. Also, can use BigInteger for larger/ longer numbers.
 
         int base=2;     Integer.parseInt(s, base); // Integer.parseInt(101, 2);     // Convert binary to int for given base value = binary representation to int for base 2  = (0101 => 5)
-        Long.toString(a, base); // Long.toString(5, 2);     // Long.toString(101, 2);   // get integer to base value i.e. 5 => 0101
+        Long.toString(a, base); // Long.toString(5, 2); // get integer to base value i.e. 5 => 0101
         Integer.bitCount(a); // Count number of bits in a i.e. 5 => 2
 
         x = a&b;            // AND operator = Intersection (1&1=1)
         x = a|b;	        // OR operator = Union (0|0 = 0)
         x = a^b;	        // XOR operator	{1^0 =0^1 =1,  1^1 =0^0 =0}
-        x = ~a;             //Not operator = Toggles all bits (5 => 1010)
+        x = ~a;             // Not operator = Toggles all bits (5 => 1010)
         x = a<<1;           // (00001010) Left shift operator = multiply by 2
-        x = a>>1;	        // (00000010) Right shift operator = divide by 2 = removing last bit
+        x = a>>1;	        // (00000010) Right shift operator = divide by 2
 
         x = a ^ (1<<i);  	// Toggle/ Flip ith bit of a
         x = a | (1<<i); 	// Set ith bit of a, like a=5, i=4  => 21(10101))
