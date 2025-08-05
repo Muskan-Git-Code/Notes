@@ -115,6 +115,38 @@ public class StackQueue {
     }
 
 
+    /* Sum of subarrays min: Find sum of minimum element of each subarray. */
+    // arr[]= {3,1,2,4} => 17 {3*1+ 1*6+ 2*2+ 4*1}
+
+    // find left and right length from nearest smallest on left and right side, and calc number of subarrays.
+    public int sumSubarrayMins(int[] arr) {
+        int n= arr.length, sum= 0;  int MOD = 1000000007;   // MOD= 1e9+7
+        Stack<Integer> stack= new Stack<>();    int[] left= new int[n];     int[] right= new int[n];
+
+        // length from prev nearest smaller (excluding it) till curr ele
+        for (int i=0; i<n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]){   stack.pop(); }
+            left[i]= stack.isEmpty() ? i+1 : i-stack.peek();
+            stack.push(i);
+        }
+
+        // length from curr ele till excluding next nearest smaller element on the right for each element
+        stack.clear();
+        for (int i=n-1; i>=0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]){     stack.pop(); }
+            right[i]= stack.isEmpty() ? n-i : stack.peek()-i;
+            stack.push(i);
+        }
+
+        // Calculate the contribution of each element to the final sum
+        for(int i=0; i<n; i++) {
+            long ans= (long)arr[i] * (left[i]*right[i]);
+            sum= (sum+ (int)(ans%MOD) )%MOD;
+        }
+        return sum;
+    }
+
+
     /* Return string after deleting all adjacent duplicates. */
     // s= "DBAABDAB"   => "AB"
 

@@ -173,7 +173,9 @@ public class Dsa {
         deque.addFirst("Apple"); deque.addLast("Banana"); deque.removeFirst(); deque.removeLast(); deque.getFirst(); deque.getLast(); deque.isEmpty();
 
 
-        // Total number of subarray for specific length is number of elements present i.e. length of subarray +1(for empty) = j-i+1
+        // Total number of subarray= n*(n+1)/2
+        // Total number of subarrays including a specific element of array= (left length)*(rightLength)
+        // Length from index i to j = j-i+1
         // Total number of subsequence = Math.pow(2, j-i)
 
 
