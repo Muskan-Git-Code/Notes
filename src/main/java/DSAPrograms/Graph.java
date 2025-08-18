@@ -3,17 +3,17 @@ package DSAPrograms;
 import java.util.*;
 
 
-    /* Graph: Non-Linear data structure consisting of nodes and edges. Example: Path in a city, Telephonic/ Circuit network.
-    Graph can be directed (Each edge has a direction (i.e. (u,v), (v,u) are different)) and undirected graph.
-    Degree of Vertex= InDegree+ outDegree (number of nodes incident from/ to that node)
+/* Graph: Non-Linear data structure consisting of nodes and edges. Example: Path in a city, Telephonic/ Circuit network.
+Graph can be directed (Each edge has a direction (i.e. (u,v), (v,u) are different)) and undirected graph.
+Degree of Vertex= InDegree+ outDegree (number of nodes incident from/ to that node)
 
-    Graph Traversal: BFS (Shortest Path algorithm, Dijkstra), DFS (Topological sort, Cycle detection).
-    DFS (Depth First Traversal): Traverse all nodes of a graph depth wise. TC: O(V+E), SC: O(V)
-    BFS (Breadth First/ Level Order Traversal): Traverse all nodes of a graph level wise. O(V+E)
+Graph Traversal: BFS (Shortest Path algorithm, Dijkstra), DFS (Topological sort, Cycle detection).
+DFS (Depth First Traversal): Traverse all nodes of a graph depth wise. TC: O(V+E), SC: O(V)
+BFS (Breadth First/ Level Order Traversal): Traverse all nodes of a graph level wise. O(V+E)
 
-    Dijkstra: Find shortest path using priority queue. Works with Weighted, non-negative graphs. TC: O((V+E)logV), SC: O(V).
-    Topological sort - Sort vertices of directed acyclic graph.
-    */
+Dijkstra: Find shortest path using priority queue. Works with Weighted, non-negative graphs. TC: O((V+E)logV), SC: O(V).
+Topological sort - Sort vertices of directed acyclic graph.
+*/
 
 
 public class Graph {

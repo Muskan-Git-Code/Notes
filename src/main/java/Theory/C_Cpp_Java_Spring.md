@@ -165,7 +165,7 @@ int b = i.intValue(); // Unboxing
 > **Source Code** (.cpp) → **Preprocessor** (Processes code before compilation) → **Compiler** (Converts source code to assembly code) → **Assembler** (Changes assembly code to object code i.e. .obj file) → **Linker** (Links object file & library files i.e. .exe file) → **Loader** (Loads into main memory) → **Main Memory** (Program executes)
 
 ### Java
-> **Code** (written using JDK - Java Development Kit which contains development tools) → **javac** (Compiles .java source code to .class bytecode) → **JAVA** (Interprets bytecode) → **JVM** (Executes bytecode as part of JRE - Java Runtime Environment) → **ClassLoader** (Loads required classes/interfaces into JVM)
+> **Code** (written using JDK - Java Development Kit which contains development tools) → **javac** (Compiles .java source code to .class bytecode) → **JAVA** (Interprets bytecode) → **JVM** (Java Virtual Machine executes bytecode as part of JRE - Java Runtime Environment) → **ClassLoader** (Loads required classes/interfaces into JVM)
 
 > **Java is Platform Independent** as it compiles into bytecode, which is platform-independent. This bytecode can run on any platform with JVM. However, this flexibility makes Java slower than C++, as C++ has no intermediate bytecode.
 
@@ -225,14 +225,14 @@ Create with `final` class, having `private` and `final` data members, along with
 # SOLID Principles
 Help in writing clean, maintainable, and scalable code.
 
-| Principle          | Description                                                                                                                  | Example                                                                                                                       |
-|--------------------|------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| Single Responsibility | Every class/function should have only one responsibility, so that any change won't impact other functionalities.             | Instead of one class for `Bill` function, have `finalAmount()`, `printBill()`, `saveBill()` classes (Separate class for saving, printing, computing bill).                       |
-| Open-Closed                   | Classes should be open for extension but closed for modification. Allows adding new features without changing existing code. | saveBill() method, extended to save bill as pdf also.                                                                         |
-| Liskov Substitution                | Parent class should be replaceable by its subclasses, promoting correct inheritance and design.                              | If `Shape` is a base class, then `Square` and `Rectangle` must behave consistently when used in place of `Shape`.             
+| Principle             | Description                                                                                                                  | Example                                                                                                                                                    |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Single Responsibility | Every class/function should have only one responsibility, so that any change won't impact other functionalities.             | Instead of one class for `Bill` function, have `finalAmount()`, `printBill()`, `saveBill()` classes (Separate class for saving, printing, computing bill). |
+| Open-Closed           | Classes should be open for extension but closed for modification. Allows adding new features without changing existing code. | saveBill() method, extended to save bill as pdf also.                                                                                                      |
+| Liskov Substitution   | Parent class should be replaceable by its subclasses, promoting correct inheritance and design.                              | If `Shape` is a base class, then `Square` and `Rectangle` must behave consistently when used in place of `Shape`.                                          |
 |
-| Interface Segregation        | Segregate interfaces as per the requirements of program. Keeping interfaces relevant to specific needs.                      | Instead of interface `Restaurant()`, we can make interface `Waiter() {takeOrder(), serveFood()}` and `Chef() {prepareFood()}` |
-| Dependency Inversion                | Class should depend on interfaces, not concrete classes. As interfaces won't affect dependent code                           | `class Demo{ User user; Demo(User user){	this.user= user; }}`    	`User user= new Admin() // OR new Client(); in main method` |
+| Interface Segregation | Segregate interfaces as per the requirements of program. Keeping interfaces relevant to specific needs.                      | Instead of interface `Restaurant()`, we can make interface `Waiter() {takeOrder(), serveFood()}` and `Chef() {prepareFood()}`                              |
+| Dependency Inversion  | Class should depend on interfaces, not concrete classes. As interfaces won't affect dependent code                           | `class Demo{ User user; Demo(User user){	this.user= user; }}`    	`User user= new Admin() // OR new Client(); in main method`                              |
 
 ---
 
@@ -354,7 +354,7 @@ class Demo{
 
 3. **super():** Calls immediate parent class constructor
 
-4. **this:** Refers to current object
+4. **this:** Refers to current class object
 
 5. **@Override Annotation:** Safety check which indicates method intentionally overrides superclass method.
 
@@ -535,7 +535,7 @@ git stash, git stash pop  // for temporarily saving changes in a branch
 Transfer control of objects to a framework. 
 
 ### Dependency Injection (DI)
-Includes necessary dependencies through IOC.
+Injecting necessary dependencies through IOC.
 Example: Using `@Autowired` annotation for injecting service class to controller.
 
 ---
@@ -563,6 +563,15 @@ Client-server communication using standard HTTP methods. It is easy to test/debu
   * `RestTemplate`: Used to consume data from external APIs and give response.
 
 > **Spring Boot Application Flow:** `@RestController` → `@Service` → `@Repository` → `@Entity`
+
+---
+
+### Web Socket API
+An API designed for continuous data streams instead of single request. It can be done through `@ServerEndpoint` annotation. Example: A subscription service where the restaurant streams you a live cooking video until your meal arrives.
+
+> **WebSocket:** Enables real-time communication between client and server. Example: A phone line between you and the restaurant where both can talk anytime.
+> 
+> **WebSocket Manager:** Manages all active websocket connections between client and backend servers.
 
 ---
 

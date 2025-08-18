@@ -185,10 +185,6 @@ In case if one of the shards fails, then we can use **Master-Slave Architecture*
 
 ---
 
-
-
----
-
 ### ⚡ Caching
 Stores frequently accessed data for quick retrieval. It reduces DB load, and improves speed. Though may require sync logic for cache. Example: Redis (NoSQL database used for caching).
 
@@ -250,10 +246,4 @@ Verifies user identity, like using OAuth, JWT (JSON Web Tokens, are stateless to
 Determines what user can do, like role-based access control. Example: Access for rider vs driver vs admin could be different.
 
 ---
-
-
-
-
-
-
 

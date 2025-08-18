@@ -14,7 +14,7 @@ public class StackQueue {
     /* Create a min stack. */
     // a={-2,0,-3,2}	=> push(5) = a{-2,0,-3,2,5}, pop() = a{-2,0,-3,2}, min()= -3
 
-    //For this question store pairs i.e. stack<pair<int, int>> s1; where s1 contains {(element, minimum till now)}. For example, here pair in stack becomes.. s1 = {(-2,-2), (0,-2), (-3,-3), (2,-3), (5,-3)}
+    // store pairs {(element, minimum till now)} in stack. For example, here pair in stack becomes.. s1 = {(-2,-2), (0,-2), (-3,-3), (2,-3), (5,-3)}
 
 
     /* Find index of next grater element */
@@ -89,36 +89,10 @@ public class StackQueue {
     }
 
 
-    /* Given n meetings with startTime, EndTime. Find largest gap possible between meetings if allowed atmost 1 meeting to be rescheduled within EventTime. */
-    // eventTime=10, startTime[]= {0,3,7,9}, endTime[]= {1,4,8,10}
-
-    // find all gaps between meetings. Find maximum gap in left-1 and right+1. If there is larger value present in either left or right, then possible to reschedule currMeeting, else not.
-    public int maxFreeTime(int eventTime, int[] startTime, int[] endTime) {
-        int n= startTime.length;    int gaps[]= new int[n+1];
-
-        gaps[0]= startTime[0]-0;
-        for(int i=1; i<n; i++){     gaps[i]= startTime[i]- endTime[i-1]; }
-        gaps[n]= eventTime- endTime[n-1];
-
-        n= gaps.length;
-        int left[]= new int[n];    int right[]= new int[n];     Arrays.fill(left, 0);   Arrays.fill(right, 0);
-        for(int i=1; i<n; i++){     left[i]= Math.max(left[i-1], gaps[i-1]); }
-        for(int i=n-2; i>=0; i--){  right[i]= Math.max(right[i+1], gaps[i+1]); }
-
-        int mx=0;
-        for(int i=1; i<n; i++){
-            int dur= endTime[i-1]-startTime[i-1];
-            if(dur<=left[i-1] || dur<= right[i]){   mx= Math.max(mx, gaps[i-1]+ dur+ gaps[i]); }    // meeting rescheduled
-            mx= Math.max(mx, gaps[i-1]+gaps[i]);
-        }
-        return mx;
-    }
-
-
-    /* Sum of subarrays min: Find sum of minimum element of each subarray. */
+    /* Sum of subarrays min: Find sum of minimum element of each subarray possible in arr[]. */
     // arr[]= {3,1,2,4} => 17 {3*1+ 1*6+ 2*2+ 4*1}
 
-    // find left and right length from nearest smallest on left and right side, and calc number of subarrays.
+    // find left and right length from nearest next and prev smallest index, and calc number of subarrays.
     public int sumSubarrayMins(int[] arr) {
         int n= arr.length, sum= 0;  int MOD = 1000000007;   // MOD= 1e9+7
         Stack<Integer> stack= new Stack<>();    int[] left= new int[n];     int[] right= new int[n];
@@ -185,7 +159,7 @@ public class StackQueue {
     /* Return smallest possible digit after removing k digits. */
     // str= 1432219, k=3  => 1219
 
-    // Store in stack. Pop if str[i]>s.top() and k is there.
+    // Store in stack. Pop if s.top()>str[i] and k is there.
     static String num(String str, int k){
         Stack<Integer> s= new Stack<>();  String res= "";
         for(int i=0; i<str.length(); i++){
@@ -201,7 +175,7 @@ public class StackQueue {
     /* Return lexographical smallest string. Given string s and empty string t, on which 2 operations allowed i.e. removing first character from s append to t, or remove last char from t and add to ans. */
     // s="bacdfghae"    => "aaehgfdcb"
 
-    // Store smallest in right in str[]. Push characters into stack, check if st.peek() <= all right values i.e. str[i] then add into ans.
+    // if value at t.peek() <= smallest till now from right side. Then include in ans.
     public String robotWithString(String s) {
         StringBuilder ans= new StringBuilder();   int n= s.length();    Stack<Character> t= new Stack<>();
         char str[] = new char[n];   str[n-1]= s.charAt(n-1);

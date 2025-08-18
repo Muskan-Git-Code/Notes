@@ -3,7 +3,7 @@ Start with telling the flow. I will go with these steps, feel free to let me kno
 
 ---
 
-### 🧠 Step 1: Gathering Requirements
+### 🧠 Step 1: Requirement Analysis
 
 #### ❓ Ask Clarifying Questions:
 * Target users: Are we designing only for riders, or drivers as well?
@@ -29,7 +29,9 @@ Start with telling the flow. I will go with these steps, feel free to let me kno
 * High Availability
 * Fault Tolerant
 * Eventual Consistency
+* High Throughput
 * Low Latency (performance i.e. should run without any lag or delay)
+* Rate limiting per user
 * Database (mostly users came to book the ride i.e. adding new data in database, that means write-heavy system)
 * Thread Safety
 * Extensible Design (to different browsers)

@@ -39,13 +39,18 @@ public class Dsa {
         // String Operations (immutable string i.e. can't change value at any specific index)
         s = "Hello, World!";    String s2= "Hello, World!";
         s.length(); s.charAt(0); s.indexOf('o'); s.contains("Hello");   s.toUpperCase(); s.toLowerCase(); s.trim(); s.replace("World", "Java"); s.split(",");  new StringBuilder(s).reverse().toString();
-        s.substring(0, 5); //(begin, end index)
+        s.substring(0, 5); //(begin, end index-1)
         s.compareTo("hi"); // Compare two strings lexicographically (returns 0 if equal, negative if less, positive if greater) //<0 if s < "hi"
 
         // == compares references, .equals() method compares value
         String aa= "hi", b1= new String("hi");
         boolean res= (aa==b1);  // return false
         res= aa.equals(b1);     // return true
+
+        // sorting a string
+        char[] ch5 = s.toCharArray();  // convert string to char array
+        Arrays.sort(ch5);              // sort characters
+        String sorted = new String(ch5);    // char array to string
 
 
         // StringBuilder Operations (mutable/ changable string) - Appends Faster than string
@@ -73,7 +78,7 @@ public class Dsa {
 
         int base=2;     Integer.parseInt(s, base); // Integer.parseInt(101, 2);     // Convert binary to int for given base value = binary representation to int for base 2  = (0101 => 5)
         Long.toString(a, base); // Long.toString(5, 2); // get integer to base value i.e. 5 => 0101
-        Integer.bitCount(a); // Count number of bits in a i.e. 5 => 2
+        Integer.bitCount(a); // Count number of set bits in a i.e. 5 => 2
 
         x = a&b;            // AND operator = Intersection (1&1=1)
         x = a|b;	        // OR operator = Union (0|0 = 0)
@@ -89,9 +94,9 @@ public class Dsa {
         // a^b = (1<<i);   // means only 1 bit is having odd freq between them.
 
         x = 1<<i;		    // pow(2,i)
-        x = (1<<a)-1;	    // checks if all bits in a is set returns true if set.
+        x = (1<<a)-1;	    // checks if all bits in 'a' is set returns true if set.
+        x = a & (a-1);      // Returns 1 if 'a' is power of 2; i.e. (=5 & 4  =101 & 100  =1)
         x = a & 1;		    // checks if odd number (returns 0 if even number)
-        x = a & -a;		    // Returns a if number is power of 2
 
         Integer.compare(a, b);      // a==b then 0, a>b then +ve, a<b then -ve
 
@@ -115,6 +120,7 @@ public class Dsa {
         //ArrayList (Dynamic array, default capacity is 10  (internally reallocates memory for more values)) and LinkedList (Default capacity is 0) => O(n)
         // Array (search is faster) and LinkedList (insert is faster as no shifting required).
         List<Integer> list = new ArrayList<>(); List<Integer> list2 = new LinkedList<>();   // works as both doubly/ single linkedlist
+        List<Integer> list3= new ArrayList<>(list);
         list.add(20); list.add(2, 30);  list.addAll(list2); list.get(2); list.remove(2); list.set(2, 10); // set(ix, ele) replaces ele at that ix.
         list.subList(2, 5); list.contains(30); list.size(); list.isEmpty(); list.clear();
         for(Integer val : list) { System.out.println(val); } // For-each loop

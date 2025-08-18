@@ -407,6 +407,32 @@ public class BasicPrograms {
         return ct;
     }
 
+
+    /* Given n meetings with startTime, EndTime. Find largest gap possible between meetings if allowed atmost 1 meeting to be rescheduled within EventTime. */
+    // eventTime=10, startTime[]= {0,3,7,9}, endTime[]= {1,4,8,10}
+
+    // find all gaps between meetings. Find maximum gap in left-1 and right+1. If there is larger value present in either left or right, then possible to reschedule currMeeting, else not.
+    public int maxFreeTime(int eventTime, int[] startTime, int[] endTime) {
+        int n= startTime.length;    int gaps[]= new int[n+1];
+
+        gaps[0]= startTime[0]-0;
+        for(int i=1; i<n; i++){     gaps[i]= startTime[i]- endTime[i-1]; }
+        gaps[n]= eventTime- endTime[n-1];
+
+        n= gaps.length;
+        int left[]= new int[n];    int right[]= new int[n];     Arrays.fill(left, 0);   Arrays.fill(right, 0);
+        for(int i=1; i<n; i++){     left[i]= Math.max(left[i-1], gaps[i-1]); }
+        for(int i=n-2; i>=0; i--){  right[i]= Math.max(right[i+1], gaps[i+1]); }
+
+        int mx=0;
+        for(int i=1; i<n; i++){
+            int dur= endTime[i-1]-startTime[i-1];
+            if(dur<=left[i-1] || dur<= right[i]){   mx= Math.max(mx, gaps[i-1]+ dur+ gaps[i]); }    // meeting rescheduled
+            mx= Math.max(mx, gaps[i-1]+gaps[i]);
+        }
+        return mx;
+    }
+
     public static void main(String args[]){
 
 //        {{0,2}, {5,10}, {13,23}, {24,25}}, B= {{1,5}, {8,12}, {15,24}, {25,26}}   => {{1,2},{5,5},{8,10},{15,23},{24,24},{25,25}}

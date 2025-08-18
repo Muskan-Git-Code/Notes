@@ -199,8 +199,6 @@ UI → Submit Original URL → Application Layer (URLService) → Check if alrea
 | URLService  | createShortUrl(originalUrl, userId, expiryDate), getOriginalUrl(shortUrl), incrementClickCount() |
 | AuthService | registerUser(name, email, password), loginUser(email, password)                                  |
 
----
-
 ### 💡 Short URL Generation Techniques
 - Hash original URL (e.g., MD5/SHA256) + take first few characters
 - Use Base62 encoding of auto-increment ID
@@ -312,21 +310,17 @@ UI (Hit the API) → Application Layer (VideoService/ UserService/ SearchService
 | SearchService  | searchByTitle(), searchByTag(), searchByChannel()                                            |
 ---
 
-15. Design Google Search Typeahead
+## 15. Design Google Search Typeahead
 
-Functional Requirements
+### Functional Requirements
+- Provide real-time search suggestions as user types
+- Suggestions ranked by frequency/popularity
+- Support for prefix matching
 
-Provide real-time search suggestions as user types
-
-Suggestions ranked by frequency/popularity
-
-Support for prefix matching
-
-Flow Diagram
-
+### Flow Diagram
 Client UI → TypeaheadService → Trie / PrefixIndex ↔ DB / Cache
 
-Class Structure Table
+### Class Structure Table
 
 Entity
 

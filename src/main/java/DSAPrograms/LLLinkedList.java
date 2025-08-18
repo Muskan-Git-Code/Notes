@@ -152,6 +152,7 @@ public class LLLinkedList {
 
 
     /* Find intersection node of 2 linkedlist.  */
+    // listA = [1,9,1,2,4], listB = [3,2,4]	=> 2
 
     // Traverse both list. If anyone reach NULL, point it to opposite list, so that the diff between list size will automatically be nullify.
     static Node intersectingNode(Node l1, Node l2){
@@ -204,7 +205,7 @@ public class LLLinkedList {
         Node slow= l1, fast= l1;
         while(fast!=null && fast.next!=null){
             slow= slow.next;    fast= fast.next.next;
-            if (slow == fast) {     System.out.println("Cycle is detected of length");  break; }
+            if (slow == fast) {     System.out.println("Cycle is detected");  break; }
         }
 
         // starting point of cycle: if starting point is equal to slow pointer that's the start point
