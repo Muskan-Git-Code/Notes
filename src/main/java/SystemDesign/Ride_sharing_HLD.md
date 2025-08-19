@@ -50,7 +50,7 @@ Data Ingestion Layer: Collect real time location and event details through third
 Customer (Requests cab, giving start, end points and fare calculated based on distance), Driver (nearby driver among all drivers), and ride starts if driver accepts the ride.
 
 ### Diagram
-![Ride Booking System](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fbeautiful%2F&psig=AOvVaw1KgYJ0asAB1lXuXRtzyLJ3&ust=1755626849080000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCODxmej5lI8DFQAAAAAdAAAAABAE)
+![Ride Booking System](RideSharingHLD.png)
 
 **Drivers (d1, d2, d3)** interacts with different **websocket servers** using **load balancer**, and managed by **websocket manager**. Driver connections are then routed to the **'Driver Location Management Service'**, which maintains real-time driver stats (GPS co-ordinates, availability status) using **redis** (for faster in-memory cache) and asynchronously updates **cassandra database** (due to its ability to handle geographically distributed data with high scalability and availability).
 
