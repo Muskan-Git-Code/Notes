@@ -164,8 +164,10 @@ Used for asynchronous (multi-thread) communication between producers and consume
 
 ### 🏗️ Monolith vs Microservices
 
-Monolith: Single code base, simpler for smaller systems, but hard to change, and test.
-Microservices: Independent services, suitable for large-scale systems, easy to deploy, modify and maintain.
+- **Monolith**: Single codebase containing all modules. Simple to build and deploy, but becomes hard to scale, change, and test as the system grows. *Example: Notification Service, or Authentication are often monolith, as they are single service.*
+
+
+- **Microservices**: System split into independent services, each owning a specific function. Better for large-scale systems as they’re easier to scale, deploy, and maintain. *Example: A food delivery app with separate services for orders, payments, delivery, and user management.*
 
 ---
 
@@ -246,4 +248,11 @@ Verifies user identity, like using OAuth, JWT (JSON Web Tokens, are stateless to
 Determines what user can do, like role-based access control. Example: Access for rider vs driver vs admin could be different.
 
 ---
+
+## Approach for interview:
+- Step 1: Requirement Analysis, Ask a lot of questions => 15 min
+- Step 2: Ask for time to think about approach, and draw HLD => 10 min
+- Explain all components in detail = 20 min
+- Step 3: API Used => 10 min
+- Step 4: Edge cases => 10 min
 

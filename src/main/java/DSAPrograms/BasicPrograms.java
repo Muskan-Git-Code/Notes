@@ -439,12 +439,5 @@ public class BasicPrograms {
         int A[][]= {{0,30},{5,10},{15,20}}, B[][]= {{1,5}, {8,12}, {15,24}, {25,26}};
         System.out.println(minRooms(A));
 
-
     }
 }
-
-/*  Recursion
-https://leetcode.com/problems/lexicographical-numbers/description/?envType=daily-question&envId=2025-06-08
-https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/?envType=daily-question&envId=2025-06-09
-
-* */

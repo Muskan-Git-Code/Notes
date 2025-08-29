@@ -1,8 +1,8 @@
-### 🧠 Step 1: Requirement Analysis
+## 🔹 HLD Interview Scenario: Design a Ride-Sharing Application (e.g., Uber/Ola)
 
-#### ❓ Ask Clarifying Questions:
-* Target users: Are we designing only for riders, or drivers as well?
-* Architecture: Is it a monolithic or microservices architecture?
+---
+
+### 🧠 Step 1: Requirement Analysis
 
 #### ✅ Functional Requirements:
 * Rider, Driver Registration & Login - verify phone/ email
@@ -11,46 +11,35 @@
 * Chat between rider & driver (optional)
 * Ride Status Tracking (requested, ongoing, completed)
 * Map integrations (optional)
-* Payment Handling - Payment Method gateway, On paid, getting invoice
+* Payment Handling - Payment Method gateway, On paid, getting invoice (optional)
 * Rating System (optional)
 * Car-pooling (allowing different riders to accomodate in same ride) (optional)
+* Notification (optional)
 
 #### 🛠️ Non-Functional Requirements:
-* Scalable - Millions of users, so should be able to handle high throughput, and large datasets, while maintaining low latency
+* Scalable - Millions of users, so should be able to handle high throughput (requests per second), and large datasets, while maintaining low latency (time to respond per request), write-heavy system
 * High Availability
 * Fault Tolerant
 * Eventual Consistency
 * Usability - Intutive, user-friendly interface for users to input data, and view results
 * Extendability: Ability to support additional features in future
-* Security and Privacy: TLS, JWT/ OAuth Authentication, Authorization, and rate limiting.
-
-
-
-* Rate limiting per user
-* Database (mostly users came to book the ride i.e. adding new data in database, that means write-heavy system)
-* Thread Safety
-* security (protection of user data)
-* Notification (optional)
+* Security and Privacy: Protection of user data, JWT/ OAuth Authentication, Authorization, and rate limiting.
 
 List down all the requirements, then ask if require to include any other functionality?
-Say, being aware of limited time these are the basic ones i want to start for (or mark others as optional).
+Say, being aware of limited time, i start with main service i.e. Ride Booking.
 
 
-### High Level Architecture Diagram:
 
-1) Edge & API Gateway → 2) Real-Time Ingestion (locations, events) → 3) Match & Pricing Services → 4) Routing/ETA & Maps → 5) Trip Orchestrator (state machine) → 6) Payments/Billing → 7) Data Stores (OLTP, cache, TSDB, search) → 8) Async & Batch (Kafka, stream proc, aggregations) → 9) Frontend (iOS/Android/Web) → 10) Monitoring/Logging.
+### 🧠 Step 2: High Level Architecture Diagram:
 
+#### Flow/ UML Diagram
+> Client (Hit the API Gateway through UI) → Application Layer (Add location, see price, Book Ride, On ride accept (Start/End ride), Calculate fare) → Database (store userId, location, price)
 
-Auth and API Gateway: API Performance Gateway (different payloads for rider, driver), Security (Authorization, Authentication), and Rate Limiting
+### UseCase Diagram
+> Rider → Requests Cab (Giving pickup, drop location, distance, fare calculated) → Finding nearest cab (Driver sees the request, if accepts) → ride starts → On ride finish, show in recent rides and payment
 
-Data Ingestion Layer: Collect real time location and event details through third party API. 
-
-
-### Core Entities
-Customer (Requests cab, giving start, end points and fare calculated based on distance), Driver (nearby driver among all drivers), and ride starts if driver accepts the ride.
-
-### Diagram
-![Ride Booking System](RideSharingHLD.png)
+### HLD Diagram
+![Ride Booking System](RideSharing_HldDiagram.png)
 
 **Drivers (d1, d2, d3)** interacts with different **websocket servers** using **load balancer**, and managed by **websocket manager**. Driver connections are then routed to the **'Driver Location Management Service'**, which maintains real-time driver stats (GPS co-ordinates, availability status) using **redis** (for faster in-memory cache) and asynchronously updates **cassandra database** (due to its ability to handle geographically distributed data with high scalability and availability).
 
@@ -59,7 +48,8 @@ Customer (Requests cab, giving start, end points and fare calculated based on di
 **Kafka** feeds **'Cab Finder Service'** which identifies most suitable driver, by querying redis for real-time driver location. To optimize driver selection it may use **graph-based algorithm** (like Dijkstra) to find nearest available driver. Once driver accepts request, the **'Trip Management Service'** initializes and maintains ride state with GPS updates in **redis** and persist data in **Cassandra Database** for fast real-time lookups. On ride completion, a summary (pickup, drop, driver, customer, distance, fare, payment method) details are stored in **MySQL database** for its ACID properties, as historical trip data.
 
 
-### APIs used
+
+### 🧠 Step 3: API Design
 **Customer**
 ```
 POST /v1/bookings {pickup, drop, driver, customer, distance, fare, payment method}
@@ -74,7 +64,8 @@ POST /v1/driver/accept {bookingId}
 WS /v1/driver/stream  // locationUpdates → server, offers (nearest rides) ← server
 ```
 
-### Edge cases and failure modes
+
+### 🧠 Step 4: Edge Cases
 - no driver found
 - multiple driver accepts the ride
 - driver disconnect in mid of ride

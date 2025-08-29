@@ -58,13 +58,29 @@ public class StackQueue {
     /* Find max rectangular area in histogram. */
     // a[]= {6,2,5,4,5,1,6}     => 12 (i.e. 4*3)
 
-    // Find next and previous smaller elements index. Then do max(mx, a[j]*(next[j]-prev[j]-1)) to find maximum area. 	O(n)
+    // Height/ length for each block is given in a[], breadth/ width max possible is by next and previous smaller elements index -1. Then do max(mx, a[j]*(next[j]-prev[j]-1)) to find maximum area. 	O(n)
 
 
     /* Find max area of rectangle in binary matrix. */
     // a[][]= {{0,1,1,0},{1,1,1,1},{0,0,1,1},{1,1,0,0}}	=> 6
 
     // Take each row as histogram, then find max area for each row. Also, height of each col is sum of all rows above it (Think it like an histogram).
+
+
+    /* Count square submatrices with all ones. */
+    // a[][]= {{0,1,1,1},{1,1,1,1},{0,1,1,1}}   => 15
+
+    // check if (left, up, diagLeftUp) are 1, then valid square.
+    public int countSquares(int[][] matrix) {
+        int m= matrix.length, n= matrix[0].length;
+        for(int i=1; i<m; i++){
+            for(int j=1; j<n; j++){
+                if(matrix[i][j]==0){    continue; }
+                matrix[i][j]= 1+ Math.min(matrix[i-1][j], Math.min(matrix[i][j-1], matrix[i-1][j-1]));
+        }}
+
+        int sum=0;      for(int i=0; i<m; i++){     for(int j=0; j<n; j++){     sum+= matrix[i][j]; }}          return sum;
+    }
 
 
     /* Find how much water can be trapped in between the walls. */
@@ -406,13 +422,3 @@ public class StackQueue {
 
     }
 }
-
-
-/* DP
-
-/* Find how many square submatrix possible with one in given matrix.
-// a[][]= {{0,1,1,1},{1,1,1,1},{0,1,1,1}}   => 15 (10+4+1)
-
-// no of squares possible for (i,j)
-
-* */

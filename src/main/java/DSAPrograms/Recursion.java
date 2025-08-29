@@ -1106,25 +1106,6 @@ public class Recursion {
     }
 
 
-
-
     public static void main(String args[]){
-
     }
-
 }
-
-/* Trees
-
-10. Find number of balanced binary trees possible with height h i.e. abs(left- right subtree)<=1.
- */
-        /* n=3	=> 15
-
-        //Cases when left, right subtree having same height, or diff of one. And multiply to include all combinations.
-        int fn(int h){
-            if(h==0 || h==1)    return 1;
-
-            int t1= fn(h-1) * fn(h-1);	int t2= fn(h-1) * fn(h-2);	int t3= fn(h-2) * fn(h-1);
-            return t1+ t2+ t3;
-        }
-*/

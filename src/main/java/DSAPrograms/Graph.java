@@ -500,6 +500,18 @@ public class Graph {
     // Apply DFS for all border 0, and mark them as vis. Then all 0, who are not vis yet, mark them as 1.
 
 
+    /* Return all numbers in range 1 to n, sorted in lexographical order. */
+    // n=13     => {1,10,11,12,13,2,3,4,5,6,7,8,9}
+
+    // print numbers starting from 1, then 2 then 3, etc.
+    // for(int i=1;i<10;i++){  solveRec(i,n, ans); }
+    public void lexOrder(int x, int n, List<Integer> ans){  // TC: O(n)
+        if(x>n)return;
+        ans.add(x);
+        for(int i=0; i<=9; i++){    lexOrder(x*10+i, n, ans); }
+    }
+
+
     /* Find possible ways to travel from (0,0) to (m-1, n-1) in m*n matrix, given you can move in all 4 direction, but can't move in cells with value 0, and can visit each cell once. */
 
     // for number of ways, always use backtracking method, i.e. add value before recursion but remove after recursion, for different paths.
