@@ -3,11 +3,11 @@
 ## CODING (C/C++/JAVA)
 ### C
 * High-level, general-purpose, procedural-oriented programming language.
-* Commonly used for developing portable applications, compilers and JVMs.
+* Used for developing portable applications, compilers and JVMs.
 
 ### C++
 * Extended version of C with object-oriented programming (OOP).
-* Commonly used for operating software development and embedded systems.
+* Used for operating software development and embedded systems.
 
 ### JAVA
 * Object-oriented, platform-independent, dynamic programming language.
@@ -129,7 +129,7 @@ class Demo {
 
 ---
 
-## Access/ Visibility Specifier
+## Access Modifiers/ Visibility Specifier
 Specifies scope of variable or method.
 
 | Specifier | Scope                                              |
@@ -153,8 +153,8 @@ Used to treat primitives as objects (helpful in collections, etc.).
 ### Example
 ```java
 int a = 10;
-Integer i = Integer.valueOf(a); // Boxing
-int b = i.intValue(); // Unboxing
+Integer i = Integer.valueOf(a); // Boxing (Converting primitive to Wrapper class)
+int b = i.intValue(); // Unboxing (Converting Wrapper to primitive class)
 ```
 
 ---
@@ -169,6 +169,7 @@ int b = i.intValue(); // Unboxing
 
 > **Java is Platform Independent** as it compiles into bytecode, which is platform-independent. This bytecode can run on any platform with JVM. However, this flexibility makes Java slower than C++, as C++ has no intermediate bytecode.
 
+> **Tight and Loose Coupling:** Classes and Objects are dependent on each other.
 ---
 
 ## Java `main` Method
@@ -245,7 +246,7 @@ Help in writing clean, maintainable, and scalable code.
 
 ## 2. Encapsulation (Data Biding)
 * Wraps function call to its appropriate function definition, keeping internal details hidden from outside access.
-* Can be achieved through private and public getter/setters.
+* Can be achieved through private and public getter/setters (used to get private members outside class).
 * It can be **Early/ Static/ Compile time binding** (Wraps at compile time) and **Late/ Dynamic/ Runtime Binding** (Wraps at runtime).
 
 ## 3. Abstraction
@@ -369,7 +370,6 @@ Comparable f1= (Comparable)field.get(p1);   Comparable f2= (Comparable)field.get
 // Compare fields without knowing datatype
 int x= f1.compareTo(f2);
 ```
-
 ---
 
 ## Exception Handling
@@ -503,14 +503,6 @@ git stash, git stash pop  // for temporarily saving changes in a branch
 
 ---
 
-### Docker
-* Lightweight containers for packaging applications with dependencies. It uses less memory and has sharable containers.
-
-### Kubernetes
-* Manages containerized applications (like docker) across clusters through APIs.
-
----
-
 ## Spring Framework
 * **Spring:** An open-source framework designed to create java production ready applications in efficient way with minimal configuration, embedded web servers, and starter dependencies.
 
@@ -538,10 +530,57 @@ Transfer control of objects to a framework.
 Injecting necessary dependencies through IOC.
 Example: Using `@Autowired` annotation for injecting service class to controller.
 
+#### 📌 Types of DI
+- **Constructor Injection** → Dependencies provided via constructor (✅ preferred: immutable, ensures non-null).
+- **Setter Injection** → Dependencies set via setter methods (good for optional).
+- **Field Injection** → Dependencies injected directly into fields (⚠️ mutable, not recommended).
+
+```java
+// via constructor
+@Component
+class Client {
+  private final ServiceA service;
+  
+  @Autowired
+  public Client(ServiceA service){  this.service = service; }
+}
+
+
+// via setter
+@Component
+class Client {
+  private ServiceA service;
+
+  @Autowired
+  public void setService(ServiceA service){     this.service = service; }
+}
+
+
+// via field
+@Component
+class Client {
+  @Autowired
+  private ServiceA service;
+}
+
+
+// Without DI (Violation Example)
+// Here the class **creates its own dependency** → tightly coupled, hard to test, violates DI.
+@Component
+class Client {
+  private ServiceA service = new ServiceA();   // ❌ creates dependency itself
+
+  public void call(){  service.serve(); }
+}
+```
 ---
+
+### SOAP (Simple Object Access Protocol)
+Protocol-based communication using XML, strict standards, and higher overhead compared to REST.
 
 ### Rest API (Representational State Transfer)
 Client-server communication using standard HTTP methods. It is easy to test/debug and is language agnostic.
+
 * `@Bean`: Manual Bean creation.
 * `@Component`: General purpose bean, base for `@Service`, `@Repository`, `@Controller`
 * `@Autowired`: Automatically wires beans.
@@ -563,6 +602,12 @@ Client-server communication using standard HTTP methods. It is easy to test/debu
   * `RestTemplate`: Used to consume data from external APIs and give response.
 
 > **Spring Boot Application Flow:** `@RestController` → `@Service` → `@Repository` → `@Entity`
+
+> **Best Practices for API:** Use proper HTTP methods, meaningful endpoints, version APIs, handle errors, support pagination, secure with HTTPS/auth, maintain consistency, document, cache responses, and ensure idempotency.
+
+---
+### Idempotency:
+Making the same API call multiple times has the same effect as making it once, with no extra side effects.
 
 ---
 

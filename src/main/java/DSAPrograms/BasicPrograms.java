@@ -122,7 +122,7 @@ public class BasicPrograms {
     // Check if no other queen in same row, col, diagonal, then place the queen
 
 
-    /* Generate all possible subsequence/ subset */
+    /* Generate all possible subsequence/ subset. */
     // arr[]= {1,2,3}   => {{1}, {2}, {1,2}, {3}, {1, 3}, {2, 3}, {1,2,3}}
 
     // In subarray/ substring is continuous values, subset/ subsequence can be of non-continuous values.
@@ -270,7 +270,7 @@ public class BasicPrograms {
 
 /*----------------------------------------------------------------------------------------------------------------------                                                    GREEDY METHOD                               ---------------------------------------------------------------------------------------------------------------------*/
 
-    /* Return minimum candies required to distribute n children, given child with higher ratings gets more candies than neighbours, and should gets atleast 1 candy. */
+    /* Return minimum candies required to distribute n children, given child with higher ratings gets more candies than neighbours, and should get atleast 1 candy. */
     // rating[]= {1,0,2}	=> 5 (2,1,2)
     // rating[]= {1,2,87,87,87,2,1}     => 13 (1,2,3,1,3,2,1)   // for equal there is no boundation
 
@@ -354,7 +354,7 @@ public class BasicPrograms {
     * OR
     * Find max number of non-overlapping intervals.
     * */
-    // meeting{}{}= {{1,2},{0,6},{3,4},{5,7},{8,9},{5,9}}	=> 4
+    // meeting[][]= {{1,2},{0,6},{3,4},{5,7},{8,9},{5,9}}	=> 4
 
     // sort by meeting end time, and check if (lastEnded <= currStartTime) then meeting possible, so ct++.
     static int maxMeetings(int a[][]){

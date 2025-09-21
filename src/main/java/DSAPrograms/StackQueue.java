@@ -2,13 +2,6 @@ package DSAPrograms;
 
 import java.util.*;
 
-/*
-Stack (LIFO Order): Example: Piles of books.
-Queue (FIFO Order): Example: People waiting in ticket line, data transfer between two processes.
-In normal Queue, once queue becomes full, we cannot insert the next element even if there is a space in front of queue.
-Circular Queue/ Ring Buffer: Stores element in circular manner, and do proper utilization of memory.
-Priority Queue: Stores element according to priority.
-*/
 public class StackQueue {
 
     /* Create a min stack. */
@@ -108,7 +101,7 @@ public class StackQueue {
     /* Sum of subarrays min: Find sum of minimum element of each subarray possible in arr[]. */
     // arr[]= {3,1,2,4} => 17 {3*1+ 1*6+ 2*2+ 4*1}
 
-    // find left and right length from nearest next and prev smallest index, and calc number of subarrays.
+    // find left and right length from nearest next and prev smaller index, and calc number of subarrays.
     public int sumSubarrayMins(int[] arr) {
         int n= arr.length, sum= 0;  int MOD = 1000000007;   // MOD= 1e9+7
         Stack<Integer> stack= new Stack<>();    int[] left= new int[n];     int[] right= new int[n];
@@ -135,6 +128,12 @@ public class StackQueue {
         }
         return sum;
     }
+
+
+    /* Find sum of subarray ranges i.e. sum of(largest-smallest) for each subarray. */
+    // a[]={1,4,3,2} => 13 { 0+3+3+3 + 0+1+2 + 0+1 + 0 }
+
+    // ans = (sum of subarray max) - (sum of subarray min) = (len in which this particular ele is max) - (len in which this particular ele is min as in above ques) = [1*1 + 4*(2*3) + 3*2 + 2*1] - [1*4 + 4*1 + 3*2 + 2*3] = 33 - 20 =13
 
 
     /* Return string after deleting all adjacent duplicates. */
@@ -191,7 +190,8 @@ public class StackQueue {
     /* Return lexographical smallest string. Given string s and empty string t, on which 2 operations allowed i.e. removing first character from s append to t, or remove last char from t and add to ans. */
     // s="bacdfghae"    => "aaehgfdcb"
 
-    // if value at t.peek() <= smallest till now from right side. Then include in ans.
+    // idea is to start with smallest. Check for min from right, and append to ans if value at t.peek() <= smallest till now from right side. Then append remaining in end.
+    // smallest from right= "aaaaaaaae", t= "bcdfgh", ans="aae", then append remaining i.e. ans= "aaehgfdcb"
     public String robotWithString(String s) {
         StringBuilder ans= new StringBuilder();   int n= s.length();    Stack<Character> t= new Stack<>();
         char str[] = new char[n];   str[n-1]= s.charAt(n-1);
@@ -258,7 +258,7 @@ public class StackQueue {
     /* QUEUE */
 
     /* Return cards deck to reveals cards in increasing order, given we need to pick a card and next card need to go at bottom. */
-    // cards[]= \  => {2,13,3,11,5,17,7}
+    // cards[]= {17,13,11,2,3,5,7}  => {2,13,3,11,5,17,7}
 
     // sort cards. Take cards in reverse order, such that each time last value comes to front, along with adding new card, for sorted order.
     static int[] deck(int cards[]){
@@ -339,7 +339,7 @@ public class StackQueue {
     // create map for finding freqency of each number, and then store into MaxHeap (freq, value)
 
 
-    /* Return difference between 1st and last part of array after removing n elements from array of size 3n. */
+    /* Return min difference between 1st and last part of array after removing n elements from array of size 3n. */
     // nums[]= {7,9,5,8,1,3}    => 1 as {7,5,8,3}
 
     // Minimize diff (minStart - maxEnd). For 1st half; Take min from [0,2n] i.e. add [0,n] then calc diff along with removing top n ele from [n,2n]. For 2nd half; Take max from [n,3n] i.e. add [2n,3n] then calc diff along with removing top n ele from [2n,n]. And return min diff as ans.
@@ -401,6 +401,65 @@ public class StackQueue {
                 pq.add(val);
             }
             return pq.peek().dist;
+        }
+    }
+
+
+    /* Sliding Window Maximum: Print values which gives max in sliding window of size k. */
+    // nums[]= {1,3,-1,-3,5,3,6,7}, k=3     => {3,3,5,5,6,7}
+
+    // In Deque, store max element for each  store index which give max till now, and in end print values through index.
+//    TBD: Deque approach for this
+
+
+    /* Find median in sliding window of size k. */
+    // a[]= {1,3,-1,-3,5,3,6,7}, k=3    => {1,-1,-1,3,5,6}
+
+    // taking min and max heap, each time move element to min heap, then to max heap, then if maxheap size is greater than min heap so move element back to min heap. Store all values outside window in a map, and if top value is in map then remove it, and balance map again.
+    class MedianQues {
+        static PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+        static Map<Integer, Integer> removedVals = new HashMap<>();
+
+        static List<Integer> median(int a[], int k) {
+            List<Integer> res = new ArrayList<>();
+            int i = 0, j = 0;
+
+            for (; j < k; j++) {    addNum(a[j]); } // first window
+            res.add(getMedian(k));
+
+            while (j < a.length) {
+                addNum(a[j]);   removeNum(a[i]);    i++;    j++;
+                res.add(getMedian(k));
+            }
+            return res;
+        }
+
+        static void addNum(int val) {
+            minHeap.add(val);
+            maxHeap.add(minHeap.remove());
+            if (maxHeap.size() > minHeap.size()) {  minHeap.add(maxHeap.remove()); }
+        }
+
+        static void removeNum(int val) {
+            removedVals.put(val, removedVals.getOrDefault(val, 0) + 1);     cleanHeap(maxHeap);     cleanHeap(minHeap);
+
+            while (minHeap.size() > maxHeap.size()) {   maxHeap.add(minHeap.remove()); }
+            while (maxHeap.size() > minHeap.size()) {   minHeap.add(maxHeap.remove()); }
+        }
+
+        static void cleanHeap(PriorityQueue<Integer> heap) {
+            while (!heap.isEmpty() && removedVals.containsKey(heap.peek())) {
+                int top = heap.peek();
+                removedVals.put(top, removedVals.get(top) - 1);
+                if (removedVals.get(top) == 0) {    removedVals.remove(top); }
+                heap.remove();
+            }
+        }
+
+        static int getMedian(int k) {
+            if (k % 2 == 1) {   return minHeap.peek(); }
+            else {  return (maxHeap.peek() + minHeap.peek()) / 2; }
         }
     }
 

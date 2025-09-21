@@ -1,9 +1,7 @@
 package DSAPrograms;
 import java.util.*;
 
-
-
-public class LLLinkedList {
+public class LLinkedList {
 
     static class Node{
         int val;    Node next;
@@ -11,7 +9,7 @@ public class LLLinkedList {
     }
 
 
-    /* Insert value at specific pos */
+    /* Insert, delete, update value at specific pos */
 
     // Iterate till pos-1, add tmpNode.
     static void insertVal(Node list, int value, int pos){
@@ -22,13 +20,9 @@ public class LLLinkedList {
             if(p==null){    System.out.println("Position out of range");    return; }
             p= p.next;
         }
-        tmp.next = p.next;  p.next = tmp;
+        tmp.next= p.next;   p.next= tmp;
     }
 
-
-    /* Delete value at specific pos. */
-
-    //
     static void deleteVal(Node list, int pos){
         Node p= list;
         if(list == null){  return; }
@@ -38,7 +32,7 @@ public class LLLinkedList {
             if(p==null || p.next==null){    System.out.println("Position out of range");    return; }
             p= p.next;
         }
-        p.next = p.next.next;
+        p.next= p.next.next;
     }
 
     void updateVal(Node list, int value, int pos){
@@ -249,33 +243,30 @@ public class LLLinkedList {
 
 
     /* Implement get(), put() method for Least Recently Used (LRU) cache i.e. remove least recently used value if capacity exceeds. */
+    // ["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"], [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]      => {null, null, null, 1, null, -1, null, -1, 3, 4}
 
     // LinkedHashMap for insertion order. If size exceeds, then remove first used value i.e. LRU.
     static class LRUCache{  // O(1)
         int capacity;
-        LinkedHashMap<Integer, Integer> map= new LinkedHashMap<>(5, 0.75f, true);
+        LinkedHashMap<Integer, Integer> map= new LinkedHashMap<>();
 
-        LRUCache(int capacity){
-            this.capacity= capacity;
-        }
+        LRUCache(int capacity){     this.capacity= capacity; }
 
         int get(int key){
-            return map.getOrDefault(key, -1);
+            int val= map.getOrDefault(key, -1);
+            if(val!=-1){    map.put(key, val); }    return val;
         }
 
         void put(int key, int value){
             map.put(key, value);
 
             // remove least recently used (i.e. first entry)
-            if(map.size() > capacity) {
-                Integer lruKey = map.keySet().iterator().next();
-                map.remove(lruKey);
+            if(map.size() > capacity){
+                Integer lruKey = map.keySet().iterator().next();    map.remove(lruKey);
             }
         }
 
-        void display(){
-            System.out.println("Current cache state: "+ map);
-        }
+        void display(){     System.out.println("Current cache state: "+ map); }
     }
 
 

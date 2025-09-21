@@ -1,6 +1,12 @@
-### 🧱 **Representation of System:**
+## High Level Design (HLD): 
+Tells about overall architecture of a system.
+
+> **Pros of System Design:** Helps in providing abstraction and create reusable, maintainable, loosely-coupled, easily extendable, refactored code which is production ready and can include future changes as well.
 
 ---
+
+### 🧱 **Representation of System:**
+
 #### 1️⃣ **Class Diagram**
 Shows different *classes* and *objects* for different functionalities of a system.
 ```markdown
@@ -147,6 +153,14 @@ Used to store binary large objects like images, videos, and documents. Avoid sto
 * A distributed NoSQL database, which offers high **write throughput**, **scalability** and **availability**
 * It uses **CQL (Cassandra Query Language)**, whose syntax is similar to MySQL.
 
+### Docker
+* A platform that uses a Dockerfile to build images, which serve as blueprints for creating lightweight, portable containers that run applications (code+ libraries+ environment) consistently across environments.
+
+### Kubernetes
+* Manages containerized applications (like docker) across clusters through APIs.
+
+### Google Cloud Platform (GCP)
+Provides on-demand services for compute, storage, networking, databases, and AI/ML, enabling you to build, deploy, and scale applications.
 
 > **Terminology:**
 > * **Node:** A single machine running Cassandra
@@ -158,7 +172,7 @@ Used to store binary large objects like images, videos, and documents. Avoid sto
 ### 📬 Message / Processing/ Task Queue
 Used for asynchronous (multi-thread) communication between producers and consumers. It gives better performance as producer/ consumer works independently, loosely coupled. Example: Kafka (High performance data pipelines).
 
-**Workflow:** Producer sends task --> Queue stores it and assigns to server --> If delay, reassigns to next available server
+**Workflow:** Producer sends task --> Queue stores it and assigns to server --> If delayed, reassigns to next available server
 
 ---
 
@@ -240,6 +254,7 @@ Limits requests per client in given time window (e.g. 100 reqs/min). Like Redis 
 ---
 
 ## 🔐 Authentication & Authorization
+Securing webservices by limiting who can view or update data. 
 
 ### 🔑 Authentication
 Verifies user identity, like using OAuth, JWT (JSON Web Tokens, are stateless token passed in headers).

@@ -123,8 +123,10 @@ public class BinarySearch {
 
     // Median exist between 1-16 i.e. lowest in row[1st col] and highest in row[last col]. Now, each time find mid, apply binary search in each row to get ele smaller or larger than mid. If middle value then that's the ans, else if number of smaller values are more then r=mid-1, else right.
 
-    /* Binary Search on answers: If we are asked to find min or max value, and we know a definite range answer might lie and after/before a particular value all are answers from which we need to find min/max value.
-     */
+
+
+    /*------------------------------------------------------------------------------------------- Binary Search on answers: If we are asked to find min or max value, and we know a definite range answer might lie and after/before a particular value all are answers from which we need to find min/max value.
+     ---------------------------------------------------------------------------------------------*/
 
     /* Find nth root of a number m. */
     // m=16, n=4    => 2 {16^(1/4)}
@@ -148,7 +150,7 @@ public class BinarySearch {
     /* A monkey is given a[i] piles of bananas, having i bananas in each pile. Return minimum number of bananas a monkey need to eat for finishing all the bananas in h hours. Given that in a particular hour a monkey can eat only 1 pile of bananas. */
     // a[]= {3,6,7,11}, h=8  => 4 (1+2+2+3)
 
-    // In 1 hr, monkey can eat all bananas of pile i.e. max 11 bananas, and as slow as 1 banana in a hr. So, apply binary search, see min bananas need to eat, such that time shouldn't exceed h.
+    // In 1 hr, monkey can eat all bananas of pile i.e. max 11 bananas, and as slow as 1 banana in a hr. So, apply binary search (1,11), see min bananas need to eat, such that time shouldn't exceed h.
 
 
     /* Given a[] roses, each blooming at ith day. Return min days required to make m bouquet with k adjacent bloomed roses */

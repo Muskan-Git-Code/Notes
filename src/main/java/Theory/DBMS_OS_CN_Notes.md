@@ -126,14 +126,14 @@ Process of organizing data in database to avoid data redundancy/ duplication, in
 ---
 
 ## 📌 SQL Clauses
-| Clause | Use |
-|--------|-----|
-| `WHERE` | Row filtering |
-| `GROUP BY` | Aggregate grouping |
-| `HAVING` | Conditions on aggregates |
-| `ORDER BY` | Sorting |
-| `LIMIT`, `TOP`, `ROWNUM` | Row restriction |
-| `LIKE`, `IN`, `EXISTS` | Pattern & condition checking |
+| Clause | Use                           |
+|--------|-------------------------------|
+| `WHERE` | Row filtering before grouping |
+| `GROUP BY` | Aggregate grouping            |
+| `HAVING` | Conditions on aggregates      |
+| `ORDER BY` | Sorting                       |
+| `LIMIT`, `TOP`, `ROWNUM` | Row restriction               |
+| `LIKE`, `IN`, `EXISTS` | Pattern & condition checking  |
 
 > Use `HAVING` instead of `WHERE` with aggregate functions.
 
@@ -150,24 +150,26 @@ Specify rules for data during table creation/ modification; ensuring accuracy an
 | **FOREIGN KEY** | Reference another table |
 | **CHECK** | Enforce custom conditions |
 | **DEFAULT** | Provide default value |
-
 ---
 
 ## 🔤 DBMS Languages
-### 🏗️ DDL (Data Definition Language)
-- `CREATE`, `DROP`, `ALTER`, `TRUNCATE`, `RENAME`
+| Category | Command | Purpose | Example |
+|----------|---------|---------|---------|
+| 🏗️ **DDL** (Data Definition) | `CREATE` | Create new object | `CREATE TABLE Students(id INT, name VARCHAR(50));` |
+| | `DROP` | Delete object | `DROP TABLE Students;` |
+| | `ALTER` | Modify structure | `ALTER TABLE Students ADD age INT;` |
+| | `TRUNCATE` | Remove all rows, keep structure | `TRUNCATE TABLE Students;` |
+| | `RENAME` | Rename object | `ALTER TABLE Students RENAME TO Pupils;` |
+| 🧮 **DML** (Data Manipulation) | `INSERT` | Add data | `INSERT INTO Students VALUES (1, 'Muskan', 22);` |
+| | `UPDATE` | Modify data | `UPDATE Students SET age = 23 WHERE id = 1;` |
+| | `DELETE` | Remove data | `DELETE FROM Students WHERE id = 1;` |
+| 🔍 **DQL** (Data Query) | `SELECT` | Retrieve data | `SELECT name, age FROM Students WHERE age > 20;` |
+| 🔐 **DCL** (Data Control) | `GRANT` | Give permissions | `GRANT SELECT ON Students TO user1;` |
+| | `REVOKE` | Remove permissions | `REVOKE SELECT ON Students FROM user1;` |
+| 🔄 **TCL** (Transaction Control) | `COMMIT` | Save changes | `COMMIT;` |
+| | `ROLLBACK` | Undo changes | `ROLLBACK;` |
+| | `SAVEPOINT` | Mark point in transaction | `SAVEPOINT sp1;` |
 
-### 🧮 DML (Data Manipulation Language)
-- `INSERT`, `UPDATE`, `DELETE`
-
-### 🔍 DQL (Data Query Language)
-- `SELECT`
-
-### 🔐 DCL (Data Control Language)
-- `GRANT`, `REVOKE`
-
-### 🔄 TCL (Transaction Control Language)
-- `COMMIT`, `ROLLBACK`, `SAVEPOINT`
 
 ---
 
@@ -221,8 +223,26 @@ SELECT salary FROM emp ORDER BY salary DESC LIMIT 3, 1;     -- 4th highest salar
 (SELECT salary FROM emp ORDER BY salary DESC LIMIT 3, 1) UNION (SELECT salary FROM emp ORDER BY salary DESC LIMIT 5, 1);    -- return 4th, 6th highest salary
 
 SELECT utc_to_date(created_t), EXTRACT(YEAR FROM created_t) AS "Year" FROM emp;    -- return Date, year 
+
+select * into tempdb..Claims from Claims where id=3  -- putting elements into another table
+
+
 ```
 
+## 📊 SQL Query Examples
+
+| Query | Purpose |
+|-------|---------|
+| `SELECT MAX(salary) FROM emp;` | Find the **highest salary** in the `emp` table |
+| `SELECT MAX(salary), deptno FROM emp GROUP BY deptno;` | Find the **highest salary per department** |
+| `SELECT COUNT(*) FROM emp;` | Count **total number of employees** |
+| `SELECT COUNT(*), deptno FROM emp GROUP BY deptno HAVING COUNT(*) > 5;` | Count employees per department, only show if **more than 5 employees** |
+| `SELECT ename FROM emp WHERE ename LIKE '%M%';` | Find employees whose **name contains 'M'** |
+| `SELECT * FROM emp LIMIT 4;` | Fetch the **first 4 rows** |
+| `SELECT salary FROM emp ORDER BY salary DESC LIMIT 3, 1;` | Fetch the **4th highest salary** |
+| `(SELECT salary FROM emp ORDER BY salary DESC LIMIT 3, 1) UNION (SELECT salary FROM emp ORDER BY salary DESC LIMIT 5, 1);` | Fetch the **4th and 6th highest salaries** |
+| `SELECT utc_to_date(created_t), EXTRACT(YEAR FROM created_t) AS "Year" FROM emp;` | Convert UTC timestamp to **date** and extract **year** |
+| `SELECT * INTO tempdb..Claims FROM Claims WHERE id = 3;` | Copy record(s) into another table (here into `tempdb..Claims`) |
 ---
 
 # 🖥️ Operating System (OS), UNIX Commands & Networking
@@ -340,6 +360,7 @@ Too many page faults slow down the system.
 ### 🔧 Misc:
 * `date` → Current date & time
 * `ps -ef` → Process status
+* `kill -9 <port>` → Kill process at particullar port
 * `clear` → Clear screen
 
 ---

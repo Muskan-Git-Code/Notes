@@ -7,14 +7,12 @@ Explore different ways, and for base condition,
     - for count {l= f(); r= f(); return l+r;} there must be base where we are returning actual value to get added in end.
     - for min/ max {l= f(); r= f(); return Math.max(l, r); }, for base only returning edge cases will work.
 
-Dynamic Programming (DP): Algorithm used to solve problem by taking sequence of decisions for optimal choices (max, min, largest, smallest).
 Time complexity (TC) for recursion will always be exponential, below TC are for DP solutions.
 
 1. Recursion
 2. Recursion on grid
 3. Front Partition
 4. Subset
-
 */
 public class Recursion {
 
@@ -308,7 +306,7 @@ public class Recursion {
 
     // after sell, i+2 instead.
     int stocks4(int i, int buy, int prices[]){  // stocks4(0,1,prices);     // TC: O(n*n)
-        if(i==prices.length){   return 0; }
+        if(i>=prices.length){   return 0; }
 
         int profit=0;
         if(buy==1){ profit= Math.max(-prices[i]+ stocks4(i+1, 0, prices), stocks4(i+1, buy, prices)); }
@@ -430,7 +428,7 @@ public class Recursion {
 
 
 /*----------------------------------------------------------------------------------------------------------------------
-                                                     SUBSET (non-continous elements): For solving, Express everything in form of index and target.
+              SUBSET (non-continous elements): For solving, Express everything in form of index and target.
 ----------------------------------------------------------------------------------------------------------------------*/
 
     /* 0/1 Knapsack: Find maximum profit can carry in a bag of weight W, given n items having weight wt, and value val */
@@ -549,7 +547,7 @@ public class Recursion {
 
         int take=0; if(a[i]<=target){ take= minCoins(i, target-a[i], a); }
         int notTake= minCoins(i-1, target, a);
-        return take+ notTake;
+        return Math.min(take, notTake);
     }
 
 
@@ -604,7 +602,7 @@ public class Recursion {
     int commonStr(int i, int j, int ct, String x, String y){    // commonStr(x.length(), y.length(), 0, x, y);
         if(i==0 || j==0){   return ct; }
 
-        int take=0; if(x.charAt(i-1)==y.charAt(i-1)){   take= commonStr(i-1, j-1, ct+1, x, y); }
+        int take=0; if(x.charAt(i-1)==y.charAt(j-1)){   take= commonStr(i-1, j-1, ct+1, x, y); }
         int notTake= Math.max(ct, Math.max(commonStr(i-1, j, 0, x, y), commonStr(i, j-1, 0, x, y) ));
         return Math.max(take, notTake);
     }
@@ -826,7 +824,8 @@ public class Recursion {
 
 
 
-/*--------------------------------------------------------------------------------------------------------------------------------------FRONT PARTITION: Starting from begin, and check for partition each time. Used when we need to solve complete, but in some specific sequence. {Start with entire array, run loop k to try possible partition, ans}. Like for ABCD, we can solve like (A)(BCD), (AB)(CD), (ABC)(D) -----------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+FRONT PARTITION: Starting from begin, and check for partition each time. Used when we need to solve complete, but in some specific sequence. {Start with entire array, run loop k to try possible partition, ans}. Like for ABCD, we can solve like (A)(BCD), (AB)(CD), (ABC)(D) ---------------------------------------------------------------------------------------------------------------------*/
 
     /* Find number of palindromic substrings in given string s. */
     // s= aaa   => {a,a,a,aa,aa,aaa}

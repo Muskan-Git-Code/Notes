@@ -92,10 +92,6 @@ public class TwoPointer {
     }
 
 
-    /* Print values which gives max in sliding window of size k. */
-    // store index which give max till now, and in end print values through index.
-
-
     /* Find max earned points by taking k elements either from start or end. */
     // a[]= {3,2,3,4,5,6,1}, k=3    => 12 (1,6,5)
 
@@ -110,58 +106,6 @@ public class TwoPointer {
             mx= Math.max(mx, sum);
         }
         return mx;
-    }
-
-
-    /* Find median in sliding window of size k. */
-    // a[]= {1,3,-1,-3,5,3,6,7}, k=3    => {1,-1,-1,3,5,6}
-
-    // taking min and max heap, each time move element to min heap, then to max heap, then if maxheap size is greater than min heap so move element back to min heap. Store all values outside window in a map, and if top value is in map then remove it, and balance map again.
-    class MedianQues {
-        static PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
-        static Map<Integer, Integer> removedVals = new HashMap<>();
-
-        static List<Integer> median(int a[], int k) {
-            List<Integer> res = new ArrayList<>();
-            int i = 0, j = 0;
-
-            for (; j < k; j++) {    addNum(a[j]); } // first window
-            res.add(getMedian(k));
-
-            while (j < a.length) {
-                addNum(a[j]);   removeNum(a[i]);    i++;    j++;
-                res.add(getMedian(k));
-            }
-            return res;
-        }
-
-        static void addNum(int val) {
-            minHeap.add(val);
-            maxHeap.add(minHeap.remove());
-            if (maxHeap.size() > minHeap.size()) {  minHeap.add(maxHeap.remove()); }
-        }
-
-        static void removeNum(int val) {
-            removedVals.put(val, removedVals.getOrDefault(val, 0) + 1);     cleanHeap(maxHeap);     cleanHeap(minHeap);
-
-            while (minHeap.size() > maxHeap.size()) {   maxHeap.add(minHeap.remove()); }
-            while (maxHeap.size() > minHeap.size()) {   minHeap.add(maxHeap.remove()); }
-        }
-
-        static void cleanHeap(PriorityQueue<Integer> heap) {
-            while (!heap.isEmpty() && removedVals.containsKey(heap.peek())) {
-                int top = heap.peek();
-                removedVals.put(top, removedVals.get(top) - 1);
-                if (removedVals.get(top) == 0) {    removedVals.remove(top); }
-                heap.remove();
-            }
-        }
-
-        static int getMedian(int k) {
-            if (k % 2 == 1) {   return minHeap.peek(); }
-            else {  return (maxHeap.peek() + minHeap.peek()) / 2; }
-        }
     }
 
 
@@ -385,7 +329,7 @@ public class TwoPointer {
     /* Return number of subarrays having exactly k distinct elements. */
     // a[]= {1,2,1,2,3}, k=2    => 7 {(1,2), (2,1), (1,2), (2,3), (1,2,1), (2,1,2), (1,2,1,2)}
 
-    // subarrays having distinct element <= k. Then, ct+= (j-(i-1))
+    // subarrays having distinct element <= k. Then, ct+= (j-(i-1)). Exactly k elements= subarray(<= distinct k) - subarray(<= distinct k-1).
 
 
     /* Return number of subarrays having k odd number in it. */
@@ -465,15 +409,15 @@ public class TwoPointer {
     /*  Find the smallest range that can include atleast 1 number from each of the given lists. */
     // a[][]= {{4,10,15,24,26},{0,9,12,20},{5,18,22,30}}	=> {20,24}
 
-    // Add all in single list as (value, listNo). Then find min window having each list number.
+    // Add all in single arrayList as (value, listNo). Then find min window having each list number.
 
 
 
-    /* Prefix sum: Concept used if require recompilation/ previous sum, or not able to find window directly. {operation, calculate answer, add new prefix value in mp}. */
+    /* -----------------------------------------------------------------------------------------------Prefix sum: Concept used if require recompilation/ previous sum, or not able to find window directly. {operation, calculate answer, add new prefix value in mp}.                           ----------------------------------------------------------------------------------------------*/
 
     /* Count subarrays whose sum equals k, negative values allowed. */
 
-    // sumOfSubarray=k, means sum-k=0. So, count subarrays with sum-k values. Iterate through array, check if sum-k value already exist through map, and add the new sum.
+    // sumOfSubarray=k, means sum-k=0. So, count subarrays with sum-k values. Iterate through array, add new sum and check if sum-k value already exist through map.
     static int subarrCt(int a[], int k){
         int ct=0, sum=0;
         Map<Integer, Integer> map= new HashMap<>(); map.put(0, 1); // (sum, ct)
@@ -490,7 +434,7 @@ public class TwoPointer {
     // sum%k=0. Also, for -ve sum, modulo is still same, so while storing in map, we will consider its +ve value i.e. adding k more in it (rem%k = (rem+k)%k).
     static int divis(int a[], int k){
         int sum=0, ct=0, rem=0;
-        Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);
+        Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);   // (sum, ct)
         for(int i=0; i<a.length; i++){
             sum+= a[i]; rem= (sum+k)%k;     ct+= map.getOrDefault(rem, 0);
             map.put(rem, map.getOrDefault(rem, 0)+1);
@@ -504,7 +448,7 @@ public class TwoPointer {
     // this time in map store (sum, index), and return max instead of ct. This time its index, so we can't store 0 if not found. Also, storing only 1st occurence of a sum, so that we have max length in case if sum occurs again.
     static int maxSubarr(int a[], int k){
         int ix=0, sum=0, res=0;
-        Map<Integer, Integer> map= new HashMap<>();     map.put(0, -1); // if sum 0, then max index can be from starting.
+        Map<Integer, Integer> map= new HashMap<>();     map.put(0, -1); // (sum, index); if sum 0, then max index can be from starting.
         for(int i=0; i<a.length; i++){
             sum+= a[i];
             if(map.containsKey(sum-k))  res= Math.max(res, i- map.get(sum-k));  // (currentIndex - index of sum-k)
@@ -537,7 +481,7 @@ public class TwoPointer {
     // multiple of k, means rem=0 i.e. sum%k=0. Also, length should be >=2.
     static boolean multiple(int a[], int k){
         int rem=0, sum=0;
-        Map<Integer, Integer> map= new HashMap<>();
+        Map<Integer, Integer> map= new HashMap<>();     // (rem, ix)
 
         for(int i=0; i<a.length; i++){
             sum+= a[i]; rem= (sum)%k;
@@ -554,7 +498,7 @@ public class TwoPointer {
     // xor of subarray=k. So, xor^k=0;
     static int xor(int a[], int k){
         int ct=0, xor=0;
-        Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);
+        Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);   // (xor, ct)
 
         for(int i=0; i<a.length; i++){
             xor^= a[i];
@@ -590,7 +534,7 @@ public class TwoPointer {
     // no of elements occuring odd no of times <= 1. We can't leave a value directly as further there might be 1 more occurence, so prefix sum.
     // bitmask for bits from a to z, if bit=1 means odd freq. So, 2 valid cases i.e. (prevMask^currMask)=0 means all even, and Integer.bitCount(prevMask^currMask)=1 means one odd.
     static int occOdd(String s){
-        int ct=0, curr=0;   Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);
+        int ct=0, curr=0;   Map<Integer, Integer> map= new HashMap<>(); map.put(0,1);   // (prevMask^currMask, ct)
         for(int i=0; i<s.length(); i++){
             curr^= (1<<(s.charAt(i)-'a'));  // toggle curr bit, i.e. found one more occ.
 

@@ -1,27 +1,7 @@
 package DSAPrograms;
-
 import java.util.*;
 
-
-/* Graph: Non-Linear data structure consisting of nodes and edges. Example: Path in a city, Telephonic/ Circuit network.
-Graph can be directed (Each edge has a direction (i.e. (u,v), (v,u) are different)) and undirected graph.
-Degree of Vertex= InDegree+ outDegree (number of nodes incident from/ to that node)
-
-Graph Traversal: BFS (Shortest Path algorithm, Dijkstra), DFS (Topological sort, Cycle detection).
-DFS (Depth First Traversal): Traverse all nodes of a graph depth wise. TC: O(V+E), SC: O(V)
-BFS (Breadth First/ Level Order Traversal): Traverse all nodes of a graph level wise. O(V+E)
-
-Dijkstra: Find shortest path using priority queue. Works with Weighted, non-negative graphs. TC: O((V+E)logV), SC: O(V).
-Topological sort - Sort vertices of directed acyclic graph.
-*/
-
-
 public class Graph {
-
-    /* A graph can be represented in form of:
-        - Adjacency Matrix: int mat[][];    mat[x][y]=1;    means there is an edge from (x to y)
-        - Adjacency List: List<List<Integer>> list;     list.get(x)= y1, y2; means node x has an edge to y1, y2.
-    */
 
     /* Convert matrix to adj list. */
 
@@ -285,22 +265,22 @@ public class Graph {
     // Proper weights and need to choose path so dijkstra. Also, possible that lesser cost comes with more dis.
     class Roads{    // O(ElogV)
         class Pair{
-            int node;   int dis;   int stops;
-            Pair(int node, int cost, int stops){    this.node= node;    this.dis= cost;    this.stops= stops; }
+            int node;   int cost;   int stops;
+            Pair(int node, int cost, int stops){    this.node= node;    this.cost= cost;    this.stops= stops; }
         }
 
         int roadWay(int n, List<List<List<Integer>>> adj, int src, int dst, int k){
-            PriorityQueue<Pair> pq= new PriorityQueue<>( (p1, p2)-> {   return Integer.compare(p1.dis, p2.dis); });
+            PriorityQueue<Pair> pq= new PriorityQueue<>( (p1, p2)-> {   return Integer.compare(p1.cost, p2.cost); });   // heap acc to min cost
 
             pq.add(new Pair(src, 0, 0));
             while(!pq.isEmpty()){
-                Pair curr= pq.remove();   int node= curr.node, dis= curr.dis, stops= curr.stops;
+                Pair curr= pq.remove();   int node= curr.node, cost= curr.cost, stops= curr.stops;
                 if(stops>k){    continue; }
-                if(node==dst){  return dis; }
+                if(node==dst){  return cost; }
 
                 for(int i=0; i<adj.get(node).size(); i++){
-                    int neiNode= adj.get(node).get(i).get(0);   int neiDis= adj.get(node).get(i).get(1);
-                    pq.add(new Pair(neiNode, dis+ neiDis, stops+1));
+                    int neiNode= adj.get(node).get(i).get(0);   int neiCost= adj.get(node).get(i).get(1);
+                    pq.add(new Pair(neiNode, cost+ neiCost, stops+1));
                 }
             }
             return -1;
@@ -334,6 +314,17 @@ public class Graph {
             return ct[dst];
         }
     }
+
+
+    /* Find minimum number of cities need to travel from city A, B to reach city D. Consider they can take common path as well for reducing total number of cities. */
+    //    A   —   F
+    //    |        \
+    //    C — E  –- D
+    //    |         |
+    //    B –- G  — H           => ans =5 {possible path = (AFD, ACED), (BGHD, BCED); so min cities= ABCED}
+
+    // Consider a common point x. required min dis= dis[A->x]+ dis[B->x]+ dis[D->x].
+    // Find distance from A, B, D to every other node. Put each city instead of x, and check min distance.
 
 
     /* Find the shortest path from source node 0, to all nodes going through only different path color from current path. Given 2 color paths i.e. Red and Blue. */
@@ -704,7 +695,7 @@ public class Graph {
         for(int i=0; i<adj.get(x).size(); i++){
             int nei= adj.get(x).get(i);
             if(vis[nei]==0){    if(undirCycle(nei, x, adj, vis)){   return true; } }
-            else if(nei!=par){  return true; }
+            else if(nei!=par){  return true; }  // if node already vis, and nei is not parent i.e. cycle
         }
         return false;
     }

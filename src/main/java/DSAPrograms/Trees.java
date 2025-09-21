@@ -1,23 +1,6 @@
 package DSAPrograms;
-
 import java.util.*;
 
-/*
- Trees: Non-Linear data structure consisting of n nodes and n-1 edges. Trees doesn't contains cycle. Example: Hashing, An organization containing people at diff levels like president, vise president, teachers, students.
- Binary Tree: Tree where each node have atmost 2 nodes.
- Binary Search Tree (BST): Sorted binary tree.
- Max heap:  Value at each node is larger than their child nodes. And vise-versa for min heap.
-
-Depth First search (DFS):
-    1. Inorder Traversal (left -> root -> right): Sort traversal of BST.
-    2. Preorder Traversal (root -> left -> right).
-    3. Postorder Traversal (left -> right -> root).
-Breadth First Traversal (BFS): Printing elements breadth/ levelwise.
-
- Predecessor (Node just before given node in inorder traversal). Successor (Node after given node in inorder traversal).
-
- Trie: Tree like structure used to store dynamic strings usually.
-*/
 public class Trees {
 
     class Node{
