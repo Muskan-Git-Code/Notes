@@ -53,18 +53,18 @@ Define how data is logically structured, stored, and accessed.
 
 ## 📐 Relational Algebra
 
-| Operator     | Symbol | Description                                                                | SQL Query                                                                                                                                                 |
-|--------------|------|----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Union**        | ∪    | A or B                                                                     | `SELECT empname FROM emp1 UNION SELECT empname FROM emp2;`                                                                                                |
-| **Intersection** | ∩    | A and B                                                                    |                                                                                                                                                           |
-| **Set Difference** | − | Tuples in one table but not in another                                     | `SELECT empname FROM emp1 WHERE empname NOT IN (SELECT empname FROM emp2);`                                                                               |
-| **Division** | ÷ | Find entries related to a common attribute | `SELECT COUNT(*), deptno FROM emp GROUP BY deptno HAVING COUNT(*)>5;`                                                         |
-| **Natural Join** | ⋈ | Join on all common attributes                                              | `SELECT * FROM emp NATURAL JOIN dept;`                                                                                                                    |
-| **Inner Join (Equi Join)** | ⋈ | Joins on a condition (equality)                                            | `SELECT * FROM emp INNER JOIN dept ON emp.dno = dept.dno;`                                                                                                |
-| **Left Outer Join** | ⟕ | All rows from left table + matched from right                              | `SELECT * FROM emp LEFT OUTER JOIN dept ON emp.dno = dept.dno;`                                                                                           |
-| **Right Outer Join** | ⟖ | All rows from right table + matched from left                              | `SELECT * FROM emp RIGHT OUTER JOIN dept ON emp.dno = dept.dno;`                                                                                          |
-| **Full Outer Join** | ⟗ | All rows from both sides with NULL where no match                          | `SELECT * FROM emp FULL OUTER JOIN dept ON emp.dno = dept.dno;`  |
-| **Self Join** | - | Joining table with itself                                                  | `SELECT A.empname, B.empname FROM emp A, emp B WHERE A.manager_id = B.emp_id;`                                                                            |
+| Operator     | Symbol | Description                                       | SQL Query                                                                                                                                                 |
+|--------------|------|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Union**        | ∪    | A or B                                            | `SELECT empname FROM emp1 UNION SELECT empname FROM emp2;`                                                                                                |
+| **Intersection** | ∩    | A and B                                           |                                                                                                                                                           |
+| **Set Difference** | − | Tuples in one table but not in another            | `SELECT empname FROM emp1 WHERE empname NOT IN (SELECT empname FROM emp2);`                                                                               |
+| **Division** | ÷ | Find entries related to a common attribute        | `SELECT COUNT(*), deptno FROM emp GROUP BY deptno HAVING COUNT(*)>5;`                                                         |
+| **Natural Join** | ⋈ | Join on all common attributes                     | `SELECT * FROM emp NATURAL JOIN dept;`                                                                                                                    |
+| **Inner Join (Equi Join)** | ⋈ | Joins on an equality condition         | `SELECT * FROM emp INNER JOIN dept ON emp.dno = dept.dno;`                                                                                                |
+| **Left Outer Join** | ⟕ | All rows from left table + matched from right     | `SELECT * FROM emp LEFT OUTER JOIN dept ON emp.dno = dept.dno;`                                                                                           |
+| **Right Outer Join** | ⟖ | All rows from right table + matched from left     | `SELECT * FROM emp RIGHT OUTER JOIN dept ON emp.dno = dept.dno;`                                                                                          |
+| **Full Outer Join** | ⟗ | All rows from both sides with NULL where no match | `SELECT * FROM emp FULL OUTER JOIN dept ON emp.dno = dept.dno;`  |
+| **Self Join** | - | Joining table with itself                         | `SELECT A.empname, B.empname FROM emp A, emp B WHERE A.manager_id = B.emp_id;`                                                                            |
 
 ---
 
@@ -73,10 +73,10 @@ Define how data is logically structured, stored, and accessed.
 |----------------------|-----------------------------------------|
 | **Super Key**        | Uniquely identifies tuples              |
 | **Candidate Key**    | Minimal super key                       |
+| **Prime Attribute**  | Attributes used in making candidate key |
 | **Primary Key (PK)** | Chosen one of the candidate key         |
 | **Alternate Key**    | Candidate key not chosen as PK          |
 | **Foreign Key (FK)** | References PK in another table          |
-| **Prime Attribute**  | Attributes used in making candidate key |
 
 ---
 
@@ -251,7 +251,7 @@ select * into tempdb..Claims from Claims where id=3  -- putting elements into an
 System software that manages computer hardware and helps application programs to run. Example: DOS, WINDOWS, LINUX/UNIX.
 
 ### ⚙️ Booting Process:
-OS is loaded by BIOS (Basic Input Output System) to initialize hardware during booting process (loading OS from secondary storage (HDD/SSD) to main memory (RAM)).
+OS is loaded by BIOS (Basic Input Output System) to initialize hardware during booting process (loading OS from secondary storage (HDD/SSD Disk) to main memory (RAM)).
 
 ### 📋 Program vs Process:
 * **Program**: A passive set of instructions.
@@ -299,9 +299,9 @@ Gives control of the CPU to the process selected by the short-term scheduler.
 * **Segmentation**: Memory divided into variable-size segments.
 
 ### 🌐 Virtual Memory:
-Large programs run using pages/segments loaded on demand:
-* **Demand Paging**
-* **Demand Segmentation**
+Allows large programs to run by loading only required pages or segments into main memory on demand, using:
+* **Demand Paging:** Loads pages only when needed.
+* **Demand Segmentation:** Loads segments only when needed.
 
 ### Pagination
 Display data page wise.
@@ -312,10 +312,10 @@ Refers to inefficient use of memory, where available memory is fragmented (i.e. 
 * **External**: Unusable scattered free space (Solved by Paging)
 
 ### ⚠️ Page Fault:
-Accessing a page which is not available in main memory.
+Accessing a page which is not available in main memory (RAM).
 
 ### 🔁 Thrashing:
-Too many page faults slow down the system.
+Occurs when the system spends more time swapping pages between RAM and disk than executing tasks, due to frequent page faults.
 
 ### 🔄 Page Replacement Algorithms:
 * **FIFO**: First In First Out

@@ -275,16 +275,13 @@ class NullCustomer implements Customer { public void buy(){System.out.println("G
 public class EcommerceDemo {
     public static void main(String[] args) {
         // Singleton
-        CartService cart = CartService.getInstance();
-        cart.addItem("Laptop");
+        CartService cart = CartService.getInstance();   cart.addItem("Laptop");
 
         // Factory
-        Payment payment = PaymentFactory.getPayment("UPI");
-        payment.pay(1000);
+        Payment payment = PaymentFactory.getPayment("UPI");     payment.pay(1000);
 
         // Abstract Factory
-        UIFactory factory = new WebUIFactory();
-        factory.createButton().render();
+        UIFactory factory = new WebUIFactory();     factory.createButton().render();
 
         // Builder
         Order order = new Order.Builder().item("Phone").qty(1).coupon("NEW50").build();
@@ -300,13 +297,11 @@ public class EcommerceDemo {
         gift.show();
 
         // Proxy
-        Product img = new ProductImageProxy("laptop.png");
-        img.show();
+        Product img = new ProductImageProxy("laptop.png");  img.show();
 
         // Composite
         Category electronics = new Category("Electronics");
-        electronics.add(new BasicProduct("Camera"));
-        electronics.add(new BasicProduct("TV"));
+        electronics.add(new BasicProduct("Camera"));    electronics.add(new BasicProduct("TV"));
         electronics.show();
 
         // Flyweight
@@ -314,12 +309,10 @@ public class EcommerceDemo {
 
         // Observer
         ProductStock ps = new ProductStock("iPhone");
-        ps.addObserver(new User("Muskan"));
-        ps.restock();
+        ps.addObserver(new User("Muskan"));     ps.restock();
 
         // Mediator
-        Mediator mediator = new OrderMediator();
-        mediator.notify("Payment Success");
+        Mediator mediator = new OrderMediator();    mediator.notify("Payment Success");
 
         // State
         OrderContext ctx = new OrderContext();

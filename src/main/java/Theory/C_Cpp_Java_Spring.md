@@ -92,8 +92,8 @@ void fn() {
 * **Serialization:** Conversion of Object to Byte stream
 * **Deserialization:** Conversion of Byte stream to Object
 ```
-@RequestBody User user    // JSON to Object (Deserialization)
-@ResponseBody User user   // Object to JSON (Serialization)
+@RequestBody User user    // byte stream to Object (Deserialization)
+@ResponseBody User user   // Object to byte stream (Serialization)
 ```
 
 > **For adding logger:** Logs data (warn, info, debug, error). Example: Logger logger = LoggerFactory.getLogger(className.class);
@@ -142,7 +142,7 @@ Specifies scope of variable or method.
 ---
 
 ## Wrapper Classes and Boxing
-Used to treat primitives as objects (helpful in collections, etc.).
+Used to treat primitives as objects (Boxing), and vise-versa (UnBoxing). It is helpful in collections.
 
 | Primitive | Wrapper |
 |-----------|---------|
@@ -245,8 +245,7 @@ Help in writing clean, maintainable, and scalable code.
 * Example: Car class having objects as color, wheel, engine.
 
 ## 2. Encapsulation (Data Biding)
-* Wraps function call to its appropriate function definition, keeping internal details hidden from outside access.
-* Can be achieved through private and public getter/setters (used to get private members outside class).
+* Wraps function call to its appropriate function definition.
 * It can be **Early/ Static/ Compile time binding** (Wraps at compile time) and **Late/ Dynamic/ Runtime Binding** (Wraps at runtime).
 
 ## 3. Abstraction
@@ -429,8 +428,11 @@ Register the driver class → Create the connection, Statement object → Execut
 
 ---
 
-## Multithreading in Java
-Allows executing multiple threads (lightweight processes) concurrently (side by side). Used in games, animations, etc, for better CPU utilization.
+### Process
+A program in execution.
+
+## Multithreading
+Allows executing multiple threads (lightweight processes, shares same address space) concurrently (side by side). Used in games, animations, etc., for better CPU utilization.
 
 ### Thread Lifecycle States
 1. **New**: Thread is created
@@ -453,7 +455,7 @@ class A extends Thread {
 
 ## Synchronous vs Asynchronous
 * **Synchronous:** (Single thread) One task at a time, blocking
-* **Asynchronous:** Multiple tasks in parallel, non-blocking
+* **Asynchronous:** Multiple tasks in parallel, non-blocking mechanism.
 
 ---
 

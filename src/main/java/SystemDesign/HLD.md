@@ -90,8 +90,7 @@ Handling large amount of requests at once and responds quickly with the latest i
 **Hashing:** Mapping keys and values into the hash table using hash function (map xth request at server of `index = x % n`)
 
 **Consistent Hashing:**
-* Distributes data across servers on a virtual hash ring.
-* Minimal reorganization (as automatically routes to next server in the ring if a node fails), and More consistent (as ensures same request maps to the same server)
+* Distributes data across servers on a virtual hash ring, with minimal reorganization (as automatically routes to next server in the ring if a node fails), and More consistent (as ensures same request maps to the same server)
 * Requires strong hash function, otherwise may have uneven data distribution
 
 ---
@@ -185,7 +184,7 @@ Used for asynchronous (multi-thread) communication between producers and consume
 
 ---
 
-### 🧬 Indexing, Replication & Sharding
+### 🧬 Database Management Techniques:
 
 **Indexing:** Fast data retrieval technique using key-value mappings.
 
@@ -209,9 +208,7 @@ Stores frequently accessed data for quick retrieval. It reduces DB load, and imp
 * **Global Cache:** Shared cache, more accurate and consistent.
 
 
-**Cache Policies:** Decides when to load/evict data from cache to ensure it has most relevant data.
-* **LRU (Least Recently Used)**: Having only recently used data.
-* **LFU (Least Frequently Used):** Having only frequently used data.
+**Cache Policies:** Decides when to load/evict data from cache to ensure it has most relevant data, like **LRU** (Least Recently Used data), **LFU** (Least Frequently Used data).
 
 
 **Write Strategies:**
@@ -237,7 +234,7 @@ In real system when there is lot of data, it ensures system is not overburdened.
 ### 🧩 Scaling Systems
 To handle high request volumes:
 ```text
-Client Request through browser → DNS (for knowing IP of website) → Message Queue (for buffer time, notify when consumer is available) → Load Balancer (routes traffic) → Application Server → Database (Handles large data requests) → Caching (faster data access)
+Client Request through UI → DNS (for knowing IP of website) → Message Queue (for buffer time, notify when consumer is available) → Load Balancer (routes traffic) → Application Server (Scaling) → Database (Handles large data requests) → Caching (faster data access)
 ```
 
 ---
