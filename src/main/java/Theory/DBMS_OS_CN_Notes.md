@@ -197,37 +197,13 @@ If all below 4 condition satisfy then deadlock may occur.
 | **Avoid**                                   | Banker’s Algorithm (Allocates resources only if all processes can complete their execution without causing a deadlock)                                                                        |
 
 > **Resource Allocation Graph:** A deadlock detection method, i.e. directed graph between processes, having resource as weights on each edge
-
 ---
 
 ## 🛠️ Handling Concurrency Use Cases
 - **Same seat booking**: Use DB Locking (Shared and exclusive lock), Sync keyword or Mutual Exclusion
 - **Bank transfer failure**: Use `COMMIT` and `ROLLBACK` i.e. commit changes only after process is completed.
 - **Replication failure (while replicating data in D1, D2, D3):** Commit after update in all nodes
-
 ---
-
-## 📊 SQL Query Examples
-
-```sql
-SELECT MAX(salary) FROM emp;
-SELECT MAX(salary), deptno FROM emp GROUP BY deptno;
-
-SELECT COUNT(*) FROM emp;
-SELECT COUNT(*), deptno FROM emp GROUP BY deptno HAVING COUNT(*) > 5;
-
-SELECT ename FROM emp WHERE ename LIKE '%M%';
-SELECT * FROM emp LIMIT 4;      -- first 4 rows
-SELECT salary FROM emp ORDER BY salary DESC LIMIT 3, 1;     -- 4th highest salary
-
-(SELECT salary FROM emp ORDER BY salary DESC LIMIT 3, 1) UNION (SELECT salary FROM emp ORDER BY salary DESC LIMIT 5, 1);    -- return 4th, 6th highest salary
-
-SELECT utc_to_date(created_t), EXTRACT(YEAR FROM created_t) AS "Year" FROM emp;    -- return Date, year 
-
-select * into tempdb..Claims from Claims where id=3  -- putting elements into another table
-
-
-```
 
 ## 📊 SQL Query Examples
 

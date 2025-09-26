@@ -302,7 +302,7 @@ public class Recursion {
     }
 
 
-    /* Find max profit if allowed to buy and sell stock any number of times, But cannout buy next day after sell. */
+    /* Find max profit if allowed to buy and sell stock any number of times, But cannot buy next day after sell. */
 
     // after sell, i+2 instead.
     int stocks4(int i, int buy, int prices[]){  // stocks4(0,1,prices);     // TC: O(n*n)
@@ -412,7 +412,7 @@ public class Recursion {
     }
 
 
-    /* Find max points possible to collect in n days, given we can perform only 1 activity out of 3 different activities, and you cannout do same activity on next day. */
+    /* Find max points possible to collect in n days, given we can perform only 1 activity out of 3 different activities, and you cannot do same activity on next day. */
     // a[][]= {{10,50,1},{5,100,11}}    => 110 {10+100}
 
     // same task can't be performed next day
@@ -480,7 +480,7 @@ public class Recursion {
     // nums[]= {4,3,2,3,5,2,1}, k=4     => true i.e. {(5), (1,4), (2,3), (2,3)}
 
     // sumReq= TotalSum/k. Means if value not taken then allowed to take, and if valid result the move to find another subset.
-    boolean ksubsets(int i, int target, int reqSum, int nums[], int k, int vis[]){     // ksubsets(0, totalSum/k, totalSum/k, nums, k, vis);
+    boolean ksubsets(int i, int target, int reqSum, int nums[], int k, int vis[]){     // ksubsets(0, totalSum/k, totalSum/k, nums, k, vis);        // TC: O(n* (2^n)), SC: O(2^n)
         if(k==0){   return true; }
         if(i==nums.length){    if(target==0){   return ksubsets(0, reqSum, reqSum, nums, k-1, vis); }   return false; }
 

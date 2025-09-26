@@ -2,8 +2,6 @@ package SpringBootExample;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
 import java.util.*;
 
 @RestController
@@ -25,7 +23,7 @@ public class ProductController {
             @RequestParam(defaultValue = "id,asc") String[] sort
     ) {
         List<Product> products= service.getProducts(name, category, page, size, sort);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        return new ResponseEntity<>(products, null, HttpStatus.OK);
     }
 
     // POST /api/products
@@ -38,18 +36,18 @@ public class ProductController {
     }
 
     // GET Product by id: GET /api/products/{id}
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Optional<Product> product = service.getById(id);
+    @GetMapping("/{name}")
+    public ResponseEntity<Product> getProduct(@PathVariable String name) {
+        Optional<Product> product = service.getByName(name);
 
         if(product.isPresent()){    return new ResponseEntity<>(product.get(), HttpStatus.OK); }
         return ResponseEntity.notFound().build();
     }
 
     // PUT /api/products/{id}
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        Optional<Product> updated = service.updateProduct(id, product);
+    @PutMapping("/{name}")
+    public ResponseEntity<Product> updateProduct(@PathVariable String name, @RequestBody Product product) {
+        Optional<Product> updated = service.updateProduct(name, product);
 
         if(updated.isPresent()){    return new ResponseEntity<>(updated.get(), HttpStatus.OK); }
         return ResponseEntity.notFound().build();
@@ -67,15 +65,6 @@ public class ProductController {
     // calling expernal api
     @GetMapping("/call-external-api")
     public ResponseEntity<String> callExternalApi() {
-
-        String url = "https://jsonplaceholder.typicode.com/posts/1";
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();    headers.set("Accept", "application/json");
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);   // (header, body) if given
-
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);      // (url, httpMethod, request, class)
-
-        return new ResponseEntity<>(response.getBody(), headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(service.callExternalApi(), null, HttpStatus.CREATED);
     }
 }

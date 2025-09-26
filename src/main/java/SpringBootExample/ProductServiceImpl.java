@@ -1,7 +1,12 @@
 package SpringBootExample;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import java.lang.reflect.Field;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.*;
 
 @Service
@@ -14,8 +19,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> getById(Long id) {
-        return repo.findById(id);
+    public Optional<Product> getByName(String name) {
+        return repo.findByName(name);
     }
 
     @Override
@@ -24,9 +29,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> updateProduct(Long id, Product newProduct) {
+    public Optional<Product> updateProduct(String name, Product newProduct) {
 
-        Optional<Product> val= repo.findById(id);
+        Optional<Product> val= repo.findByName(name);
         if(val.isPresent()){
             // update the existing product and return
             Product existing= val.get();    existing.setName(newProduct.getName());     existing.setCategory(newProduct.getCategory());     existing.setPrice(newProduct.getPrice());
@@ -40,44 +45,33 @@ public class ProductServiceImpl implements ProductService {
         repo.deleteById(id);
     }
 
-    // fetch products, filtering, sorting, pagination
+    // fetch products via filtering, sorting, pagination
     @Override
     public List<Product> getProducts(String name, String category, int page, int size, String sort[]) {
-        try{
-            List<Product> allProducts = repo.findAll();
+        String sortBy = sort[0] != null ? sort[0] : "id"; // default column
+        String dir = sort[1] != null ? sort[1].toUpperCase() : "ASC"; // default direction
 
-            // Filtering
-            List<Product> filtered = new ArrayList<>();
-            for(int i=0; i<allProducts.size(); i++) {
-                Product p= allProducts.get(i);
-                if( (name==null || p.getName().equalsIgnoreCase(name)) && (category==null || p.getCategory().equalsIgnoreCase(category)) ){     filtered.add(p); }
-            }
-
-            // Sorting
-            if (sort != null && sort.length == 2) {
-                String sortBy = sort[0];
-                String direction = sort[1].toLowerCase();
-
-                Field field= Product.class.getDeclaredField(sortBy);
-                filtered.sort( (p1, p2) -> {
-                    try {
-                        Comparable val1= (Comparable)field.get(p1);
-                        Comparable val2= (Comparable)field.get(p2);
-
-                        if(direction.equals("asc")){    return val1.compareTo(val2); }
-                        return val2.compareTo(val1);
-                    } catch (Exception e) {}
-                    return 0;
-                });
-            }
-
-            // Pagination
-            int start= page*size;   int end= Math.min(start+size, filtered.size());
-            if(start >= filtered.size()){   return new ArrayList<>(); } // outOfRange
-            return filtered.subList(start, end);
+        Sort.Direction direction;
+        try {
+            direction = Sort.Direction.valueOf(dir);
+        } catch (IllegalArgumentException e) {
+            direction = Sort.Direction.ASC; // fallback if wrong value
         }
-        catch (Exception e){}
-        return null;
+
+        Pageable pageable = PageRequest.of(page, size, direction, sortBy);  // Sorting, Pagination
+        return repo.findByFilters(name, category, pageable).getContent();   // filtration directly by query
+    }
+
+    @Override
+    public String callExternalApi() {
+        String url = "https://jsonplaceholder.typicode.com/posts/1";
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();    headers.set("Accept", "application/json");
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);   // (header, body) if given
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);      // (url, httpMethod, request, class)
+
+        return response.getBody();
     }
 }
 
