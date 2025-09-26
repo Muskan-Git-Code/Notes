@@ -358,17 +358,9 @@ class Demo{
 
 5. **@Override Annotation:** Safety check which indicates method intentionally overrides superclass method.
 
-6. **Field class:** Represents class member variable (field) at runtime.
-```java
-// Get 'price' field from 'Product' class at runtime (even if it's private member)
-Field field= Product.class.getDeclaredField("price");
+6. **Field class:** Represents class member variable (field) at runtime. `Field field= Product.class.getDeclaredField("price");   field.getName();`
 
-// get field values from Object
-Comparable f1= (Comparable)field.get(p1);   Comparable f2= (Comparable)field.get(p2);
-
-// Compare fields without knowing datatype
-int x= f1.compareTo(f2);
-```
+7. **Pageable:** Returns abstract pagination information. `Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, sortBy);`
 ---
 
 ## Exception Handling
@@ -639,39 +631,12 @@ An API designed for continuous data streams instead of single request. It can be
 * **Unit Test**: Tests individual modules
 * **Integration Test**: Tests combined modules
 
-Mockito: Tests by clone/mock objects of java application.
 * `@SpringBootTest(classes = ApiApplication.class)`: Loads context of the main ApiApplication class (with `@SpringBootApplication` annotation) for testing.
-* `@AutoConfigureMockMvc`: Enables MockMvc auto-configuration for testing without starting server.
-* `MockMvc`: Mocks HTTP calls for REST API testing.
 * `@Before`, `@BeforeEach`: Run before each method
 * `@BeforeClass`,`@BeforeAll`: Runs once before executing all test methods
 * `when().thenReturn()`, `when().thenThrow()`: Mock to return specific values.
 * `Assertions.assertEquals(expected, actual)`: Checks if both equal.
 * `@Test`:	Marks a method as a test case.
-* `MvcResult`: Captures result of MockMvc request for further assertions.
-
-
-#### Example: 
-mockMvc to perform get url with given params, and expect given status/ path to return.
-```java
-MvcResult result= mockMvc.perform(get("/api/products/"+ saved.getId()))
-        .param("name", "Keyboard")
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.name", is("Mouse")))
-        .andReturn();
-```
-
-mockMvc to perform post/put url, with given header, contentType to expect a specific result and return.
-```java
-MvcResult result = mockMvc.perform(put("/api/products/" + saved.getId())
-                .header("X-Custom-Header", "my-header-value")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(updatedProduct)))
-          .andExpect(status().isOk())
-          .andExpect(jsonPath("$.name", is("Tablet Pro")))
-          .andExpect(jsonPath("$.price", is(500.0)))
-          .andReturn();
-```
 
 ---
 

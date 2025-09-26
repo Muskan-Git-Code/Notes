@@ -222,7 +222,6 @@ In real system when there is lot of data, it ensures system is not overburdened.
 * **Filtering:** Filtering data by location, rating, etc. Example: `GET /products?category=electronics&brand=sony,samsung`
 * **Pagination:** Return 10–20 items per API call using `offset/limit` in sql. Example of API: `GET /products?page=2&size=10`
 * **Sorting:** Let client sort data based on a parameter. Example: `GET /products?sort=-price,name` (i.e. sort by price in desc and name by asc)
-
 ---
 
 ### 🖥️ Server Types
