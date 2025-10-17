@@ -125,21 +125,20 @@ Handling large amount of requests at once and responds quickly with the latest i
 
 ---
 
-### 📂 SQL vs NoSQL Database
-**SQL** is used for structured data with RDBMS ensuring **ACID properties**, faster updates, and handling complex queries.
+### 📂 Databases
+1. **SQL DB** (like MySQL, PostgreSQL) is used for structured data with RDBMS ensuring ACID properties, faster updates, and handling complex queries. 
 
-**NoSQL** is for distributed, unstructured data (like document-oriented, graph-based). It supports dynamic schema and offers faster insertions and retrievals.
+2. **NoSQL DB** (like MongoDB, Cassandra) is for distributed, unstructured data, offers dynamic schema with faster insertions and retrievals.
 
-> If database looks same for all values then SQL, else NoSQL. Example: Question-answer form where questions can be MCQ or string answers, can be stored in NoSQL.
+3. **Graph DB** (like Neo4j) is for interconnected data. Example: social networks, recommendations, fraud link analysis.
+
+4. **Time-Series DB** (like TimescaleDB) is for time-stamped data. Example: Metrics, Monitoring and IOT sensor data.
+
+5. **Blob/File Storage** (like AWS S3, GCP, CDN) is for storing large binary objects like images, videos, documents.
+
+> If database looks same for all values then SQL, else NoSQL. Example: Question-answer form where questions can be MCQ or string answers, can be stored in NoSQL. If SQL, then can store image link instead of image itself.
 
 ---
-
-### 🗃️ Blob/ File Storage
-Used to store binary large objects like images, videos, and documents. Avoid storing bulky files, store file links instead.
-* **Examples:** Amazon S3 (AWS Cloud Storage), Microsoft Azure, Google Cloud Storage, CDN (Content Delivery Network)
-
----
-
 **S3 (AWS Cloud Storage)**: Offers scalability, availability, security, and performance through s3 buckets in diff regions.
 
 **CDN (Content Delivery Network)**: A geographically distributed proxy servers used to provide high availability and performance, like video/image streaming, caching.
@@ -147,8 +146,7 @@ Used to store binary large objects like images, videos, and documents. Avoid sto
 ✅ Combination of **S3 + CDN** is a good approach to get low latency + high availability
 
 ---
-
-### 📂 Cassandra
+### Cassandra
 * A distributed NoSQL database, which offers high **write throughput**, **scalability** and **availability**
 * It uses **CQL (Cassandra Query Language)**, whose syntax is similar to MySQL.
 
@@ -161,7 +159,7 @@ Used to store binary large objects like images, videos, and documents. Avoid sto
 ### Google Cloud Platform (GCP)
 Provides on-demand services for compute, storage, networking, databases, and AI/ML, enabling you to build, deploy, and scale applications.
 
-> **Terminology:**
+> 🗃️ **Terminology:**
 > * **Node:** A single machine running Cassandra
 > * **Cluster:** Collection of nodes with related data
 > * **DataCenter:** Grouping of nodes based on geographical area
@@ -174,14 +172,15 @@ Used for asynchronous (multi-thread) communication between producers and consume
 **Workflow:** Producer sends task --> Queue stores it and assigns to server --> If delayed, reassigns to next available server
 
 ---
+### ⚙️ **Retry Mechanism**
+Automatically reattempts failed tasks (API calls, DB queries, message processing) to handle temporary issues. Retries are limited (e.g., 3–5 times) using **Fixed Delay** (constant gap) or **Exponential Backoff** (1s → 2s → 4s). If all retries fail, the message moves to a **Dead Letter Queue (DLQ)** which stores failed messages for later inspection or manual fix.
 
+---
 ### 🏗️ Monolith vs Microservices
-
 - **Monolith**: Single codebase containing all modules. Simple to build and deploy, but becomes hard to scale, change, and test as the system grows. *Example: Notification Service, or Authentication are often monolith, as they are single service.*
 
 
 - **Microservices**: System split into independent services, each owning a specific function. Better for large-scale systems as they’re easier to scale, deploy, and maintain. *Example: A food delivery app with separate services for orders, payments, delivery, and user management.*
-
 ---
 
 ### 🧬 Database Management Techniques:
@@ -241,7 +240,6 @@ Client Request through UI → DNS (for knowing IP of website) → Message Queue 
 ## ☢️ Single Point of Failure
 Just like any other computer, if our **main server (i.e. Load Balancer)** dies, the system fails. 
 * To avoid this we can swap the main-server by a **stand-by routing server**. For swapping either change the IP address in DNS registry, or assign a static IP to main server and point that static IP to stand-by server on failure.
-
 ---
 
 ## 🔒 Rate Limiting

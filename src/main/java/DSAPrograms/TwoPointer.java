@@ -146,6 +146,19 @@ public class TwoPointer {
     }
 
 
+    /* Given walls of containers, find max water possible to store. */
+    // height[]= [1,8,6,2,5,4,8,3,7]    => 49 {from 2nd and last wall}
+
+    // each time calc area by (width * heightOfSmallerAmongTwo), and move pointer from smaller wall for finding next larger wall.
+    public int maxArea(int[] height) {
+        int i=0, j= height.length-1, res=0;
+        while(i<j){
+            res= Math.max(res, (j-i)*Math.min(height[j], height[i]));
+            if(height[i]<height[j]){    i++; }else{     j--; }
+        }
+        return res;
+    }
+
 
     /*--------------------------------------------------------------------------------------------------VARIABLE SIZE WINDOW with (Condition <=k): For it follow pattern {operation, violated condition, calculate ans} --------------------------------------------------------------------------------------------------*/
 

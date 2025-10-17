@@ -203,6 +203,7 @@ If all below 4 condition satisfy then deadlock may occur.
 - **Same seat booking**: Use DB Locking (Shared and exclusive lock), Sync keyword or Mutual Exclusion
 - **Bank transfer failure**: Use `COMMIT` and `ROLLBACK` i.e. commit changes only after process is completed.
 - **Replication failure (while replicating data in D1, D2, D3):** Commit after update in all nodes
+- **Server-failure/ services-stopped issues after deployment:** Use load balancer to redirect traffic to healthy server. In case if all servers are down, then rollback to previous stable version.
 ---
 
 ## 📊 SQL Query Examples
@@ -371,4 +372,46 @@ Occurs when the system spends more time swapping pages between RAM and disk than
 ### 🌐 TCP/IP Model:
 * Application → Transport → Network → Network Interface (Data Link, Physical) layer. 
 
+---
+
+# 🤖 Generative AI
+- **Artificial Intelligence (Think):** Intelligence in machine. Example: Chatbot helping you to order.
+- **Machine Learning (Learn):** AI that learns from data to make predictions. Example: you order often on weekends.
+  - ML Types:
+    - **Supervised Learning:** Learns from labeled data, (Like classification, regression models) Example: Spam/ NotSpam, cat/ dog.
+    - **Unsupervised Learning:** Learns from unlabelled data, by finding patterns. Example: frequent buyers on a website.
+- **GenAI (Generates):** AI that generates new content. Example: Your favorite pizza is just a click away.
+
+### Different ML Models:
+- **Classification Model:** Predicts categories, like image is of cat or dog
+- **Regression Model:** Predicts continuous values, like price of house.
+
+### Different GenAI Models:
+- 🧠 **Large Language Models (Text):** LLMs are trained on huge text data to understand and generate text. Example: ChatGPT, Google Gemini, Claude
+- 🎨 **Image Models:** Example: Google Imagen3
+- 🎵 **Audio Models:** Example: Google MusicLM
+- 🎥 **Video Models:** Example: Google Veo
+
+### 🏗️ LLM Model Roles & State
+- **Roles** →
+  - *System Prompt* → Defines behavior (“You are a helpful coding assistant”), hidden from user.
+  - *User Prompt* → Input request.
+  - *Assistant Prompt* → Model’s reply.
+  - *Tool Role* → External actions (APIs, DB queries).
+
+- **Stateless Nature** →
+  - Each request is independent; no built‑in memory.
+  - “Memory” is simulated by re‑sending **conversation history** in every request.
+
+> - **Ollama** → Run open‑source LLMs locally (like gpt-4, gemini); data stays secure, faster inference, no external sharing.
+---
+
+- **When to use AI?** → Repetitive tasks, creative suggestions, large data summarization, generating context.
+- **When not to use AI?** → Sensitive/confidential data, require critical judgments.
+- - **When to use ML over GenAI** → When tasks involve structured data, predictions, or pattern detection.
+- **How do you stay up to date on Al improvements and innovations?** → I stay updated by exploring new AI releases, following community discussions and webinars, and using AI tools and copilots in daily development.
+
+
+- **What’s prompt engineering?** → Designing inputs/ prompts to get accurate and useful responses from LLMs.
+- **How do you leverage prompts?** → I craft clear, context-rich prompts for accurate results. Example: while generating Java code, I specify the system prompt ("You are a senior SDE"), language ("expert in java"), problem ("Solve this.."), expected outcome ("accurate result, followed best practices, no failures"), constraints ("1 million data streaming"), and example ("..") to get precise, reliable solutions.
 ---

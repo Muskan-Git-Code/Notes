@@ -44,7 +44,7 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
-    // PUT /api/products/{id}
+    // PUT /api/products/{id}   // Complete product is given in input
     @PutMapping("/{name}")
     public ResponseEntity<Product> updateProduct(@PathVariable String name, @RequestBody Product product) {
         Optional<Product> updated = service.updateProduct(name, product);
@@ -52,6 +52,9 @@ public class ProductController {
         if(updated.isPresent()){    return new ResponseEntity<>(updated.get(), HttpStatus.OK); }
         return ResponseEntity.notFound().build();
     }
+
+//    @PatchMapping("/{name}")  // Partial product is given in input
+//    public ResponseEntity<Product> patchUser(@PathVariable Long id, @RequestBody Map<String, Object> updates) {}
 
 
     // DELETE /api/products/{id}

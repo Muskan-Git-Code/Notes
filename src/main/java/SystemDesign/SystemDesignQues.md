@@ -164,7 +164,7 @@ UI → ProductService / CartService / OrderService / Payment ↔ DB
 * Send notifications via multiple channels
 
 ### Flow Diagram
-Event Trigger → NotificationService → ChannelService → Queue
+Event Trigger → NotificationService (processing - users, emailAddress of those users, linkage, email template) → ChannelService (sending through diff channels) → Queue
 
 ### Class Structure
 | Entity         | Attributes                               |

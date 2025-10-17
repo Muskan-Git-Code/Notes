@@ -38,7 +38,9 @@ void fn(){
     s.substring(0, 5); // beginIndex to endIndex-1
     s.compareTo("hi"); // lexicographic compare
     new StringBuilder(s).reverse().toString();  // reverse of string
-    Arrays.sort(s.toCharArray());   // sorting of a string.
+
+    // sorting of a string - storing in another variable is imp as strings are immutable.
+    char c[]= s.toCharArray();  Arrays.sort(c); String snew= new String(c);
 }
 ```
 
@@ -73,7 +75,7 @@ void fn(){
     int[] arr = new int[5]; arr[3]= 20;
     int[][] arr3 = new int[3][3];   int[][] arr4 = {{1,2,3}, {4,5,6}, {7,8,9}};
     
-    Arrays.fill(arr, 0);    Arrays.toString(arr);
+    Arrays.fill(arr, 0);    System.out.println(Arrays.toString(arr));  // for printing array values
     Arrays.binarySearch(arr, 4);    // search ele 4 in arr.
     
     Arrays.sort(arr);   Arrays.sort(arr, 2, 5); // (arr, startIx, endIx)
@@ -125,7 +127,7 @@ void fn(){
     for(String key: set){ System.out.println(key); }
 
     HashMap<String,Integer> map = new HashMap<>();
-    map.put("Apple", 10);   map.getOrDefault("Apple", 0);   map.remove("Apple");
+    map.put("Apple", 10);   map.getOrDefault("Apple", 0);   map.remove("Apple");    map.containsKey("Apple");
     for(String key : map.keySet()){    System.out.println(key + " → " + map.get(key)); }
     
     TreeMap<String,Integer> tmap = new TreeMap<>(); tmap.headMap("D");

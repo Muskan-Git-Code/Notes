@@ -361,6 +361,8 @@ class Demo{
 6. **Field class:** Represents class member variable (field) at runtime. `Field field= Product.class.getDeclaredField("price");   field.getName();`
 
 7. **Pageable:** Returns abstract pagination information. `Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, sortBy);`
+
+8. **Record:** Final immutable class. `record Pair(int x, int y){}`
 ---
 
 ## Exception Handling
@@ -443,6 +445,7 @@ class A extends Thread {
 }
 ```
 
+> **Java Memory Model:** Defines rules for how memory is read/written across threads.
 ---
 
 ## Synchronous vs Asynchronous
@@ -618,7 +621,15 @@ An API designed for continuous data streams instead of single request. It can be
 * `@ControllerAdvice`: Globally handling exceptions
 * `@ExceptionHandler`: Handles specific exception
 * Can also use try-catch block.
+---
 
+### Caching
+Spring Boot supports in-built caching — the first API call hits the DB, while subsequent calls return data from cache, avoiding redundant DB access.
+* `@EnableCaching`: Enables caching in spring boot application.
+* `@Cacheable`: Caches the result of method execution. 
+* `@CacheEvict`: Removes cache entry.
+* `@CachePut`: Updates cache without interfering with method execution.
+* Example: `@Cacheable(cacheNames = "ProductsCache", key = "#id")`
 ---
 
 ### DB Configuration

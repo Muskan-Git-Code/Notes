@@ -1,5 +1,8 @@
 package SpringBootExample;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(cacheNames = "ProductsCache", key = "#name")
     public Optional<Product> getByName(String name) {
         return repo.findByName(name);
     }
@@ -29,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CachePut(cacheNames = "ProductsCache", key = "#name")
     public Optional<Product> updateProduct(String name, Product newProduct) {
 
         Optional<Product> val= repo.findByName(name);
@@ -41,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "ProductsCache", key = "#id")
     public void deleteProduct(Long id) {
         repo.deleteById(id);
     }
