@@ -6,9 +6,9 @@ public class BasicPrograms {
 
     /* Find sum of digits */
     static int sumOfDigits(int n){    // n= 12345 => sum = 15
-        int res = 0;
+        int res=0;
         while(n != 0){
-            res = res + n % 10;     // for reverse, res = res*10 + n%10;
+            res= res + n % 10;     // for reverse, res = res*10 + n%10;
             n= n/10;
         }
         return res;
@@ -292,7 +292,7 @@ public class BasicPrograms {
     }
 
 
-    /* Given set of n jobs, where each job have (deadline, profit). Find number of jobs done with max profit */
+    /* Given set of n jobs, where each job have (deadline, profit). Find number of jobs done with max profit. */
     // Jobs={(4,20), (1,10), (1,40), (1,30)}	=> 2, 60 i.e. {job 0, 2} is completed
 
     //Sort the jobs according to their profit and complete every job on last day of their deadline. If new job comes with similar deadline then see if there is space before deadline to be completed.
@@ -317,7 +317,7 @@ public class BasicPrograms {
     /* Return intersections between given close intervals A and B. */
     // A= {{0,2}, {5,10}, {13,23}, {24,25}}, B= {{1,5}, {8,12}, {15,24}, {25,26}}   => {{1,2},{5,5},{8,10},{15,23},{24,24},{25,25}}
 
-    // A[i]={1,5}, B[i]={3,8} => ans={3,5}, that means common is max from start, and min from end
+    // Sort acc to startTime. Then A[i]={1,5}, B[i]={3,8} => ans={3,5}, that means common is max from start, and min from end
     static void interval(int A[][], int B[][]){
         List<List<Integer>> res= new ArrayList<>();
         int i=0, j=0;
@@ -332,7 +332,7 @@ public class BasicPrograms {
     }
 
 
-    /* Return intervals after merging all operlapping intervals. */
+    /* Return intervals after merging all overlapping intervals. */
     // a[][]= {[1,3],[2,6],[8,10],[6,7],[15,18]}	=> {[1,7],[8,10],[15,18]}
 
     // sort interval by start time. Add a[0] in res, and each time check if overlap then update the last index of res, else add curr index in res.
@@ -388,7 +388,7 @@ public class BasicPrograms {
     }
 
 
-    /* Find maximum number of events that can be attended, given you can attend only 1 event at a time, but its not compulsion to attend entire event */
+    /* Find maximum number of events that can be attended, given you can attend only 1 event at a time, but it's not compulsion to attend entire event. */
     // events[][]= {{1,1},{1,4},{2,2},{4,4},{3,4}}
 
     // Sort by start day. At currDay, Process event who is finishing earlier. That is, store all events with same start date, process whoever is finishing earlier first on that day, and do day++.
@@ -408,7 +408,7 @@ public class BasicPrograms {
     }
 
 
-    /* Given n meetings with startTime, EndTime. Find largest gap possible between meetings if allowed atmost 1 meeting to be rescheduled within EventTime. */
+    /* Given n meetings with startTime, EndTime. Find the largest gap possible between meetings if allowed at most 1 meeting to be rescheduled within EventTime. */
     // eventTime=10, startTime[]= {0,3,7,9}, endTime[]= {1,4,8,10}
 
     // find all gaps between meetings. Find maximum gap in left-1 and right+1. If there is larger value present in either left or right, then possible to reschedule currMeeting, else not.

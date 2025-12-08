@@ -7,7 +7,6 @@ import java.util.List;
 public class BinarySearch {
 
     static int binarySearch(int a[], int l, int r, int x){      // O(logn)
-
         while(l<=r){
             int m= (l+r)/2;
             if(a[m]==x){    return m; }
@@ -131,7 +130,7 @@ public class BinarySearch {
     /* Find nth root of a number m. */
     // m=16, n=4    => 2 {16^(1/4)}
 
-    //nth root lie between 1 to m. Binary search with midValue = pow(mid, n), and make range smaller each time till we find ans.
+    //nth root lie between 1 to m. Binary search with midValue= pow(mid, n), and make range smaller each time till we find ans.
 
 
     /* Find smallest divisor of elements in a[], also sum of all elements dividing by that integer is less than threshold t. */
@@ -143,7 +142,7 @@ public class BinarySearch {
     /* Find kth missing element in a sorted array. */
     // a[]={2,3,4,7,11}, k=5    => 9 (as missing elements are 1,5,6,8,9,10)
 
-    // Without any number missing, each index contains i+1 value (i.e. 1, 2, 3..). Till, a[3], missing numbers are a[3]-(i+1) =7-4 =3. Similiarly till a[4] missing numbers are a[4]-(i+1) =11-5 =6. So, 5th missing number is a[3]+2 =9.
+    // Without any number missing, each index contains i+1 value (i.e. 1, 2, 3..). Till, a[3], missing numbers are a[3]-(i+1) =7-4 =3. Similarly, till a[4] missing numbers are a[4]-(i+1) =11-5 =6. So, 5th missing number is a[3]+2 =9.
     // Find 2 numbers among which answer lie through binary search. Then, l + (k - no of missing till l) is ans.
 
 
@@ -191,22 +190,14 @@ public class BinarySearch {
     }
 
 
-    /* Book Allocation: Find maximum of minimum number of pages allocated to a student. Given books array a[n] where books are allocated in continuous manner, between m students. */
-    // a[]={12,34,67,90}, m=2	=> 113 {2 students can have {(12+34+67), (90)} so that minimum required pages will be allocated to students, and among them maximum pages that will be allocated is 113}
+    /* Book Allocation: Find maximum of minimum number of pages allocated to a student. Given books array a[n] where books are allocated in continuous manner, between k students.
+    * OR
+    * Largest Subarray Sum Minimized: Split array a[] into k non-empty subarrays such that the largest sum of any subarray is minimized.
+    * OR
+    * Painter’s Partition: Given n walls a[], taking i hrs to be painted. Find maximum of minimum time required by k painters to paint all walls in continuous manner. */
+    // a[]={12,34,67,90}, k=2	=> 113 {2 students can have {(12+34+67), (90)} so that minimum required pages will be allocated to students, and among them maximum pages that will be allocated is 113}
 
     // Min 1 book will be allocated, max all books can be allocated i.e. ans is between (max ele, sum). Apply binary search, to check ifPossible() to allocate then store ans and find smaller range.
-
-
-    /* Painter’s Partition: Given n walls[], taking i hrs to be painted. Find maximum of minimum time required by k painters to paint all walls in continuous manner. */
-    // walls[]= {10,20,30,40}, k=2      => 60 {make partition as (10, 20, 30), (40) }
-
-    // Exactly same as Book Allocation
-
-
-    /* Largest Subarray Sum Minimized: Split array a[] into k non-empty subarrays such that the largest sum of any subarray is minimized. */
-    // a[]= {10,20,30,40}, k=2      => 60 {partition as (10,20,30), (40)}
-
-    // Exactly same as Book Allocation problem. Range= (max ele, sum)
 
 
     public static void main(String args[]){

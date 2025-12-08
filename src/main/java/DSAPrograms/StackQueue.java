@@ -4,13 +4,13 @@ import java.util.*;
 
 public class StackQueue {
 
-    /* Create a min stack. */
+    /* Create a min stack, i.e. able to find min value in stack currently in O(1). */
     // a={-2,0,-3,2}	=> push(5) = a{-2,0,-3,2,5}, pop() = a{-2,0,-3,2}, min()= -3
 
     // store pairs {(element, minimum till now)} in stack. For example, here pair in stack becomes.. s1 = {(-2,-2), (0,-2), (-3,-3), (2,-3), (5,-3)}
 
 
-    /* Find index of next grater element */
+    /* Find index of next greater element */
     //  a[]={73,74,75,71,69,72,76,73}	=> {1,2,6,5,5,6,-1,-1}
 
     // Start from right to left. So, all the elements in right side are already stored, so pop till top is less than current.

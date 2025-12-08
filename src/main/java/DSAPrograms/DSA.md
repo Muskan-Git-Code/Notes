@@ -5,8 +5,7 @@
 void inpOutput() {
     // Scanner (simple but slower)
     Scanner sc = new Scanner(System.in);
-    int a = sc.nextInt();
-    String s = sc.nextLine();
+    int a = sc.nextInt();   String s = sc.nextLine();
 
     // BufferedReader (faster for large input)
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,6 +23,18 @@ void fn(){
     Character.isUpperCase(ch);  Character.isLowerCase(ch);
     Character.toUpperCase(ch);  Character.toLowerCase(ch);
     Character.isWhitespace(ch);
+}
+```
+---
+
+## 🔹 StringBuilder (Mutable String)
+```java
+void fn(){
+    StringBuilder sb = new StringBuilder("Hello");
+    sb.append("Hi");    sb.insert(5, ",");  // (index, ele)
+    sb.delete(5, 6); // (startIx, endIx)
+    sb.length();    sb.toString();  sb.reverse();   sb.indexOf("World");    
+    sb.charAt(0);   sb.setCharAt(5, 'r');   sb.deleteCharAt(3); // (index, ele)
 }
 ```
 ---
@@ -48,27 +59,15 @@ void fn(){
 ```java
 voif fn(){
     String a = "hi", b = new String("hi");
-    a == b;        // false (reference)
-    a.equals(b);   // true (value)
+    a == b;        // false (compares reference/ address)
+    a.equals(b);   // true (compares value)
 }
 ```
 
 - In Java, all arguments are **pass-by-value**.
     - For objects/collections: the reference itself is passed by value → behaves like pass-by-reference.
-- Use **1e9** (≈10⁹) instead of `Integer.MAX_VALUE` when you may need extra room for calculations.
 ---
 
-## 🔹 StringBuilder (Mutable String)
-```java
-void fn(){
-    StringBuilder sb = new StringBuilder("Hello");
-    sb.append("Hi");    sb.insert(5, ",");  // (index, ele)
-    sb.delete(5, 6); // (startIx, endIx)
-    sb.length();    sb.toString();  sb.reverse();   sb.indexOf("World");    
-    sb.charAt(0);   sb.setCharAt(5, 'r');   sb.deleteCharAt(3); // (index, ele)
-}
-```
----
 ## 🔹 Arrays
 ```java
 void fn(){
@@ -103,8 +102,7 @@ void fn(){
     List<List<List<Integer>>> adj= new ArrayList<>();   adj.get(0).add(Arrays.asList(1,6));     // 3D array initialization
     
 
-    Collections.sort(list); Collections.reverse(list);
-    Collections.max(list);  Collections.min(list);
+    Collections.sort(list); Collections.reverse(list);  Collections.max(list);  Collections.min(list);
     Collections.binarySearch(list, 4);
     
     list.sort((p,q) -> { return Integer.compare(p, q); } ); // asc order
@@ -190,6 +188,9 @@ void fn() {
 }
 ```
 ⚡ Use modulo for large constraints → `int M = (int)1e9 + 7;`
+- Use **1e9** (≈10⁹) instead of `Integer.MAX_VALUE` when you may need extra room for calculations.
+- `Integer.compare(a,b);` checks if(a==b) then 0, a>b then +ve, a<b then -ve
+- Use **BigInteger** for very large numbers
 
 ---
 ## 🔹 Subarray / Subsequence
@@ -201,7 +202,7 @@ void fn() {
 ## 🔹Permutation & Combination:
 * Combination = Choosing k elements from n (order doesn't matter): `nCk = n! / (k! * (n-k)!)`
 * Permutation = Arranging n elements (order matters): `n!`
-* Distribute `n` different objects in `k` groups → `Math.pow(n,k)`
+* Distribute `n` different objects in `k` groups → `n^k`
 * Distribute `n` identical objects in `k` groups → `(n+k-1)C(k-1)`
 ---
 
@@ -209,10 +210,6 @@ void fn() {
 - **Binary → Decimal:** `101101 => 2^5 + 2^3 + 2^2 + 2^0 = 45`
 - **Decimal → Binary:** `13 => 2^3 + 2^2 + 2^0 = 1101`
 
-**Properties:**
-- Last digit in binary = `0` → number is **even**
-- Last digit in binary = `1` → number is **odd**
-- Use **BigInteger** for very large numbers
 ```java
 void fn(){
     int a=5, b=9, i=4, base=2;    // a=5 (00000101), b=9 (00001001)
@@ -231,12 +228,11 @@ void fn(){
 
     Integer.parseInt("101", base);   // Convert binary to decimal ("101" => 5)
     Long.toString(5, base);     // Convert decimal to binary (5 => "101")
-    
     Integer.bitCount(a); // Count set bits (for 5 => 2 set bits)
-    Integer.compare(a,b); // a==b then 0, a>b then +ve, a<b then -ve
 
     x = a & 1;  // checks if a is odd/ even (1=odd, 0=even)
-    x = 1 << i;     // 2^i (power of 2)
+    // In binary format, if Last digit is `0` → number is **even** else odd
+    x = 1 << i;     // returns 2^i (power of 2)
     x = i & (i-1);  // returns 0 if 'i' is power of 2 {(4&3) =(100 & 011) =0)}
     x = (1 << i) - 1;   // create mask with i bit set =(2^4 -1) =15 =1111)
 }
@@ -244,7 +240,7 @@ void fn(){
 ---
 
 ## 🔹 Key DSA Concepts
-1. **Binary Search** → Search / min / max in sorted arrays
+1. **Binary Search** → Search min / max in sorted arrays
 2. **Two Pointers / Sliding Window / Prefix Sum** → Subarray / substring problems
 3. **Stack & Queue** → LIFO / FIFO problems
 4. **Backtracking** → Paths / permutations; add before recursion, remove after
@@ -310,9 +306,9 @@ O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2^n) < O(n!)
 
 ---
 ## 🔹 Interview Approach
-1. **Clarify** → Rephrase the question, confirm understanding (~5 min)
-2. **Think Aloud** → Ask for time, brainstorm approaches, share thought process (~10 min)
-3. **Plan** → Outline solution steps, dry-run with example (~20 min)
-4. **Code** → Write clean, working solution (~15 min)
+1. **Clarify** → Rephrase the question, confirm understanding (~2-3 min)
+2. **Think Aloud** → Ask for time, brainstorm approaches, share thought process (~5 min)
+3. **Plan** → Outline solution steps, dry-run with example, Tell Timme Complexity (~10 min)
+4. **Code** → Write clean, working solution (~10 min)
 5. **Optimize & Validate** → Discuss complexity, handle edge cases, suggest improvements (~5 min)  
 

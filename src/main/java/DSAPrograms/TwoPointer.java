@@ -160,7 +160,7 @@ public class TwoPointer {
     }
 
 
-    /*--------------------------------------------------------------------------------------------------VARIABLE SIZE WINDOW with (Condition <=k): For it follow pattern {operation, violated condition, calculate ans} --------------------------------------------------------------------------------------------------*/
+   /*-------------------------------------------------------------------------------------------------  VARIABLE SIZE WINDOW with (Condition <=k): For it follow pattern {operation, violated condition, calculate ans} --------------------------------------------------------------------------------------------------*/
 
     /* Return max no of consecutive ones, if can flip utmost k zeroes.
        OR
@@ -184,15 +184,15 @@ public class TwoPointer {
     }
 
 
-    /* Collect max no of fruits from continous trees in 2 baskets, given you can collect only 1 type of fruit in a basket.  */
+    /* Collect max no of fruits from continuous trees in 2 baskets, given you can collect only 1 type of fruit in a basket.  */
     // a[]= {0,1,2,2}   => 3
 
     // pluck from continous trees, fruits i.e. k <= 2
     static int maxFruits(int a[]){
-        int mx=0, i=0, j=0, fruitsCt=0;
+        int mx=0, i=0;
         Map<Integer, Integer> map= new HashMap<>();
 
-        for(;j<a.length; j++){
+        for(int j=0; j<a.length; j++){
             map.put(a[j], map.getOrDefault(a[j], 0)+1);
 
             while(map.size()>2 && i<=j){
@@ -200,14 +200,13 @@ public class TwoPointer {
                 if(map.get(a[i])==0){    map.remove(a[i]); }
                 i++;
             }
-
             mx= Math.max(mx, j-(i-1));
         }
         return mx;
     }
 
 
-    /* Return total subarrays having product less than k. */
+    /* Return total sub-arrays having product less than k. Given only +ve integers. */
     // a[]= {10,5,2,6}, k=100    => 8 as {{10}, {5}, {2}, {6}, {10,5}, {5,2}, {2,6}, {5,2,6}}
 
     // product<k
@@ -215,7 +214,6 @@ public class TwoPointer {
         int res=0, i=0, prod=1;
         for(int j=0; j<a.length; j++){
             prod*= a[j];
-
             while(prod>=k && i<=j){     prod/= a[i];    i++; }
 
             res+= j-(i-1);  // //ct+= (j-i)+1, as to calculate ct for each individual array and a combined complete array from j till i.
@@ -336,8 +334,7 @@ public class TwoPointer {
     }
 
 
-
-    /*--------------------------------------------------------------------------------------------------VARIABLE SIZE WINDOW with (count==k) condition: This is for count only. return subarray(<=k) - subarray(<=k-1)--------------------------------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------------------------------- VARIABLE SIZE WINDOW with (count==k) condition: This is for count only. return subarray(<=k) - subarray(<=k-1)--------------------------------------------------------------------------------------------------*/
 
     /* Return number of subarrays having exactly k distinct elements. */
     // a[]= {1,2,1,2,3}, k=2    => 7 {(1,2), (2,1), (1,2), (2,3), (1,2,1), (2,1,2), (1,2,1,2)}
@@ -351,10 +348,9 @@ public class TwoPointer {
     // Exactly k odd i.e. subarray(<=k odd)- subarray(<=k-1 odd). Check if odd number then do the count.
 
 
+  /*-------------------------------------------------------------------------------------------------- VARIABLE SIZE WINDOW with (condition > k): ans= all who contains min window {operation, (ct,shrink)} --------------------------------------------------------------------------------------------------*/
 
-    /*--------------------------------------------------------------------------------------------------VARIABLE SIZE WINDOW with (condition > k): ans= all who contains min window {operation, (ct,shrink)} --------------------------------------------------------------------------------------------------*/
-
-    /* Return number of substrings containing atleast 3 characters i.e. a, b,c */
+    /* Return number of substrings containing atleast 3 characters i.e. a,b,c */
     // s= "abcabc"  => 10
 
     // ct+= n-j; as all who contains min window is ans.
@@ -426,7 +422,7 @@ public class TwoPointer {
 
 
 
-    /* -----------------------------------------------------------------------------------------------Prefix sum: Concept used if require recompilation/ previous sum, or not able to find window directly. {operation, calculate answer, add new prefix value in mp}.                           ----------------------------------------------------------------------------------------------*/
+    /* ----------------------------------------------------------------------------------------------- Prefix sum: Concept used if require recompilation/ previous sum, or not able to find window directly. {operation, calculate answer, add new prefix value in mp}.                           ----------------------------------------------------------------------------------------------*/
 
     /* Count subarrays whose sum equals k, negative values allowed. */
 
@@ -541,7 +537,7 @@ public class TwoPointer {
     }
 
 
-    /* Find number of substrings with atmost one letter occurring odd number of times. */
+    /* Find number of substrings with at most one letter occurring odd number of times. */
     // s="aba"  => 4 {a, b, aba, a}
 
     // no of elements occuring odd no of times <= 1. We can't leave a value directly as further there might be 1 more occurence, so prefix sum.

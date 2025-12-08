@@ -47,7 +47,7 @@ public class Trees {
 
 
 
-/*-------------------------------------------------------------------------------------------------------------------------------------                                                   DFS TRAVERSAL QUESTIONS         ------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------                                                   DFS TRAVERSAL QUESTIONS         ---------------------------------------------------------------------------------------------------------------------*/
 
 
     /* Tree Size: Find total number of nodes in tree. */
@@ -217,7 +217,7 @@ public class Trees {
     }
 
 
-    /* Return all subtrees of given tree. */
+    /* Return all subtrees of given tree i.e. may or may not start from root. */
     // root= {1,2,3,4,null,2,4,null,null,4}     => [[4,N,N], [2,4,N,N,N], [4,N,N], [2,4,N,N,N], [4,N,N], [3,2,4,N,N,N,4,N,N], [1,2,4,N,N,N,3,2,4,N,N,N,4,N,N]]
 
     // traverse for each subtree, and print subtree depth-wise
@@ -265,7 +265,7 @@ public class Trees {
     }
 
 
-    /* Check if every node value is equal to its left and right subtree. */
+    /* Check if every node value is equal to its left and right subtree sum. */
 
     int nodeEqSub(Node root, List<Integer> ans){   // nodeEqSub(root, ans);   if(ans.isEmpty()){    return true; } else false;
         if(root==null){ return 0; }
@@ -277,7 +277,7 @@ public class Trees {
     }
 
 
-    /* Diameter of binary tree: Find longest path between any 2 nodes. */
+    /* Diameter of binary tree: Find the longest path between any 2 nodes. */
 
     // Possibility is that we are taking left of 1 subtree and right of any other subtree to get max path. So, we take max path each time instead of any sort of total.
     int diamSub(Node root, List<Integer> ans){  // diamSub(root, ans);  return Collections.max(ans);    // return max of ans.
@@ -289,7 +289,7 @@ public class Trees {
     }
 
 
-    /* Maximum Path Sum: Find maximum path sum in the binary tree. Path might or mightnot pass through root. */
+    /* Maximum Path Sum: Find maximum path sum in the binary tree. Path might or might not pass through root. */
 
     // same as above, just add root.val instead of 1 in end. And also to discard -ve path, if sum becomes -ve any time take max of 0 and currPath.
     int pathSum(Node root, List<Integer> ans){  // pathSum(root, ans);  return Collections.max(ans);    // return max of ans.
@@ -318,7 +318,7 @@ public class Trees {
     }
 
 
-    /* Find lowest common ancestor of 2 nodes in a tree. */
+    /* Find the lowest common ancestor of 2 nodes in a tree. */
 
     Node lca(Node root, Node p, Node q){
         if(root==null || root==p || root==q){   return root; }
@@ -336,8 +336,7 @@ public class Trees {
     // find lca of given 2 nodes. So, ans= dist(of lcaNode, p)+ dist(lcaNode, q)
 
 
-    /* Return max from tree, given we can't take 2 adj
-    node values. */
+    /* Return max from tree, given we can't take 2 adj node values. */
 
     // at each node 2 choices, either take this, or next node. Here instead of i+1, we have node.left and node.right.
     int maxNonAdj(Node root, Map<Node, Integer> dp){    // maxNonAdj(root, dp);
@@ -470,6 +469,7 @@ public class Trees {
                     if(curr.right!=null && !vis.contains(curr.right)){    q.add(curr.right);   vis.add(curr.right); }
                     if(parent.get(curr)!=null && !vis.contains(parent.get(curr))){  q.add(parent.get(curr));    vis.add(parent.get(curr)); }
                 }
+                lvl++;
             }
 
             while(!q.isEmpty()){    res.add(q.remove().val); }

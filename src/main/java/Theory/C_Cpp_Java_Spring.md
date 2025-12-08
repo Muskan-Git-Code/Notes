@@ -1,5 +1,3 @@
-# JAVA NOTES
-
 ## CODING (C/C++/JAVA)
 ### C
 * High-level, general-purpose, procedural-oriented programming language.
@@ -382,17 +380,15 @@ It can be:
 
 > `finally` block is **not executed** if code contains `System.exit()` or if there is a system crash (i.e. StackOverflow/ OutOfMemory exception).
 
-### Exception Example
+> Global Exception Handling: Managing exceptions across entire application using custom exception classes. 
+
+### `try`, `catch`, `finally` Example
 ```java
 public class Demo {
     public static void main(String[] args) {
-        try {
-            int a[]= new int[5];   a[5]= 30/0;  // ArithmeticException
-        } catch (Exception e) {
-            System.out.println("Exception occurs: "+ e);
-        } finally {
-            System.out.println("finally block is always executed");
-        }
+        try{    int a[]= new int[5];   a[5]= 30/0; } 
+        catch (Exception e){    System.out.println("Exception occurs: "+ e); } 
+        finally{    System.out.println("finally block is always executed"); }
         System.out.println("rest of the code");
     }
 }
@@ -400,14 +396,14 @@ public class Demo {
 
 ### `throw` and `throws` Example
 ```java
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class NoSuchAgeException extends Exception {
+    public NoSuchAgeException(String str) {  super(str); }
+}
 public class Demo {
-    static void validate(int age) throws Exception {
-        if(age<18){     throw new ArithmeticException("not valid"); }
+    void validateAge(int age) throws Exception {
+        if(age<18){     throw new NoSuchAgeException("not valid"); }
         else{   System.out.println("welcome to vote"); }
-    }
-    public static void main(String[] args) throws Exception {
-        try {   validate(16); } // This will throw exception
-        catch(Exception e){    System.out.println("Exception caught: " + e); }
     }
 }
 ```
@@ -596,6 +592,7 @@ Client-server communication using standard HTTP methods. It is easy to test/debu
 * For calling any api, 
   * `HttpEntity`: Obtain HTTP content as inputStream, and is passed through `@RequestBody`, `@RequestHeader`.
   * `ResponseEntity`: Get result of HTTP response (by methods like  getStatusCode(), getBody(), etc.) in form of `@ResponseBody`.
+  * `@ResponseStatus`: Custom HTTP status code for API response.
   * `RestTemplate`: Used to consume data from external APIs and give response.
 
 > **Spring Boot Application Flow:** `@RestController` → `@Service` → `@Repository` → `@Entity`

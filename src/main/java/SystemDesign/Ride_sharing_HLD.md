@@ -17,17 +17,34 @@
 * Notification (optional)
 
 #### 🛠️ Non-Functional Requirements:
-* Scalable - Millions of users, so should be able to handle high throughput (requests per second), and large datasets, while maintaining low latency (time to respond per request), write-heavy system
-* High Availability
-* Fault Tolerant
-* Eventual Consistency
-* Usability - Intutive, user-friendly interface for users to input data, and view results
+**Questions to ask:** What is the expected number of users/ day?
+* System should be able to scale to support 100M+ daily users, that too with low latency, and high throughput
+* System is write heavy (more writes than reads)
+* System should be with High Availability (preferred over eventual consistency if not banking system), Fault Tolerant, Eventual Consistency
+* Usability - User-friendly interface for users to input data, and view results
 * Extendability: Ability to support additional features in future
 * Security and Privacy: Protection of user data, JWT/ OAuth Authentication, Authorization, and rate limiting.
 
 List down all the requirements, then ask if require to include any other functionality?
 Say, being aware of limited time, i start with main service i.e. Ride Booking.
 
+
+
+### Core Entities (Data Model): 
+**Ask yourself:** Who are actors in system? What are resources necessary to achieve functionality?
+
+* User (Rider, Driver)
+* Ride
+* Vehicle
+
+- User (userId, name, phone, email, password, userType {RIDER, DRIVER (isAvailable, location, vehicleDetails)}, rating, createdAt, updatedAt)
+- Ride (rideId, riderId, driverId, pickupLocation, dropLocation, distance, fare, status {REQUESTED, ONGOING, COMPLETED, CANCELLED}, createdAt, updatedAt)
+- DriverLocation (driverId, latitude, longitude, availabilityStatus {ONLINE, OFFLINE, BUSY}, lastUpdatedAt)
+- Vehicle (vehicleId, driverId, vehicleType, licensePlate, capacity, createdAt, updatedAt)
+
+- Payment (paymentId, rideId, amount, paymentMethod, status {PENDING, COMPLETED, FAILED}, createdAt, updatedAt)
+- Notification (notificationId, userId, message, type {RIDE_STATUS, PROMOTION}, createdAt, isRead)
+- ChatMessage (messageId, rideId, senderId, receiverId, messageContent, timestamp)
 
 
 ### 🧠 Step 2: High Level Architecture Diagram:

@@ -28,7 +28,7 @@ My name is **Muskan**, currently a **Software Engineer** at **Goldman Sachs** wi
 
 ---
 ## 💡 Key Tips & Best Practices
-- Start with a smile: Greet confidently, engage politely, speak sincerely, communicate clearly.
+- Start with a smile: Greet confidently, engage politely, speak sincerely, communicate clearly and friendly conversation.
 - Always ask: *“Am I going in the right direction?”*
 - Focus on **coding part** → clarity > speed.
 - **STAR Method**: Situation → Task → Action → Result/ Impact.

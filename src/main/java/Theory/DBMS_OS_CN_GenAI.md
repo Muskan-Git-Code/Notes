@@ -415,3 +415,44 @@ Occurs when the system spends more time swapping pages between RAM and disk than
 - **What’s prompt engineering?** → Designing inputs/ prompts to get accurate and useful responses from LLMs.
 - **How do you leverage prompts?** → I craft clear, context-rich prompts for accurate results. Example: while generating Java code, I specify the system prompt ("You are a senior SDE"), language ("expert in java"), problem ("Solve this.."), expected outcome ("accurate result, followed best practices, no failures"), constraints ("1 million data streaming"), and example ("..") to get precise, reliable solutions.
 ---
+
+### Example of Ollama API to showcase how LLM works:
+```
+curl --location 'http://localhost:11434/api/chat' \
+--header 'Accept: */*' \
+--header 'Content-Type: application/json' \
+--data '{
+    "model": "gemma3:4b",
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are an intelligent senior staff software engineer. Task: To help users with their java codes. Outcomes - Your response should be accurate, no failures."
+        },
+        {
+          "role": "user",
+          "content": "Hi"
+        },
+        {
+          "role": "assistant",
+          "content": "Hello! How can I help you today?"
+        },
+        {
+          "role": "user",
+          "content": "My name is Lelouch. whats yours"
+        },
+        {
+          "role": "assistant",
+          "content": "That'\''s a nice name, Lelouch. I don'\''t have a personal name."
+        },
+        {
+          "role": "user",
+          "content": "how is the weather today?"
+        },
+        {
+          "role": "assistant",
+          "content": "Lelouch, Today it’s sunny ~ 29 °C (85 °F)."
+        }
+    ],
+    "stream": false
+}'
+```

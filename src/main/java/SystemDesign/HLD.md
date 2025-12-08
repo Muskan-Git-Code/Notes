@@ -96,8 +96,8 @@ Handling large amount of requests at once and responds quickly with the latest i
 ---
 
 ### 🧠 *Stateful vs Stateless Systems*
-* **Stateful Systems** saves status and session info, and have low latency.
-* **StateLess Systems** serves response back as per given state, and is resilient to server failure (as doesn't store session info).
+* **Stateful Systems** saves status and session info, and have low latency. Like, online shopping cart.
+* **Stateless Systems** serves response back as per given state, and is resilient to server failure (as doesn't store session info). Like games.
 
 ---
 ### ⏱️ *Latency*
@@ -166,13 +166,13 @@ Provides on-demand services for compute, storage, networking, databases, and AI/
 
 ---
 
-### 📬 Message / Processing/ Task Queue
+### 📬 Message / Processing/ Task Queue (Producer-Consumer problem)
 Used for asynchronous (multi-thread) communication between producers and consumers. It gives better performance as producer/ consumer works independently, loosely coupled. Example: Kafka (High performance data pipelines).
 
 **Workflow:** Producer sends task --> Queue stores it and assigns to server --> If delayed, reassigns to next available server
 
 ---
-### ⚙️ **Retry Mechanism**
+### ⚙️ Retry Mechanism (Fault Tolerance method)
 Automatically reattempts failed tasks (API calls, DB queries, message processing) to handle temporary issues. Retries are limited (e.g., 3–5 times) using **Fixed Delay** (constant gap) or **Exponential Backoff** (1s → 2s → 4s). If all retries fail, the message moves to a **Dead Letter Queue (DLQ)** which stores failed messages for later inspection or manual fix.
 
 ---
