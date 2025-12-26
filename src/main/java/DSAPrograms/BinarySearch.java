@@ -78,7 +78,7 @@ public class BinarySearch {
         Find maximum element in bitonic (monotonically increasing then decreasing) array.  */
     // a[] = {1,3,8,12,4,2}     => 12
 
-    // Each time compare mid with neighbors, if greater then that's the ans, else if inc order then l = m+1, else r=m-1
+    // Each time compare mid with neighbors, if greater than that's the ans, else if inc order then l = m+1, else r=m-1
     static int bitonic(int a[]){
         int l=0, r= a.length-1;
         while(l<=r){

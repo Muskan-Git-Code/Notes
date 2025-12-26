@@ -2,7 +2,7 @@ package DSAPrograms;
 import java.util.*;
 
 /*
-Recursion: Each time calling is done at (n-1) or (n+1) for reaching to base condition (Think about smallest valid input).
+Recursion: Each time calling is done at (n-1) or (n+1) for reaching to base condition (Think about the smallest valid input).
 Explore different ways, and for base condition,
     - for count {l= f(); r= f(); return l+r;} there must be base where we are returning actual value to get added in end.
     - for min/ max {l= f(); r= f(); return Math.max(l, r); }, for base only returning edge cases will work.

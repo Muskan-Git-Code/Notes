@@ -14,7 +14,7 @@ public class LLinkedList {
     // Iterate till pos-1, add tmpNode.
     static void insertVal(Node list, int value, int pos){
         Node tmp= new Node(value);  Node p= list;
-        if(pos==1){     tmp.next = list;   list = tmp;    return; }
+        if(pos==1){     tmp.next= list;   list= tmp;    return; }
 
         for(int i=1; i<pos-1; i++){
             if(p==null){    System.out.println("Position out of range");    return; }

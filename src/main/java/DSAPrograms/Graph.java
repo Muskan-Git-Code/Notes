@@ -750,7 +750,7 @@ public class Graph {
 
         // apply toposort
         Arrays.fill(vis, 0);    // reset vis array
-        for(int i=0; i<n; i++){ if(vis[i]==0){  topoSort(i, adj, vis, ans);}}
+        for(int i=0; i<n; i++){ if(vis[i]==0){  topoSort(i, adj, vis, ans); }}
         Collections.reverse(ans);
         return ans;
     }
