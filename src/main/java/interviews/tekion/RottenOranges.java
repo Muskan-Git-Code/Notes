@@ -1,6 +1,4 @@
-package tekion;
-
-import DSAPrograms.ques;
+package interviews.tekion;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

@@ -1,4 +1,4 @@
-package tekion;
+package interviews.tekion;
 
 
 public class SuarrProd {
