@@ -1,30 +1,15 @@
-## CODING (C/C++/JAVA)
-### C
-* High-level, general-purpose, procedural-oriented programming language.
-* Used for developing portable applications, compilers and JVMs.
-
-### C++
-* Extended version of C with object-oriented programming (OOP).
-* Used for operating software development and embedded systems.
-
-### JAVA
-* Object-oriented, platform-independent, dynamic programming language.
-* Used in web applications, Android development, enterprise systems, and cloud computing.
-
+## CODING (C/C++/JAVA) 
+- **C:** High-level, general-purpose, procedural-oriented programming language. Used for developing portable applications, compilers and JVMs.
+- **C++:** Extended version of C with object-oriented programming (OOP). Used for operating software development and embedded systems.
+- **JAVA:** Object-oriented, platform-independent, dynamic programming language. Used in web applications, Android development, enterprise systems, and cloud computing.
 ---
 
-## POP vs OOP
-
-### Procedural-Oriented programming language (POP):
-Divides program into smaller functions, and allows data to move freely into system.
-
-### Object-Oriented programming language (OOP):
-Divides program into objects, and is more secure.
-
+#### POP vs OOP
+- **Procedural-Oriented programming language (POP):** Divides program into smaller functions, and allows data to move freely into system.
+- **Object-Oriented programming language (OOP):** Divides program into objects, and is more secure.
 ---
 
-## Some C++ Concepts
-
+### Some C++ Concepts
 * **Pointers:** Stores memory address of another variable.
   * **Null pointer:** Pointer containing nothing i.e. initialized to `nullptr`
   * **Dangling pointer:** Points to deleted memory location
@@ -44,28 +29,16 @@ void f3(int& a, int& b);       // Call by reference (address is passed, and made
 
 ---
 
-## Major Features in Java 8
+### Major Features in Java 8
+**1. Functional Interface:** Interface with exactly one abstract method. It can have default and static methods. `@FunctionalInterface` annotation prevents multiple abstract methods from being accidentally added.
 
-### 1. Functional Interface:
-* Interface with exactly one abstract method.
-* @FunctionalInterface annotation prevents multiple abstract methods from being accidentally added.
+**2. Lambda Expressions:** Anonymous function with no name and identifier, using only ( -> ) symbol. It is compact and readable. Example: `public void fn(String s1, String s2){ return s1.equals(s2); }`, can also be written as `(s1,s2)-> s1.equals(s2);`
 
-### 2. Lambda Expressions:
-* Anonymous function with no name and identifier, using only ( -> ) symbol.
-* Compact and readable
-* Example: `public void fn(String s1, String s2){ return s1.equals(s2); }`, can also be written as `(s1,s2)-> s1.equals(s2);`
+**3. Method References:** Refer method of functional interface to an existing method, using scope resolution operator (::). `ClassName::functionName`, Example: `Demo::fn1 `
 
-### 3. Method References:
-* Refer method of functional interface to an existing method, using scope resolution operator (::).
-* ClassName::functionName, Example: `Demo::fn1 `
+**4. forEach Method:** Iterates over collection of items, similar to for loop.
 
-### 4. forEach Method:
-* Iterates over collection of items, similar to for loop.
-
-### 5. Optional Class:
-* Helps avoid null pointer exception.
-* Example:
-
+**5. Optional Class:** Helps avoid null pointer exception. Example:
 ```java
 import java.util.Optional;
 void fn() {
@@ -74,154 +47,16 @@ void fn() {
   return Optional.empty();
 }
 ```
-
-### 6. Try-With-Resources:
-* Automatically closes files/ resources at end, without explicitly file.close() statement in finally block.
+**6. Try-With-Resources:** Automatically closes files/ resources at end, without explicitly file.close() statement in finally block.
 ```java
 void fn() {
     try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
         System.out.println(br.readLine());
 }}
 ```
-
 ---
 
-## Serialization in Java
-* **Serialization:** Conversion of Object to Byte stream
-* **Deserialization:** Conversion of Byte stream to Object
-```
-@RequestBody User user    // byte stream to Object (Deserialization)
-@ResponseBody User user   // Object to byte stream (Serialization)
-```
-
-> **For adding logger:** Logs data (warn, info, debug, error). Example: Logger logger = LoggerFactory.getLogger(className.class);
-> 
-> **ObjectMapper:** Handles JSON **serialization** (java objects to json strings i.e. objectMapper.writeValueAsString(User)) and **deserialization** (json strings to java objects i.e. objectMapper.readValue(str, className.class)).
-
----
-
-## Data Types
-* **Primitive/ Builtin/ Interinsic:** int, float, boolean, char
-* **Non-primitive/ Derived/ Reference:** arrays, classes, interfaces
-
-> **Typecasting:** Converting a variable from one datatype to another. Example: `int a=5;`    `float f= (float)a;`
-
----
-
-## Variable Types
-* **Local:** Within a method
-* **Instance/ Global:** Within class outside method, not static. Doesn't exist in java
-* **Static/ Class:** Within class outside method with static keyword. Retains value throughout the program. 
-* **Final:** Used to maintain constant value; as it cannot be reassigned, overridden, or inherited.
-
-
-**Static Method:** Can be called directly by the class name. Though cannot access non-static methods directly (But via creating object). Example: `Math.max()`, `Collections.sort()`.
-```java
-class Demo {
-    int val = 10;  // non-static variable
-    public static void show() {
-      Demo d = new Demo();
-      System.out.println(d.val);    // accessing non-static member via object  // Output: 10
-}}
-```
-
----
-
-## Access Modifiers/ Visibility Specifier
-Specifies scope of variable or method.
-
-| Specifier | Scope                                              |
-| --------- |----------------------------------------------------|
-| private   | Within same class                                  |
-| protected | Within same class and subclass                     |
-| default   | Within same package (By default specifier in java) |
-| public    | Everywhere accessible                              |
-
----
-
-## Wrapper Classes and Boxing
-Used to treat primitives as objects (Boxing), and vise-versa (UnBoxing). It is helpful in collections.
-
-| Primitive | Wrapper |
-|-----------|---------|
-| int       | Integer |
-| char      | Character |
-| boolean   | Boolean |
-
-### Example
-```java
-int a = 10;
-Integer i = Integer.valueOf(a); // Boxing (Converting primitive to Wrapper class)
-int b = i.intValue(); // Unboxing (Converting Wrapper to primitive class)
-```
-
----
-
-## Language Processing Systems
-
-### C++
-> **Source Code** (.cpp) → **Preprocessor** (Processes code before compilation) → **Compiler** (Converts source code to assembly code) → **Assembler** (Changes assembly code to object code i.e. .obj file) → **Linker** (Links object file & library files i.e. .exe file) → **Loader** (Loads into main memory) → **Main Memory** (Program executes)
-
-### Java
-> **Code** (written using JDK - Java Development Kit which contains development tools) → **javac** (Compiles .java source code to .class bytecode) → **JAVA** (Interprets bytecode) → **JVM** (Java Virtual Machine executes bytecode as part of JRE - Java Runtime Environment) → **ClassLoader** (Loads required classes/interfaces into JVM)
-
-> **Java is Platform Independent** as it compiles into bytecode, which is platform-independent. This bytecode can run on any platform with JVM. However, this flexibility makes Java slower than C++, as C++ has no intermediate bytecode.
-
-> **Tight and Loose Coupling:** Classes and Objects are dependent on each other.
----
-
-## Java `main` Method
-```java
-public static void main(String[] args) { }
-```
-- `public`: Accessible from anywhere
-- `static`: No object needed to run
-- `void`: Returns nothing
-- `main`: Entry point, method name
-- `String[] args`: Command-line arguments
-
-> Java programs can compile without `main` but fail at runtime.
-
-
----
-
-## Garbage Collection (GC)
-- **Automatic memory management** that reclaims unused memory, by nullifying the object and giving that reference to another object.
-- Improves memory efficiency.
-- In languages like C++, manual memory management is required, risking memory leaks if unused memory isn't re-used properly.
-
-### Finalize Method
-Perform cleanup tasks before garbage collection.
-
-> Java implicitly uses reference instead of pointers, making it safer and more efficient. As pointers allow direct memory access, posing security and complexity risks.
-
----
-
-## Memory Allocation
-
-| Memory Type | Description                                                                                |
-|-------------|--------------------------------------------------------------------------------------------|
-| Heap Memory | Global memory, used throughout program. Deleted by GC. Can throw OutOfMemoryError if full. |
-| Stack Memory | Local, fast memory used in function calls. Can throw StackOverflowError if full.           |
-
----
-
-## String Pool:
-A collections of strings in JAVA's heap memory.
-
-- Strings are **immutable** (cannot change value once assigned).
-- It can be created through string literal `String s1 = "Hello";` or using new keyword `String s2 = new String("Hello");`.
-
-## Mutable Strings
-StringBuffer (Thread-safe)
-StringBuilder (More efficient, not thread-safe)
-
-## Immutable Classes
-Create with `final` class, having `private` and `final` data members, along with only getter methods (no setters)
-
----
-
-# SOLID Principles
+### SOLID Principles
 Help in writing clean, maintainable, and scalable code.
 
 | Principle             | Description                                                                                                                  | Example                                                                                                                                                    |
@@ -235,63 +70,51 @@ Help in writing clean, maintainable, and scalable code.
 
 ---
 
-# OOP Concepts
+### **Language Processing Systems:**
+* **C++:**
+> **Source Code** (.cpp) → **Preprocessor** (Processes code before compilation) → **Compiler** (Converts source code to assembly code) → **Assembler** (Changes assembly code to object code i.e. .obj file) → **Linker** (Links object file & library files i.e. .exe file) → **Loader** (Loads into main memory) → **Main Memory** (Program executes)
 
-## 1. Class and Objects
-* **Object:** Real-world entity with unique properties.
-* **Class:** Collection of similiar objects having common attributes. 
-* Example: Car class having objects as color, wheel, engine.
+**Java:**
+> **Code** (written using JDK - Java Development Kit which contains development tools) → **javac** (Compiles .java source code to .class bytecode) → **JAVA** (Interprets bytecode) → **JVM** (Java Virtual Machine executes bytecode as part of JRE - Java Runtime Environment) → **ClassLoader** (Loads required classes/interfaces into JVM)
+---
 
-## 2. Encapsulation (Data Biding)
-* Wraps function call to its appropriate function definition.
-* It can be **Early/ Static/ Compile time binding** (Wraps at compile time) and **Late/ Dynamic/ Runtime Binding** (Wraps at runtime).
+## OOP Concepts
+**1. Class and Objects:** Object is a real-world entity with unique properties, and class is a collection of similiar objects having common attributes. Example: Car class having objects as color, wheel, engine.
 
-## 3. Abstraction
-* Show only relevant details, and hide internal implementation.
-* Can be achieved using abstract classes and interfaces.
-```java
-abstract class Shape {
-    abstract void draw(); // abstract method
-}
-```
+**2. Encapsulation (Data Biding):** Wrapping data and code together into a single unit (class). It can be **Early/ Static/ Compile time binding** (Wraps at compile time) and **Late/ Dynamic/ Runtime Binding** (Wraps at runtime).
 
-## 4. Inheritance
-* Creating new class from already existing class.
-* Promotes code reusability and polymorphism.
-* Types 
-  * Single (`Parent → child class` i.e. A class inherits from a parent class)
-  * Multilevel (`Parent1 → Parent2 (child of parent1) → Child class`)
-  * Hierarchical (`Parent → Child1, Child2`)
-  * Hybrid (Combination of multiple inheritance)
-  * Multiple (not supported by java `Parent1, Parent2 → Child`)
-```java
-class Animal {
-    void sound() { System.out.println("Some sound"); }
-}
-class Dog extends Animal {
-    void sound() { System.out.println("Bark"); }
-}
+**3. Abstraction:** Hiding internal details and showing only relevant information to the user. It can be achieved using abstract classes and interfaces.
 
-class Demo{
-  public static void main(String args[]){
-    Animal a= new Dog();	 //First search in given class, then to base class
-    a.eat();	a.sound();	//eating  //barking
-  }}
-```
+**4. Inheritance:** Creating new class from already existing class. Promotes code reusability and polymorphism.
+* Types:
+    * **Single:** `Parent → child class` i.e. A class inherits from a parent class
+    * **Multilevel:** `Parent1 → Parent2 (child of parent1) → Child class`
+    * **Hierarchical:** `Parent → Child1, Child2`
+    * **Hybrid:** Combination of multiple inheritance
+    * **Multiple:** not supported by java `Parent1, Parent2 → Child`
+* Example: 
+    ```java
+    class Animal {
+      void sound() { System.out.println("Some sound"); }
+    }
+    class Dog extends Animal {
+      void sound() { System.out.println("Bark"); }
+    }
+    
+    class Demo{
+    public static void main(String args[]){
+      Animal a= new Dog();	 //First search in given class, then to base class
+      a.eat();	a.sound();	//eating  //barking
+    }}
+    ```
 
-## 5. Polymorphism
-* Greek term which means ability to take many forms.
-* Example: An animal can be dog or cat.
-* It can be **Compile-time/ method overloading** (Same method name with different parameters) and **Runtime/ method overriding** (Same method name in parent and child class)
+**5. Polymorphism:** Greek term which means ability to take many forms. It can be **Compile-time/ method overloading** (Same method name with different parameters) and **Runtime/ method overriding** (Same method name in parent and child class).
 
-## 6. Message Passing
-* Object communicate via methods.
-* Example: `emp.getDetails();    // Object emp calls method getDetails`
+**6. Message Passing** Object communicate via methods. Example: `emp.getDetails();    // Object emp calls method getDetails`
 
 ---
 
-## 🔍 Abstract Class vs Interface
-
+### 🔍 Abstract Class vs Interface
 * **Interface:** Declared with interface keyword, used to get abstraction and multiple inheritance. All variables are public static final by default, and methods must be declared as public.
 ```java
 interface Animal {  void makeSound(); }
@@ -304,83 +127,34 @@ class Demo{
 }}
 ```
 
-* **Abstract Class:** Declared with abstract keyword, used to get abstraction. It can have local variable also. And require anonymous class during instantiation.
+* **Abstract Class:** Declared with abstract keyword, used to get abstraction. It can have local variable and require anonymous class during instantiation.
 ```java
-interface Animal {  void makeSound(); }
-abstract class Cat implements Animal {
-    public void makeSound() {   System.out.println("Meow"); }
+abstract class Animal {  abstract void makeSound(); }
+class Cat extends Animal {
+    void makeSound() {   System.out.println("Meow"); }
 }
 class Demo{
   public static void main(String args[]){
     Animal a=new Cat(){};     a.makeSound();  //Meow    // Annonymous class {}
 }}
 ```
-
----
-
-## Package
-* Used to group related classes, interfaces, sub-packages.
-* It can be done by importing `import pack.A;` or calling another package `pack.A obj= new pack.A();`
-
-> **Default java packages** like `java.lang` and `java.util`.
-
----
-
-## Constructor
-* Special method invoked automatically on object creation; with same name as class and having no return type.
-* It can be Default (No args) and Parameterized Constructor
-
-## Destructor (Garbage Collector in java)
-* Cleans up memory, and invokes when object goes out of scope.
-
-## Copy Constructor
-- Performs object copying.
-- It can be 
-  - Shallow copy: Copy reference not actual data. Change in one location will affect others.
-  - Deep copy: Create new objects.
-
-> Strings are immutable so copying them behaves like deep copy. It mainly affects derived datatype.
-
-> **Constructor/Destructor Hierarchy:** Base class constructor → Derived class constructor → Derived class destructor → Base class destructor
-
----
-
-## Some more Concepts
-1. **instanceof Operator:** Used to check if an object is an instance of a specific class. `if (user instanceof Emp) { ... }`
-
-2. **Enum:** User-defined constants. `enum Status { New("New Order"), completed, cancelled };`
-
-3. **super():** Calls immediate parent class constructor
-
-4. **this:** Refers to current class object
-
-5. **@Override Annotation:** Safety check which indicates method intentionally overrides superclass method.
-
-6. **Field class:** Represents class member variable (field) at runtime. `Field field= Product.class.getDeclaredField("price");   field.getName();`
-
-7. **Pageable:** Returns abstract pagination information. `Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, sortBy);`
-
-8. **Record:** Final immutable class. `record Pair(int x, int y){}`
 ---
 
 ## Exception Handling
-A mechanism used to handle errors.
-It can be: 
-* **Checked Exceptions**: Detected at compile time, like `ClassNotFoundException`, `IOException`, `SQLException`.
-* **Unchecked Exceptions**: Detected at runtime, like `ArithmeticException`, `NullPointerException`, `ArrayIndexOutOfBoundsException`
+A mechanism used to handle errors. It can be:
+* **Checked Exceptions:** Detected at compile time, like `ClassNotFoundException`, `IOException`, `SQLException`
+* **Unchecked Exceptions:** Detected at runtime, like `ArithmeticException`, `NullPointerException`, `ArrayIndexOutOfBoundsException`
 
-> **Exception Hierarchy:** Throwable class → Check for Exception (Checked and Unchecked Exception) → Throw error (StackOverFlowError, VirtualMachineError, OutOfMemoryException)
+**Global Exception Handling:** Managing exceptions across entire application using custom exception classes.
 
-### Exception Handling Keywords
+**Exception Handling Keywords:**
 * `try`: Main code block, always followed by catch block to test errors.
 * `catch`: Handle the exception.
-* `finally`: Executes after `try`/`catch`, regardless of exception.
+* `finally`: Executes after `try`/`catch`, regardless of exception. It is not executed if code contains `System.exit()` or if there is a system crash (i.e. StackOverflow/ OutOfMemory exception).
 * `throw`: Used to explicitly throw an exception.
 * `throws`: Declares exceptions in method signature.
 
-> `finally` block is **not executed** if code contains `System.exit()` or if there is a system crash (i.e. StackOverflow/ OutOfMemory exception).
-
-> Global Exception Handling: Managing exceptions across entire application using custom exception classes. 
+> **Exception Hierarchy:** Throwable class → Check for Exception (Checked and Unchecked Exception) → Throw error (StackOverFlowError, VirtualMachineError, OutOfMemoryException)
 
 ### `try`, `catch`, `finally` Example
 ```java
@@ -407,79 +181,111 @@ public class Demo {
     }
 }
 ```
-
 ---
 
-## Java Database Connectivity (JDBC)
-JDBC is an API to connect and execute queries with databases for permanent storage.
+## Definitions:
+* **Package:** A namespace that organizes classes and interfaces. It can be called by importing `import pack.A;` or by calling another package `pack.A obj= new pack.A();`.
 
-#### Steps for Database Connectivity
-Register the driver class → Create the connection, Statement object → Execute the query → Close the connection
+* **Constructor:** Special method invoked automatically on object creation; with same name as class and having no return type. It can be Default (No args) and Parameterized Constructor.
+* **Destructor (Garbage Collector in java):** Cleans up memory, and invokes when object goes out of scope.
+* **Copy Constructor:** Performs object copying. It can be: 
+  * **Shallow copy:** Copy reference not actual data i.e. Change in one location will affect others
+  * **Deep copy:** Create new objects.
+* **Constructor/Destructor Hierarchy:** Base class constructor → Derived class constructor → Derived class destructor → Base class destructor
 
----
 
-### Process
-A program in execution.
+* **Java  Database Connectivity (JDBC):** API to connect and execute queries with databases for permanent storage. Steps: Register driver class → Create connection, Statement object → Execute query → Close connection
 
-## Multithreading
-Allows executing multiple threads (lightweight processes, shares same address space) concurrently (side by side). Used in games, animations, etc., for better CPU utilization.
 
-### Thread Lifecycle States
-1. **New**: Thread is created
-2. **Runnable**: Ready to run
-3. **Running**: Currently executing
-4. **Blocked**: Waiting/suspended
-5. **Terminated**: Execution completed
+* **Process:** A program in execution.
+* **Thread:** Lightweight process that shares the same address space.
+* **Multithreading:** Allows executing multiple threads concurrently (side by side). Used in games, animations, etc., for better CPU utilization. 
+* **Thread Lifecycle States:** New → Runnable → Running → Blocked → Terminated
+* **Thread Synchronization:** Controls access to shared resources to prevent conflicts. Techniques: **Mutual Exclusion** (using synchronized keyword), **Inter-thread Communication** (using wait(), notify(), notifyAll())
+ 
 
-### Example
-```java
-class A extends Thread {
-    public void run() { System.out.println("Thread runs..."); }
-    public static void main(String args[]) {
-        A obj = new A();    obj.start();
-    }
-}
-```
+* **Serialization:** Conversion of Object to Byte stream/ json. Example: `@ResponseBody User user   // Object to byte stream`
+* **Deserialization:** Conversion of Byte stream to Object. Example: `@RequestBody User user    // byte stream to Object (Deserialization)`
 
-> **Java Memory Model:** Defines rules for how memory is read/written across threads.
----
 
-## Synchronous vs Asynchronous
-* **Synchronous:** (Single thread) One task at a time, blocking
-* **Asynchronous:** Multiple tasks in parallel, non-blocking mechanism.
+* **ObjectMapper:** Handles JSON **serialization** *(i.e. objectMapper.writeValueAsString(User))* and **deserialization** *(i.e. objectMapper.readValue(str, className.class))*.
+* **For adding logger:** Logs data (warn, info, debug, error). Example: Logger logger = LoggerFactory.getLogger(className.class);
 
----
 
-## Thread Synchronization
-It controls access to shared resources to prevent conflicts.
+* **Data Types:** Defines type of data a variable can hold. It can be **Primitive/Builtin/ Interinsic** (int, float, boolean, char) and **Non-primitive/ Derived/ Reference** (arrays, classes, interfaces).
 
-### Techniques
-* **Mutual Exclusion**: Prevents multiple threads from accessing critical code together using `synchronized` keyword.
-* **Inter-thread Communication**: Pause a thread and allow another thread to run in critical code by 
-  * `wait()`: Pauses thread
-  * `notify()`: Wakes one waiting thread
-  * `notifyAll()`: Wakes all waiting threads
+* **Typecasting:** Converting a variable from one datatype to another. Example: `int a=5;`    `float f= (float)a;`
 
----
 
-## Fail-Fast vs Fail-Safe Iterators
-**Fail-Fast Iterator:** Throws `ConcurrentModificationException` on structural modification. Examples: `ArrayList`, `HashMap`
+* **Variable Scope:** Defines accessibility of variable. It can be: 
+  * **Local:** within method
+  * **Instance/ Global:** within class outside method, not static. Doesn't exist in java.
+  * **Static/ Class:** within class outside method with static keyword. Retains value throughout the program.
+  * **Final:** Used to maintain constant value; as it cannot be reassigned, overridden, or inherited.
 
-**Fail-Safe/ Weakly-Consistent Iterator:**
-Works on a copy, hence no exception. Examples: `ConcurrentHashMap` (Designed to be accessed by multiple threads for reading, writing data).
 
---- 
+* **Static Method:** Can be called directly by the class name. Example: `Math.max()`, `Collections.sort()`.
 
-## Type Safety
-Ensures memory safety by preventing invalid memory access or type mismatches.
 
-## Thread Safety
-Ensures correct program behavior in multithreaded environments. It can be achieved by: 
-* Using immutable objects
-* Using `synchronized` blocks/methods
-* Using locks
-* Using thread-safe collections like `ConcurrentHashMap`
+* **Access Modifiers/ Visibility Specifier:** Specifies scope of variable or method. It can be: 
+  * **private:** Within same class
+  * **protected:** Within same class and subclass
+  * **default:** Within same package (By default specifier in java)
+  * **public:** Everywhere accessible
 
+
+* **Wrapper Classes:** Used to treat primitives as objects (Boxing), and vise-versa (UnBoxing). It is helpful in collections. Example:
+    ```java
+    int a = 10;
+    Integer i = Integer.valueOf(a); // Boxing
+    int b = i.intValue(); // Unboxing
+    ```
+
+* **Tight Coupling:** Different Classes are strongly dependent on each other, which can lead to issues in maintenance and scalability. 
+* **Loose Coupling:** Classes have minimal dependencies on each other, which promotes flexibility and easier maintenance.
+
+
+* **JAVA Syntax:** `public` (Accessible from anywhere) `static` (No object needed to run) `void` (returns nothing) `main(String[] args)` (cmd-line arguments). It is Java's entry point. Java programs can compile without `main` but fail at runtime.
+
+* **Memory Management:** Java has automatic memory management with garbage collection, It uses implicit references, which is safer and prevents direct memory access.
+
+* **Platform Independence:** JAVA compiles to bytecode, which can run on any platform with JVM. However, this flexibility makes Java slower than Cpp, as Cpp has no intermediate bytecode.
+
+* **Garbage Collection (GC):** Automatic memory management that reclaims unused memory, by nullifying the object and giving that reference to another object. Improves memory efficiency. In languages like C++, manual memory management is required, risking memory leaks if unused memory isn't re-used properly.
+ 
+* **Finalize Method:** Perform cleanup tasks before garbage collection.
+
+
+* **Memory Allocation:** It can be:
+  * **Heap Memory:** Global memory, used throughout program. Deleted by GC. Can throw OutOfMemoryError if full.
+  * **Stack Memory:** Local, fast memory used in function calls. Can throw StackOverflowError if full.
+
+* **Memory Model:** Defines rules for how memory is read/written across threads. Java provides `volatile` keyword to ensure visibility of changes across threads, and `synchronized` blocks to control access to shared resources.
+
+
+* **Fail-Fast Iterator:** Throws `ConcurrentModificationException` on structural modification. Examples: `ArrayList`, `HashMap`
+* **Fail-Safe/ Weakly-Consistent Iterator:** Works on a copy, hence no exception. Examples: `ConcurrentHashMap` (Designed to be accessed by multiple threads for reading, writing data).
+
+
+* **Type Safety:** Ensures memory safety by preventing invalid memory access or type mismatches.
+* **Thread Safety:** Ensures correct program behavior in multithreaded environments. It can be achieved by using immutable objects, locks, ConcurrentHashMap, and synchronized methods.
+
+* **String Pool:** A collection of strings in JAVA's heap memory.
+    - Strings are **immutable** (cannot change value once assigned).
+    - Mutable strings are StringBuffer (Thread-safe) and StringBuilder (More efficient, not thread-safe).
+    - It can be created through string literal `String s1 = "Hello";` or using new keyword `String s2 = new String("Hello");`.
+
+* **Immutable classes:** Create with `final` class, having `private` and `final` data members, along with only getter methods (no setters)
+
+
+* **instanceof Operator:** Used to check if an object is an instance of a specific class. `if (user instanceof Emp) { ... }`
+* **Enum:** User-defined constants. `enum Status { New("New Order"), completed, cancelled };`
+* **super():** Calls immediate parent class constructor
+* **this:** Refers to current class object
+* **@Override Annotation:** Safety check which indicates method intentionally overrides superclass method.
+* **Field class:** Represents class member variable (field) at runtime. `Field field= Product.class.getDeclaredField("price");   field.getName();`
+* **Pageable:** Returns abstract pagination information. `Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, sortBy);`
+* **Record:** Final immutable class. `record Pair(int x, int y){}`
 ---
 
 ## Git Commands
@@ -493,7 +299,6 @@ git commit -m "message"
 git push origin <branch>
 git stash, git stash pop  // for temporarily saving changes in a branch
 ```
-
 ---
 
 ## Spring Framework
@@ -509,15 +314,22 @@ git stash, git stash pop  // for temporarily saving changes in a branch
 
 ---
 
+⭐ **Spring Boot Application Flow:** `@RestController` → `@Service` → `@Repository` → `@Entity`
+
+⭐ **Inversion of Control (IoC):** Transfer control of objects to a framework.
+
+⭐ **Idempotency:** Making the same API call multiple times has the same effect as making it once, with no extra side effects.
+
+---
+
 ### Spring Boot Starter Dependencies
 * **spring-boot-starter-web:** For web apps
 * **spring-boot-starter-data-jpa:** For JPA DB access
 * **spring-boot-starter-actuator:** For production monitoring
 * **spring-boot-starter-test:** Includes all neccessary test libraries like JUnit, Mockito, AssertJ, SpringTest, etc.
 * `@SpringBootApplication Annotation`: Automatically configures all dependencies added in project. It includes `@Configuration` (Defines bean method), `@ComponentScan` (spring component scanning), `@EnableAutoConfiguration` (Enables auto configs)
- 
-### Inversion of Control (IoC) 
-Transfer control of objects to a framework. 
+
+---
 
 ### Dependency Injection (DI)
 Injecting necessary dependencies through IOC.
@@ -533,27 +345,20 @@ Example: Using `@Autowired` annotation for injecting service class to controller
 @Component
 class Client {
   private final ServiceA service;
-  
-  @Autowired
-  public Client(ServiceA service){  this.service = service; }
+  @Autowired    public Client(ServiceA service){  this.service = service; }
 }
-
 
 // via setter
 @Component
 class Client {
   private ServiceA service;
-
-  @Autowired
-  public void setService(ServiceA service){     this.service = service; }
+  @Autowired    public void setService(ServiceA service){     this.service = service; }
 }
-
 
 // via field
 @Component
 class Client {
-  @Autowired
-  private ServiceA service;
+  @Autowired    private ServiceA service;
 }
 
 
@@ -562,18 +367,31 @@ class Client {
 @Component
 class Client {
   private ServiceA service = new ServiceA();   // ❌ creates dependency itself
-
   public void call(){  service.serve(); }
 }
 ```
 ---
 
-### SOAP (Simple Object Access Protocol)
-Protocol-based communication using XML, strict standards, and higher overhead compared to REST.
+### Client-Server Communication medium:
+1. **SOAP API (Simple Object Access Protocol):** Protocol-based communication using XML, strict standards, and higher overhead compared to REST.
+2. **REST API (Representational State Transfer):** Bi-Directional communication using standard HTTP methods.
+3. **Server-Sent Events (SSE):** Handles real-time server-to-client communication. Example: live scores, notifications
+4. **WebSockets:** Handles real-time bidirectional communication using `@ServerEndpoint` annotation. Example: Chat or live collaboration.
 
-### Rest API (Representational State Transfer)
-Client-server communication using standard HTTP methods. It is easy to test/debug and is language agnostic.
+> **WebSocket Manager:** Manages all active websocket connections between client and backend servers.
 
+---
+⭐ **Best Practices for API Design:** Use proper HTTP methods, meaningful endpoints, dependency injection, handle errors, support pagination, rate limiting, secure with HTTPS/auth, document, caching, auditing, and ensure idempotency.
+
+---
+### 🔍 Filtering & Pagination
+In real system when there is lot of data, it ensures system is not overburdened.
+* **Filtering:** Filtering data by location, rating, etc. Example: `GET /products?category=electronics&brand=sony,samsung`
+* **Pagination:** Return 10–20 items per API call using `offset/limit` in sql. Example of API: `GET /products?page=2&size=10`
+* **Sorting:** Let client sort data based on a parameter. Example: `GET /products?sort=-price,name` (i.e. sort by price in desc and name by asc)
+---
+
+### Rest API Annotations
 * `@Bean`: Manual Bean creation.
 * `@Component`: General purpose bean, base for `@Service`, `@Repository`, `@Controller`
 * `@Autowired`: Automatically wires beans.
@@ -594,23 +412,6 @@ Client-server communication using standard HTTP methods. It is easy to test/debu
   * `ResponseEntity`: Get result of HTTP response (by methods like  getStatusCode(), getBody(), etc.) in form of `@ResponseBody`.
   * `@ResponseStatus`: Custom HTTP status code for API response.
   * `RestTemplate`: Used to consume data from external APIs and give response.
-
-> **Spring Boot Application Flow:** `@RestController` → `@Service` → `@Repository` → `@Entity`
-
-> **Best Practices for API:** Use proper HTTP methods, meaningful endpoints, version APIs, handle errors, support pagination, secure with HTTPS/auth, maintain consistency, document, cache responses, and ensure idempotency.
-
----
-### Idempotency:
-Making the same API call multiple times has the same effect as making it once, with no extra side effects.
-
----
-
-### Web Socket API
-An API designed for continuous data streams instead of single request. It can be done through `@ServerEndpoint` annotation. Example: A subscription service where the restaurant streams you a live cooking video until your meal arrives.
-
-> **WebSocket:** Enables real-time communication between client and server. Example: A phone line between you and the restaurant where both can talk anytime.
-> 
-> **WebSocket Manager:** Manages all active websocket connections between client and backend servers.
 
 ---
 

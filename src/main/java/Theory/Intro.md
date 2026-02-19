@@ -39,7 +39,7 @@ My name is **Muskan**, currently a **Software Engineer** at **Goldman Sachs** wi
 ---
 
 ## 🧑‍🤝‍🧑 Behavioral, Fit & Q&A
-- **Why switch?** → Seeking growth → I’m looking for more growth and SDE2 role. Earlier, I was in a niche BRM role, so I moved to a startup for hands-on exposure to modern tech and fast-paced work. Later, GS helped me deepen my technical skills. Now, I’m ready for SDE2 role where I can apply both startup agility and enterprise experience. I’ve always valued Intuit’s culture and would love to contribute back with the perspective I’ve gained.
+- **Why switch?** → Seeking growth → I’m looking for more growth and higher Software Engineer role. Earlier, I was in a niche BRM role, so I moved to a startup for hands-on exposure to modern tech and fast-paced work. Later, GS helped me deepen my technical skills. Now, I’m ready for higher SDE role where I can apply both startup agility and enterprise experience. I always value company's culture and would love to contribute back with the perspective I’ve gained.
 
 - **Good thing about current team:** It has a lot of scope to improve, code, and automate
 - **Conflict within team**: Listen → acknowledge, appreciate good points → suggest alternatives → collaborative tone.
