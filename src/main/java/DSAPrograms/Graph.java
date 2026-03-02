@@ -536,7 +536,7 @@ public class Graph {
     }
 
 
-    /* Find minimum color required to color all n nodes of a graph, such that no two nodes have same color. */
+    /* Find minimum color required to color all n nodes of a graph, such that no two adjacent nodes have same color. */
 
     // Each time starting from node 0, check if possible to color in k colors.
     class MColoring{

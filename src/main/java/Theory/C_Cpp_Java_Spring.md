@@ -23,7 +23,7 @@
 ### Function Argument Passing
 ```cpp
 void f1(int a, int b);         // Call by value (Changes made are local to called function)
-void f2(int* a, int* b);       // Call by address (called by pointer, and made permanent changes on address)
+void f2(int* a, int* b);       // Call by address (pointer is passed, and made permanent changes on address)
 void f3(int& a, int& b);       // Call by reference (address is passed, and made permanent changes on address)
 ```
 
@@ -75,13 +75,13 @@ Help in writing clean, maintainable, and scalable code.
 > **Source Code** (.cpp) → **Preprocessor** (Processes code before compilation) → **Compiler** (Converts source code to assembly code) → **Assembler** (Changes assembly code to object code i.e. .obj file) → **Linker** (Links object file & library files i.e. .exe file) → **Loader** (Loads into main memory) → **Main Memory** (Program executes)
 
 **Java:**
-> **Code** (written using JDK - Java Development Kit which contains development tools) → **javac** (Compiles .java source code to .class bytecode) → **JAVA** (Interprets bytecode) → **JVM** (Java Virtual Machine executes bytecode as part of JRE - Java Runtime Environment) → **ClassLoader** (Loads required classes/interfaces into JVM)
+> **Code** (written using JDK - Java Development Kit which contains development tools) → **javac** (Compiles .java source code to .class bytecode) → **JAVA** (Interprets bytecode) → **JVM** (Java Virtual Machine executes bytecode as part of JRE - Java Runtime Environment using ClassLoader which loads required classes/interfaces into JVM)
 ---
 
 ## OOP Concepts
 **1. Class and Objects:** Object is a real-world entity with unique properties, and class is a collection of similiar objects having common attributes. Example: Car class having objects as color, wheel, engine.
 
-**2. Encapsulation (Data Biding):** Wrapping data and code together into a single unit (class). It can be **Early/ Static/ Compile time binding** (Wraps at compile time) and **Late/ Dynamic/ Runtime Binding** (Wraps at runtime).
+**2. Encapsulation (Data Biding):** Binding data and code together into a single unit (class). It can be **Early/ Static/ Compile time binding** (Binds at compile time) and **Late/ Dynamic/ Runtime Binding** (Binds at runtime).
 
 **3. Abstraction:** Hiding internal details and showing only relevant information to the user. It can be achieved using abstract classes and interfaces.
 
@@ -186,7 +186,7 @@ public class Demo {
 ## Definitions:
 * **Package:** A namespace that organizes classes and interfaces. It can be called by importing `import pack.A;` or by calling another package `pack.A obj= new pack.A();`.
 
-* **Constructor:** Special method invoked automatically on object creation; with same name as class and having no return type. It can be Default (No args) and Parameterized Constructor.
+* **Constructor:** Special method with same name as class name having no return type and invoked automatically on object creation. It can be Default (No args) and Parameterized Constructor.
 * **Destructor (Garbage Collector in java):** Cleans up memory, and invokes when object goes out of scope.
 * **Copy Constructor:** Performs object copying. It can be: 
   * **Shallow copy:** Copy reference not actual data i.e. Change in one location will affect others
@@ -194,7 +194,17 @@ public class Demo {
 * **Constructor/Destructor Hierarchy:** Base class constructor → Derived class constructor → Derived class destructor → Base class destructor
 
 
-* **Java  Database Connectivity (JDBC):** API to connect and execute queries with databases for permanent storage. Steps: Register driver class → Create connection, Statement object → Execute query → Close connection
+* **Garbage Collection (Memory Management):** Reclaims unused memory automatically by nullifying the object and giving that reference to another object. It improves memory efficiency by prevents direct memory access and reducing memory leaks.
+
+* **Finalize Method:** Perform cleanup tasks before garbage collection.
+
+* **Platform Independence:** JAVA compiles to bytecode, which can run on any platform with JVM. However, this flexibility makes Java slower than Cpp, as Cpp has no intermediate bytecode.
+
+* **Memory Allocation:** It can be:
+    * **Heap Memory:** Global memory, used throughout program. Deleted by Garbage Collection. Can throw OutOfMemoryError if full.
+    * **Stack Memory:** Local, fast memory used in function calls. Can throw StackOverflowError if full.
+
+* **Memory Model:** Defines rules for how memory is read/written across threads. Java provides `volatile` keyword to ensure visibility of changes across threads, and `synchronized` blocks to control access to shared resources.
 
 
 * **Process:** A program in execution.
@@ -210,6 +220,9 @@ public class Demo {
 
 * **ObjectMapper:** Handles JSON **serialization** *(i.e. objectMapper.writeValueAsString(User))* and **deserialization** *(i.e. objectMapper.readValue(str, className.class))*.
 * **For adding logger:** Logs data (warn, info, debug, error). Example: Logger logger = LoggerFactory.getLogger(className.class);
+
+
+* **Java  Database Connectivity (JDBC):** API to connect and execute queries with databases for permanent storage. Steps: Register driver class → Create connection, Statement object → Execute query → Close connection
 
 
 * **Data Types:** Defines type of data a variable can hold. It can be **Primitive/Builtin/ Interinsic** (int, float, boolean, char) and **Non-primitive/ Derived/ Reference** (arrays, classes, interfaces).
@@ -241,26 +254,11 @@ public class Demo {
     int b = i.intValue(); // Unboxing
     ```
 
-* **Tight Coupling:** Different Classes are strongly dependent on each other, which can lead to issues in maintenance and scalability. 
+* **Tight Coupling:** Classes having strong dependency on each other, which can lead to issues in maintenance and scalability. 
 * **Loose Coupling:** Classes have minimal dependencies on each other, which promotes flexibility and easier maintenance.
 
 
 * **JAVA Syntax:** `public` (Accessible from anywhere) `static` (No object needed to run) `void` (returns nothing) `main(String[] args)` (cmd-line arguments). It is Java's entry point. Java programs can compile without `main` but fail at runtime.
-
-* **Memory Management:** Java has automatic memory management with garbage collection, It uses implicit references, which is safer and prevents direct memory access.
-
-* **Platform Independence:** JAVA compiles to bytecode, which can run on any platform with JVM. However, this flexibility makes Java slower than Cpp, as Cpp has no intermediate bytecode.
-
-* **Garbage Collection (GC):** Automatic memory management that reclaims unused memory, by nullifying the object and giving that reference to another object. Improves memory efficiency. In languages like C++, manual memory management is required, risking memory leaks if unused memory isn't re-used properly.
- 
-* **Finalize Method:** Perform cleanup tasks before garbage collection.
-
-
-* **Memory Allocation:** It can be:
-  * **Heap Memory:** Global memory, used throughout program. Deleted by GC. Can throw OutOfMemoryError if full.
-  * **Stack Memory:** Local, fast memory used in function calls. Can throw StackOverflowError if full.
-
-* **Memory Model:** Defines rules for how memory is read/written across threads. Java provides `volatile` keyword to ensure visibility of changes across threads, and `synchronized` blocks to control access to shared resources.
 
 
 * **Fail-Fast Iterator:** Throws `ConcurrentModificationException` on structural modification. Examples: `ArrayList`, `HashMap`
@@ -275,7 +273,7 @@ public class Demo {
     - Mutable strings are StringBuffer (Thread-safe) and StringBuilder (More efficient, not thread-safe).
     - It can be created through string literal `String s1 = "Hello";` or using new keyword `String s2 = new String("Hello");`.
 
-* **Immutable classes:** Create with `final` class, having `private` and `final` data members, along with only getter methods (no setters)
+* **Immutable classes:** `final` class, having `private`, `final` data members, and only getter methods (no setters)
 
 
 * **instanceof Operator:** Used to check if an object is an instance of a specific class. `if (user instanceof Emp) { ... }`
