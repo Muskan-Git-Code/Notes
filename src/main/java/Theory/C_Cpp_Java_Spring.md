@@ -204,7 +204,7 @@ public class Demo {
     * **Heap Memory:** Global memory, used throughout program. Deleted by Garbage Collection. Can throw OutOfMemoryError if full.
     * **Stack Memory:** Local, fast memory used in function calls. Can throw StackOverflowError if full.
 
-* **Memory Model:** Defines rules for how memory is read/written across threads. Java provides `volatile` keyword to ensure visibility of changes across threads, and `synchronized` blocks to control access to shared resources.
+* **Memory Model:** Defines rules for how memory is read/written across threads. Java provides `volatile` keyword to ensure visibility of changes across threads, and handles through `locks` and `synchronized` blocks to control access to shared resources.
 
 
 * **Process:** A program in execution.

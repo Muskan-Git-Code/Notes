@@ -215,14 +215,21 @@ If all below 4 condition satisfy then deadlock may occur.
 
 
 **Context Switch:** Saving state of currently running process and loading state of next process to run.
+
 **Dispatcher:** Gives control of CPU to the process selected by short-term scheduler.
  
+
 **Swapping:** Moving processes between main memory and disk to manage memory efficiently.
+
 **Thrashing:** Excessive swapping leading to performance degradation.
 
+
 **Fragmentation:** Inefficient use of memory due to scattered free space (external) or wasted space within allocated memory (internal). It can be solved by techniques like paging and best fit allocation.
+
 **Page Fault:** Accessing a page which is not available in main memory (RAM).
+
 **Segmentation Fault:** Accessing memory that the process is not allowed to access.
+
 ---
 
 ---
@@ -302,7 +309,7 @@ If all below 4 condition satisfy then deadlock may occur.
 - **When to use AI?** → Repetitive tasks, creative suggestions, large data summarization, generating context.
 - **When not to use AI?** → Sensitive/confidential data, require critical judgments.
 - - **When to use ML over GenAI** → When tasks involve structured data, predictions, or pattern detection.
-- **How do you stay up to date on Al improvements and innovations?** → I stay updated by exploring new AI releases, following community discussions and webinars, and using AI tools and copilots in daily development.
+- **How do you stay up to date on Al improvements and innovations?** → I stay updated by exploring new AI releases, following community discussions, webinars, using AI tools and copilots in daily development.
 
 
 - **What’s prompt engineering?** → Designing inputs/ prompts to get accurate and useful responses from LLMs.
