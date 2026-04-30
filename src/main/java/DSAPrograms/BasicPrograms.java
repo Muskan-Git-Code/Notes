@@ -15,6 +15,19 @@ public class BasicPrograms {
     }
 
 
+    /* Find GCD/ HCF of 2 numbers. */
+    // a=52, b=10   => 2
+
+    // According to Euclidean formula, gcd(a,b)= gcd(a%b, b) where a>b, and repeated till either a==0 or b==0 and other is answer.
+    int gcd(int a, int b){      // TC: O(log(min(a,b)))
+        while(a>0 && b>0){
+            if(a>b){    a= a%b; }
+            else{   b= b%a; }
+        }
+        if(a==0){   return b; }else{    return a; }
+    }
+
+
     /* Rotate matrix to 90 degree clockwise */
     // 1 2 3             1 4 7       7 4 1
     // 4 5 6    =>       2 5 8   =>  8 5 2
@@ -44,6 +57,19 @@ public class BasicPrograms {
 
         if(s2.contains(s)){     return true; }
         return false;
+    }
+
+
+    /* Find the largest string x that divides both s1 and s2. */
+    // s1= "ABABAB", s2= "ABAB"     => "AB"
+
+    // If s1, s2 is made of x, that means s1+s2 = s2+s1. Also, the result is gcd of len(s1), len(s2).
+    public String largestCommon(String str1, String str2) {
+        String r1= str1+ str2;  String r2= str2+ str1;
+
+        int lenGCD= gcd(str1.length(), str2.length());
+
+        if(!r1.equals(r2)){ return ""; }else{   return str1.substring(0, lenGCD); }
     }
 
 

@@ -1,16 +1,19 @@
 #### ✅ Common System Design Questions:
 
-* Design Cab Booking System (Uber/Ola) - Ride_Sharing_cdesign.md in detail
+[//]: # (* Design Cab Booking System &#40;Uber/Ola&#41; - Ride_Sharing_cdesign.md in detail)
 
 * Design Instagram / Twitter / Facebook/ LinkedIn (Social Media)
 * Design BookMyShow / Ticket-Booking System
-* Design Food Delivery App (Zomato/Swiggy)
+
+[//]: # (* Design Food Delivery App &#40;Zomato/Swiggy&#41;)
 * Design WhatsApp / Chat App
 * Design Rate Limiter (Token Bucket, Leaky Bucket)
 * Design Google Docs (Real-time Collaboration)
-* Design Amazon / Flipkart (E-commerce)
+
+[//]: # (* Design Amazon / Flipkart &#40;E-commerce&#41;)
 * Design Notification System (Push/SMS/Email)
-* Design URL Shortener (Bitly)
+
+[//]: # (* Design URL Shortener &#40;Bitly&#41;)
 * Design Payment Gateway
 * Design Parking Lot System
 * Design Stock Trading Platform (like Zerodha)

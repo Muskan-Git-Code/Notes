@@ -122,10 +122,35 @@ public class TwoPointer {
 
     // Iterate through array, add values in current sum, if sum goes -ve then make cs=0, else continue counting sum.
     static int maxSum(int a[]){
-        int mx= Integer.MIN_VALUE, cs=0;
+        int mx= a[0], cs=a[0];
         for(int i=0; i<a.length; i++){
-            cs+= a[i];      mx= Math.max(mx, cs);
-            if(cs<0)    cs=0;
+            cs= Math.max(a[i], cs+ a[i]);
+            mx= Math.max(mx, cs);
+        }
+        return mx;
+    }
+
+
+    /* Find max sum in a circular array. */
+    // a[]= {5, -2, 3, 4}   => 12 (i.e. 5+ 3+ 4)
+
+    // max of (max sum, total sum - min sum).
+    static int circular(int a[]){
+        int n= a.length, mx=a[0], curr=a[0];
+
+        // find max sum subarray
+        for(int i=1; i<n; i++){ curr= Math.max(a[i], curr+ a[i]);   mx= Math.max(mx, curr); }
+
+        // find min sum subarray.
+        int mn=a[0], ts=a[0];   curr= a[0];
+        for(int i=1; i<n; i++){
+            ts+= a[i];
+            curr= Math.min(a[i], curr+a[i]);    mn= Math.min(mn, curr);
+        }
+        mx= Math.max(mx, ts-mn);
+
+        if(mx==0){
+            mx= Integer.MIN_VALUE;  for(int i=0; i<n; i++){ mx= Math.max(mx, a[i]); }
         }
         return mx;
     }

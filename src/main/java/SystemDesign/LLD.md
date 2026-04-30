@@ -1,3 +1,24 @@
+### [How you create a system] / [12 factor compliance]
+1. **Codebase:** Single codebase (Git Repo) tracked in version control.
+2. **Dependencies:** Explicitly declare and isolate dependencies. (e.g. pom.xml)
+3. **Config:** Store config in environment variables, not code. (e.g. env.properties)
+
+
+4. **Backing Services:** Treat databases, caches, queues as attached resources.
+5. **Processes:** Run the app as stateless processes.
+6. **Concurrency:** Scale by running multiple process instances i.e. horizontal scaling.
+
+
+7. **Build, Release, Run:** Strict separation of build and runtime stages.
+8. **Disposability:** Fast startup and graceful shutdown. 
+9. **Admin Processes:** Run admin tasks as one-off processes.
+
+
+10. **Port Binding:** Export services via a port (self-contained).
+11. **Dev/Prod Parity:** Keep environments as similar as possible.
+12. **Logs:** Treat logs as event streams, not files.
+
+---
 ## Low Level Design (LLD): 
 Detailed blueprint of system, outlining classes and functions to guide developers in implementation phase.
 
